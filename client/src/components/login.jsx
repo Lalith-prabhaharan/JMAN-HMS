@@ -1,14 +1,33 @@
 import React from 'react'
 import { useState } from 'react'
+import axios from 'axios'
 import "../style/login.css"
 import logindoc from "../images/login_doctor.jpg"
 export const Login = () => {
 
-  const [selectedOption, setSelectedOption] = useState(null);
+  const [email,setEmail]=useState("");
+  const [pass,setPass]=useState("");
+  const [selectedOption, setSelectedOption] = useState();
 
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
+    console.log(selectedOption)
   };
+  
+  const submit=(e)=>{
+      e.preventDefault();
+      const login=async()=>{
+        console.log(email,pass,selectedOption)
+        const response=await axios.post("http://localhost:5000/api/v1/auth/login",{
+          username:email,
+          password:pass,
+          type:selectedOption
+        })
+        console.log(response.data.msg)
+      }
+      login();
+
+  }
 
   return (
     <div className='login-bg'>
@@ -17,27 +36,27 @@ export const Login = () => {
                 <h1>HEALTH CARE</h1>
                 <h2>LOGIN PAGE</h2>
                 <p>Login to your account</p>
-                <form className='login-form'>
+                <form className='login-form' onSubmit={submit}>
                     <div className='login-input'>
                     <label> <span>Name:</span></label>
-                    <input type='text'  placeholder='Enter your E-Mail Address'></input>
+                    <input type='text'onChange={(e)=>{setEmail(e.target.value)}}  placeholder='Enter your E-Mail Address'></input>
                     </div>
                     <div  className='login-input'>
                     <label><span>Password:</span></label>
-                    <input type='password' placeholder='Enter your Password'></input>
+                    <input type='password' onChange={(e)=>{setPass(e.target.value)}} placeholder='Enter your Password'></input>
                     </div>
                     <label className='radio'>
                         <input
                         type="radio"
-                        value="option1"
-                        checked={selectedOption === 'option1'}
+                        value="admin"
+                        checked={selectedOption === 'admin'}
                         onChange={handleOptionChange}
                         />
                         Admin
                         <input
                         type="radio"
-                        value="option2"
-                        checked={selectedOption === 'option2'}
+                        value="doctor"
+                        checked={selectedOption === 'doctor'}
                         onChange={handleOptionChange}
                         />
                         Doctor

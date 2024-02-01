@@ -31,6 +31,7 @@ const loginUser = async(req, res) => {
 
         if (rowCount == 0 || (rowCount > 0 && rows[0].password !== password)) {
             throw new UnauthenticatedError('Invalid credentials');
+            console.log("Invalid");
         }
 
         const token = jwt.sign({ userId: rows[0].id, name: rows[0].username }, process.env.JWT_SECRET, {
