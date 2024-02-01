@@ -28,15 +28,7 @@ const port = 5000;
 
 const start = async() => {
     try {
-        const queryStr = {
-            text: `Select * from users where lastname = $1`,
-            values: ['vishal']
-        };
-        const { rows, rowCount } = await db.query(queryStr);
-        if (rowCount == 0) {
-            console.log("Empty");
-        }
-        console.log(rows);
+        //
         app.listen(port, () =>
             console.log(`Server is listening on port ${port}...`)
         );

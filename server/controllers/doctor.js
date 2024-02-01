@@ -1,23 +1,23 @@
 const statusCode = require('http-status-codes');
 
 const getAllPaients = (req, res) => {
-    res.status(statusCode.OK).json('Get all Handling patients');
+    res.status(200).json('Get all Handling patients');
 }
 
 const getPatient = (req, res) => {
-    res.status(statusCode.OK).json('Get a handling patient');
+    res.status(200).json('Get a handling patient');
 }
 
 const postApproval = (req, res) => {
-    res.status(statusCode.OK).json('Approve patient');
+    res.status(200).json('Approve patient');
 }
 
 const getAllPendingPatients = (req, res) => {
-    res.status(statusCode.OK).json('Get all wating patients');
+    res.status(200).json('Get all wating patients');
 }
 
 const getPendingPatient = (req, res) => {
-    res.status(statusCode.OK).json('Get a wating patient');
+    res.status(200).json('Get a wating patient');
 }
 
 const postSuggestions = (req, res) => {
