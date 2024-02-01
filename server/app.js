@@ -1,5 +1,6 @@
 require('dotenv').config();
 require('express-async-errors');
+const cors=require('cors');
 const express = require('express');
 const app = express();
 
@@ -16,6 +17,8 @@ const admin = require('./routes/admin');
 const doctor = require('./routes/doctor');
 
 //routes
+app.use(cors());
+app.options("*",cors());
 app.use('/api/v1/auth', auth);
 app.use('/api/v1/admin', admin);
 app.use('/api/v1/doctor', doctor);
