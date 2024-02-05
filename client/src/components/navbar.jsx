@@ -1,9 +1,13 @@
 import "../style/nav.css"
 import React, { useState } from 'react';
+import { useAuth } from "../utils/authentication";
 
 export const Navbar = () => {
   const [showNav, setShowNav] = useState(false);
-
+  const auth=useAuth()
+  const logout=()=>{
+    auth.logout();
+  }
   const toggleNav = () => {
     setShowNav(!showNav);
   };
@@ -12,11 +16,11 @@ export const Navbar = () => {
     <nav className="navbar">
       <div className="logo">HEALTH CARE</div>
       <div className={`nav-links ${showNav ? 'show' : ''}`}>
-        <a href="#">All Patients</a>
+        <a href="/#">All Patients</a>
         <a href="#">Add Patients</a>
         <a href="#">View Status</a>
         <a href="#">Doctors Details</a>
-        <a href="#">Logout</a>
+        <a onClick={logout}>Logout</a>
       </div>
       <button className="menu-icon" onClick={toggleNav}>
         <span>&#9776;</span>
