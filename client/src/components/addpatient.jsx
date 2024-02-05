@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState } from 'react';
 import '../style/addpatient.css'
+import { Navbar } from './navbar';
 export const Addpatient = () => {
 
   const [selectedOption, setSelectedOption] = useState('Male');
@@ -10,6 +11,8 @@ export const Addpatient = () => {
   };
 
   return (
+    <div>
+    <Navbar/>
     <div className='addform'>
       <form >
         
@@ -95,5 +98,7 @@ export const Addpatient = () => {
         <button class="button-1" role="button">Add Patient</button>
       </form>
     </div>
+    </div>
+
   )
 }

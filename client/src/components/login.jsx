@@ -3,11 +3,15 @@ import { useState } from 'react'
 import axios from 'axios'
 import "../style/login.css"
 import logindoc from "../images/login_doctor.jpg"
+import { useAuth } from '../utils/authentication'
+import { useNavigate } from 'react-router-dom'
 export const Login = () => {
 
+  const navigate=useNavigate()
   const [email,setEmail]=useState("");
   const [pass,setPass]=useState("");
   const [selectedOption, setSelectedOption] = useState();
+  const auth=useAuth();
 
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
@@ -23,7 +27,18 @@ export const Login = () => {
           password:pass,
           type:selectedOption
         })
-        console.log(response.data.msg)
+        if(response.data.msg==="success"){
+          alert("Success")
+          localStorage.setItem("mail",email)
+          localStorage.setItem("password",pass)
+          navigate("/addpatient")
+        }
+        else if(response.data.msg="select"){
+          alert("Enter type of user")
+        }
+        else{
+          alert("Enter details correctly")
+        }
       }
       login();
 
