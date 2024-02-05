@@ -7,13 +7,13 @@ const loginUser = async(req, res) => {
     const { username, password, type } = req.body;
 
     if (!type) {
-        throw new BadRequestError('Please select type of user');
+        return res.status(400).json({msg: 'Please select type of user'});
     }
 
     //Admin Login
     if (type === 'admin') {
         if (username !== 'root' || password !== '123') {
-            throw new UnauthenticatedError('Invalid credentials');
+            return res.status(404).json({msg: 'Invalid credentials'});
         }
         const token = jwt.sign({ name: username }, process.env.JWT_SECRET, {
             expiresIn: '30d'
@@ -24,14 +24,13 @@ const loginUser = async(req, res) => {
     //Doctor login
     else {
         const queryStr = {
-            text: `select * from doctors where username = $1`,
+            text: `select * from doctor where email = $1`,
             values: [username]
         }
         const { rows, rowCount } = await db.query(queryStr);
 
         if (rowCount == 0 || (rowCount > 0 && rows[0].password !== password)) {
-            throw new UnauthenticatedError('Invalid credentials');
-            console.log("Invalid");
+            return res.status(404).json({msg: 'Invalid credentials'});
         }
 
         const token = jwt.sign({ userId: rows[0].id, name: rows[0].username }, process.env.JWT_SECRET, {
