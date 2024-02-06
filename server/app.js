@@ -15,13 +15,15 @@ app.use(express.json());
 const auth = require('./routes/auth');
 const admin = require('./routes/admin');
 const doctor = require('./routes/doctor');
+const authDoc = require('./middleware/authDoctor');
+const authAdmin = require('./middleware/authAdmin');
 
 //routes
 app.use(cors());
 app.options("*",cors());
 app.use('/api/v1/auth', auth);
 app.use('/api/v1/admin', admin);
-app.use('/api/v1/doctor', doctor);
+app.use('/api/v1/doctor', authDoc, doctor);
 
 //error handler
 app.use(notFoundMiddleware);

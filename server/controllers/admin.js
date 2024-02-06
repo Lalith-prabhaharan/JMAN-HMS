@@ -8,12 +8,11 @@ const getDeptDoctors = async (req, res) => {
     } 
     const {rows,rowCount} = await db.query(getDoctors);
     if(rowCount===0){
-        res.status(404).json({msg:'No doctor in the specified department'})
+        return res.status(404).json({msg:'No doctor in the specified department'})
     }
-    else{
-        res.status(200).json(rows);
-    }
+    res.status(200).json(rows);
 }
+
 const getPatients = (req, res) => {
     res.status(200).json({ msg: 'Get Approval of patients' });
 }
