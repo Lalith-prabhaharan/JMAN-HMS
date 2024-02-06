@@ -31,7 +31,10 @@ export const Login = () => {
           alert("Success")
           localStorage.setItem("mail",email)
           localStorage.setItem("password",pass)
+          if(selectedOption=="admin")
           navigate("/addpatient")
+          else
+          navigate("/viewpatient")
         }
         else if(response.data.msg="select"){
           alert("Enter type of user")
