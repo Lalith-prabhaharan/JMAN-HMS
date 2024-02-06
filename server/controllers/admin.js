@@ -7,10 +7,25 @@ const getDeptDoctors = async (req, res) => {
         values: [department] 
     } 
     const {rows,rowCount} = await db.query(getDoctors);
-    if(rowCount===0){
+    if(rowCount === 0){
         return res.status(404).json({msg:'No doctor in the specified department'})
     }
     res.status(200).json(rows);
+}
+
+const getAllDeptDoctors = async(req, res) => {
+    const getDoctors = `SELECT 
+                            doc_id, 
+                            concat(first_name, ' ', last_name) AS name,
+                            age,
+                            department,
+                            year_of_exp as experience FROM doctor`; 
+    
+                            const {rows,rowCount} = await db.query(getDoctors);
+    if(rowCount === 0){
+        return res.status(200).json({msg:'success', doctors: 'No doctors available'});
+    }
+    return res.status(200).json({msg: 'Success', doctors: rows});
 }
 
 const getPatients = (req, res) => {
@@ -95,5 +110,6 @@ const postPatientForm = async(req, res) => {
 module.exports = {
     getDeptDoctors,
     getPatients,
-    postPatientForm
+    postPatientForm,
+    getAllDeptDoctors
 }
