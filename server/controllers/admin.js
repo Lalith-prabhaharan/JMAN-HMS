@@ -14,14 +14,16 @@ const getDeptDoctors = async (req, res) => {
 }
 
 const getAllDeptDoctors = async(req, res) => {
+    
     const getDoctors = `SELECT 
                             doc_id, 
-                            concat(first_name, ' ', last_name) AS name,
+                            first_name, 
+                            last_name,
                             age,
                             department,
-                            year_of_exp as experience FROM doctor`; 
-    
-                            const {rows,rowCount} = await db.query(getDoctors);
+                            year_of_exp FROM doctor`; 
+
+    const {rows,rowCount} = await db.query(getDoctors);
     if(rowCount === 0){
         return res.status(200).json({msg:'success', doctors: 'No doctors available'});
     }
