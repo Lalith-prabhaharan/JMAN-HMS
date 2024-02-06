@@ -19,7 +19,7 @@ export const Navbar = () => {
         <a href="/#">All Patients</a>
         <a href="#">Add Patients</a>
         <a href="#">View Status</a>
-        <a href="#">Doctors Details</a>
+        <a href="/doctordetails">Doctors Details</a>
         <a onClick={logout}>Logout</a>
       </div>
       <button className="menu-icon" onClick={toggleNav}>

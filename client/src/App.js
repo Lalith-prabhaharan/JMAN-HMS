@@ -5,6 +5,7 @@ import { Login } from './components/login';
 import { Navbar } from './components/navbar';
 import { Authentication } from './utils/authentication';
 import { Viewpatient } from './components/viewpatient';
+import { Doctordetails } from './components/doctordetails';
 
 function App() {
   return (
@@ -14,6 +15,9 @@ function App() {
       <Routes>
       <Route path="/" element={<Login/>}></Route>
       <Route path="/addpatient" element={<Addpatient/>}></Route>
+      <Route path="/viewpatient" element={<Viewpatient/>}></Route>
+      <Route path="/doctordetails" element={<Doctordetails/>}></Route>
+      
       </Routes>
       </Authentication>
     </div>
