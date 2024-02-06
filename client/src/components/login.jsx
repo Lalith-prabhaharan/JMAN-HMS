@@ -10,7 +10,7 @@ export const Login = () => {
   const navigate=useNavigate()
   const [email,setEmail]=useState("");
   const [pass,setPass]=useState("");
-  const [selectedOption, setSelectedOption] = useState();
+  const [selectedOption, setSelectedOption] = useState("");
   const auth=useAuth();
 
   const handleOptionChange = (event) => {
@@ -36,11 +36,11 @@ export const Login = () => {
           else
           navigate("/viewpatient")
         }
-        else if(response.data.msg="select"){
+        else if(response.data.msg=="select"){
           alert("Enter type of user")
         }
-        else{
-          alert("Enter details correctly")
+        else {
+          alert("Enter the valid credentials")
         }
       }
       login();

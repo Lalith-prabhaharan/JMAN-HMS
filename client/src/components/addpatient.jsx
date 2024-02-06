@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react';
+import axios from 'axios';
 import '../style/addpatient.css'
 import { Navbar } from './navbar';
 export const Addpatient = () => {
@@ -9,6 +10,34 @@ export const Addpatient = () => {
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
   };
+
+  const [selectedDepartment, setSelectedDepartment] = useState('');
+
+  const departments = ['Cardiologist','Dermatology','Pediatrics','Gynecologist','Neurologist','Psychiatrist','Anesthesiology','Radiologists'
+  ,'Oncologist','general',"dd"];
+
+  const handleDepartmentChange=(event)=>{
+    const dep=event.target.value;
+    setSelectedDepartment(dep)
+    console.log(selectedDepartment)
+  }
+  
+  const [doctorList,setDoctorList]=useState([])
+  const [flag,setFlag]=useState(false)
+
+  useEffect(()=>{
+    axios.get(`http://localhost:5000/api/v1/admin/doctor/${selectedDepartment}`)
+    .then((response)=>{
+      console.log(response)
+      if(response.length==0)console.log("No data found")
+      else{
+        setDoctorList(response.data)
+      }
+      console.log(doctorList)
+    })
+    setFlag(true)
+  });
+  
 
   return (
     <div>
@@ -36,13 +65,13 @@ export const Addpatient = () => {
           
           <label>Gender:</label>
           <label>
-          <input type="radio"  value="Male" checked={selectedOption === 'Male'}
+          <input type="radio"  value="M" checked={selectedOption === 'Male'}
           onChange={handleOptionChange}  ></input>
           Male
-          <input type="radio"  value="Female" checked={selectedOption === 'Female'}
+          <input type="radio"  value="F" checked={selectedOption === 'Female'}
           onChange={handleOptionChange}></input>
           Female
-          <input type="radio"  value="None"  checked={selectedOption === 'None'}
+          <input type="radio"  value="N"  checked={selectedOption === 'None'}
           onChange={handleOptionChange}></input>
           Prefer Not to Say
           </label>
@@ -76,21 +105,24 @@ export const Addpatient = () => {
           <textarea className="addhotelinp"> </textarea>
           
           <label>Department:</label>
-          <select>
-              <option value="cardiologist">Cardiologist</option>
-              <option value="dermatology">Dermatology</option>
-              <option value="pediatrics">Pediatrics</option>
-              <option value="gynecologist">Gynecologist</option>
-              <option value="neurologist">Neurologist</option>
-              <option value="psychiatrist">Psychiatrist</option>
-              <option value="anesthesiology">Anesthesiology</option>
-              <option value="radiologists">Radiologists</option>
-              <option value="oncologist">Oncologist</option>
+          <select value={selectedDepartment} onChange={handleDepartmentChange}>
+              
+              <option value="">Select the Department</option>
+              {
+                departments.map((department)=>(
+                  <option value={department}>{department}</option>
+                ))
+              }
           </select>          
           
           <label>Doctor:</label>
           <select>
-              
+              <option value="">Select the Doctor</option>
+              if (doctorList.length!=0){
+                doctorList.map((doctor)=>(
+                  <option value={doctor.first_name}>{doctor.first_name}</option>
+                ))
+              }
           </select>          
         </fieldset>
           
