@@ -1,4 +1,5 @@
 const statusCode = require('http-status-codes');
+const db = require('../db/connect');
 
 const getAllPaients = (req, res) => {
     res.status(200).json('Get all Handling patients');
@@ -13,7 +14,15 @@ const postApproval = (req, res) => {
 }
 
 const getAllPendingPatients = (req, res) => {
-    res.status(200).json('Get all wating patients');
+    // Query to fetch all the pending patients
+    const queryStr = {
+        text: `select * from patients where status="pending"`
+    }
+    // Fetching data from db
+    const pendingPatients = await db.query(queryStr);
+    
+    // Sending the response
+    return res.status(200).json({ pendingPatients: pendingPatients });
 }
 
 const getPendingPatient = (req, res) => {
