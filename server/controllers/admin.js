@@ -42,7 +42,7 @@ const getPatientsStatus = async(req, res) => {
     const getPatientsStatus = `SELECT patient_id,first_name,last_name,status FROM patient;`;
     const {rows,rowCount} = await db.query(getPatientsStatus);
     if(rowCount === 0){
-        return res.status(404).json({msg:'No patients'})
+        return res.status(200).json({msg:'No patients'})
     }
     res.status(200).json(rows);
 }

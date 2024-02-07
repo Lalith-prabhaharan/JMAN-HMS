@@ -1,8 +1,24 @@
 const statusCode = require('http-status-codes');
 const db = require('../db/connect');
 
-const getAllPaients = (req, res) => {
-    res.status(200).json('Get all Handling patients');
+const getAllPatients = async(req, res) => {
+    const {userId} = req.user;
+    const queryStr = {
+        text: `SELECT 
+                patient_id, 
+                first_name,
+                last_name,
+                age FROM patient WHERE doc_id = $1`,
+        values: [userId]
+    }
+
+    const {rows, rowCount} = await db.query(queryStr);
+    
+    if(rowCount === 0) {
+        return res.status(200).json({msg: 'No Patients Available'});
+    }
+
+    return res.status(200).json(rows);
 }
 
 const getPatient = (req, res) => {
@@ -24,11 +40,11 @@ const getAllPendingPatients = async(req, res) => {
     // Fetching data from db
     const {rows, rowCount} = await db.query(queryStr);
     if(rowCount === 0) {
-        return res.status(200).json({msg: 'Success', list: 'No applicants Available'});
+        return res.status(200).json({msg: 'No applicants Available'});
     }
 
     // Sending the response
-    return res.status(200).json({msg: 'Success', list: rows});
+    return res.status(200).json(rows);
 }
 
 const getPendingPatient = async(req, res) => {
@@ -48,11 +64,11 @@ const getPendingPatient = async(req, res) => {
     // Fetching data from db
     const {rows, rowCount} = await db.query(queryStr);
     if(rowCount === 0) {
-        return res.status(404).json({msg: 'failure', applicant: 'No such applicant availabe'});
+        return res.status(404).json({msg: 'No such applicant availabe'});
     }
 
     // Sending the response
-    return res.status(200).json({msg: 'Success', applicant: rows[0]});
+    return res.status(200).json(rows[0]);
 }
 
 const postSuggestions = (req, res) => {
@@ -62,7 +78,7 @@ const postSuggestions = (req, res) => {
 
 
 module.exports = {
-    getAllPaients,
+    getAllPatients,
     getPatient,
     getPendingPatient,
     getAllPendingPatients,
