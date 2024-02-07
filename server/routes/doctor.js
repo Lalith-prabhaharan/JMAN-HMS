@@ -1,6 +1,6 @@
 const express = require('express');
 const {
-    getAllPaients,
+    getAllPatients,
     getPatient,
     postSuggestions,
     getAllPendingPatients,
@@ -10,7 +10,7 @@ const {
 
 const router = express.Router();
 
-router.route('/handling').get(getAllPaients);
+router.route('/handling').get(getAllPatients);
 router.route('/handling/:id').get(getPatient);
 router.route('/suggestion/:id').post(postSuggestions);
 router.route('/pending').get(getAllPendingPatients);
