@@ -17,7 +17,7 @@ export const Navbar = () => {
       <div className="logo">HEALTH CARE</div>
       <div className={`nav-links ${showNav ? 'show' : ''}`}>
         <a href="/allpatients">All Patients</a>
-        <a href="#">Add Patients</a>
+        <a href="/addpatient">Add Patients</a>
         <a href="/viewstatus">View Status</a>
         <a href="/doctordetails">Doctors Details</a>
         <a onClick={logout}>Logout</a>
