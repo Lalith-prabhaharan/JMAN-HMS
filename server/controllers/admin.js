@@ -30,8 +30,21 @@ const getAllDeptDoctors = async(req, res) => {
     return res.status(200).json(rows);
 }
 
-const getPatients = (req, res) => {
-    res.status(200).json({ msg: 'Get Approval of patients' });
+const getPatients = async(req, res) => {
+    const getPatients = `SELECT application_id,first_name,last_name,status FROM form`;
+    const {rows,rowCount} = await db.query(getPatients);
+    if(rowCount === 0){
+        return res.status(404).json({msg:'No patients'})
+    }
+    res.status(200).json(rows);
+}
+const getPatientsStatus = async(req, res) => {
+    const getPatientsStatus = `SELECT patient_id,first_name,last_name,status FROM patient;`;
+    const {rows,rowCount} = await db.query(getPatientsStatus);
+    if(rowCount === 0){
+        return res.status(404).json({msg:'No patients'})
+    }
+    res.status(200).json(rows);
 }
 
 const postPatientForm = async(req, res) => {
@@ -113,5 +126,6 @@ module.exports = {
     getDeptDoctors,
     getPatients,
     postPatientForm,
-    getAllDeptDoctors
+    getAllDeptDoctors,
+    getPatientsStatus,
 }
