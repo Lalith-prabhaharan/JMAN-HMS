@@ -2,7 +2,7 @@ import './App.css';
 import {Routes,Route} from 'react-router-dom'
 import { Addpatient } from './components/addpatient';
 import { Login } from './components/login';
-import { Navbar } from './components/navbar';
+// import navbar from './components/navbar';
 import { Authentication } from './utils/authentication';
 import { Viewpatient } from './components/viewpatient';
 import { Doctordetails } from './components/doctordetails';

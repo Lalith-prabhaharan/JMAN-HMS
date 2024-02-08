@@ -1,0 +1,62 @@
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 8px;
+    text-align: center;
+}
+#search-bar {
+    width: 70%;
+    padding: 10px;
+    margin: 20px auto;
+    font-size: 18px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    box-sizing: border-box;
+}
+
+#content-container {
+    max-width: 800px; /* Set your desired maximum width */
+    width: 100%;
+    margin: 0px auto;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 65vh;
+}
+
+th {
+    background-color: rgba(240, 141, 25, 0.59);
+}
+
+.status {
+    color: black; /* Change color based on your status design */
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+tr {
+    border-bottom: 1px solid #ddd;
+}
+
+tr:last-child {
+    border-bottom: none;
+}
+
+tr:nth-child(even) {
+    background-color: #D57FFE; 
+}
+
+tr:nth-child(odd) {
+    background-color: #F4C1C1;
+}
+h2{
+    text-align: center;
+    color: white;
+}
+
