@@ -1,11 +1,11 @@
-table {
+.status table {
     width: 100%;
     border-collapse: separate;
     border-spacing: 0;
     margin-top: 20px;
 }
 
-th, td {
+.status th, td {
     padding: 8px;
     text-align: center;
 }
@@ -19,7 +19,8 @@ th, td {
     box-sizing: border-box;
 }
 
-#content-container {
+
+.status  {
     max-width: 800px; /* Set your desired maximum width */
     width: 100%;
     margin: 0px auto;
@@ -27,36 +28,37 @@ th, td {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    height: 65vh;
+    margin-bottom: 5%;
+    /* height: 65vh; */
 }
 
-th {
+.status th {
     background-color: rgba(240, 141, 25, 0.59);
 }
 
-.status {
+.status1 {
     color: black; /* Change color based on your status design */
     text-decoration: underline;
     cursor: pointer;
 }
 
-tr {
+.status tr {
     border-bottom: 1px solid #ddd;
 }
 
-tr:last-child {
+.status tr:last-child {
     border-bottom: none;
 }
 
-tr:nth-child(even) {
+.status tr:nth-child(even) {
     background-color: #D57FFE; 
 }
 
-tr:nth-child(odd) {
+.status tr:nth-child(odd) {
     background-color: #F4C1C1;
 }
-h2{
+/* h2{
     text-align: center;
     color: white;
-}
+} */
 

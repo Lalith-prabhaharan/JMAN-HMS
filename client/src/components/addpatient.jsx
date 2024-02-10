@@ -20,6 +20,7 @@ export const Addpatient = () => {
 
   const departments = ['cardiology','dermatology','pediatrics','gynecology','neurology','urology','orthopedics','radiology'
   ,'oncology','general'];
+  
 
   const handleDepartmentChange=(event)=>{
     const dep=event.target.value;
@@ -50,6 +51,7 @@ export const Addpatient = () => {
       if(response.length==0)console.log("No data found")
       else{
         setDoctorList(response.data)
+        console.log(doctorList)
       }
       // console.log(doctorList)
       // console.log(doctor)
