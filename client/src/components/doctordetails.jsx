@@ -24,7 +24,7 @@ export const Doctordetails = () => {
       <div className="glass-card">
         Dr.{doctor.first_name} <br></br>
         Age:{doctor.age}<br></br>
-        YOE:{doctor.year_of_exp}<br></br>
+        YOE:{doctor.year_of_exp} yrs<br></br>
         Department:{doctor.department}
       </div>
       ))
