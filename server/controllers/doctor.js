@@ -1,24 +1,21 @@
 const statusCode = require('http-status-codes');
-const db = require('../db/connect');
+const Doctor = require('../models/Doctor');
+const Application = require('../models/Application');
+const Patient = require('../models/Patient');
+const {Sequelize} = require('sequelize');
 
 const getAllPatients = async(req, res) => {
     const {userId} = req.user;
-    const queryStr = {
-        text: `SELECT 
-                patient_id, 
-                first_name,
-                last_name,
-                age FROM patient WHERE doc_id = $1`,
-        values: [userId]
-    }
-
-    const {rows, rowCount} = await db.query(queryStr);
+    const patient = await Patient.findAll({
+        attributes: ['patient_id', 'first_name', 'last_name', 'age'],
+        where: {doc_id: userId}
+    });
     
-    if(rowCount === 0) {
+    if(patient.length === 0) {
         return res.status(200).json({msg: 'No Patients Available'});
     }
 
-    return res.status(200).json(rows);
+    return res.status(200).json(patient);
 }
 
 const getPatient = (req, res) => {
@@ -32,43 +29,55 @@ const postApproval = (req, res) => {
 const getAllPendingPatients = async(req, res) => {
     const {userId} = req.user;
     // Query to fetch all the pending patients
-    const queryStr = {
-        text: `select application_id, concat(first_name,' ', last_name) As name from form where status = $1 AND doc_id = $2`,
-        values: ['pending', userId]
-    }
-
-    // Fetching data from db
-    const {rows, rowCount} = await db.query(queryStr);
-    if(rowCount === 0) {
+    
+    const applicant = await Application.findAll({
+        attributes: [
+            'application_id', [
+                Sequelize.fn('concat', Sequelize.col('first_name'), ' ', Sequelize.col('last_name')), 
+                'name'
+            ]],
+        where: {
+            status: 'pending',
+            doc_id: userId
+        }
+    })
+    
+    if(applicant.length === 0) {
         return res.status(200).json({msg: 'No applicants Available'});
     }
 
     // Sending the response
-    return res.status(200).json(rows);
+    return res.status(200).json(applicant);
 }
 
 const getPendingPatient = async(req, res) => {
     const {userId} = req.user;
     const application_id = req.params.id;
-    const queryStr = {
-        text: `select concat(first_name,' ', last_name) As name,
-                      age,
-                      phone,
-                      blood_group,
-                      diseases_description As Description,
-                      history
-        from form where application_id = $1 AND doc_id = $2`,
-        values: [application_id, userId]
-    }
+
+    const applicant = await Application.findAll({
+        attributes: [[
+                Sequelize.fn('concat', Sequelize.col('first_name'), ' ', Sequelize.col('last_name')), 
+                'name'
+            ] , 
+            'age', 
+            'phone', 
+            'blood_group', 
+            ['diseases_description', 'description'], 
+            'history'
+        ],
+        where: {
+            application_id: application_id,
+            doc_id: userId
+        }
+    })
 
     // Fetching data from db
-    const {rows, rowCount} = await db.query(queryStr);
-    if(rowCount === 0) {
+    if(applicant.length === 0) {
         return res.status(404).json({msg: 'No such applicant availabe'});
     }
 
     // Sending the response
-    return res.status(200).json(rows[0]);
+    return res.status(200).json(applicant[0]);
 }
 
 const postSuggestions = (req, res) => {
