@@ -31,7 +31,11 @@ const getAllPendingPatients = async(req, res) => {
     // Query to fetch all the pending patients
     
     const applicant = await Application.findAll({
-        attributes: ['application_id', [Sequelize.fn('concat', Sequelize.col('first_name'), ' ', Sequelize.col('last_name')), 'name']],
+        attributes: [
+            'application_id', [
+                Sequelize.fn('concat', Sequelize.col('first_name'), ' ', Sequelize.col('last_name')), 
+                'name'
+            ]],
         where: {
             status: 'pending',
             doc_id: userId
@@ -51,7 +55,16 @@ const getPendingPatient = async(req, res) => {
     const application_id = req.params.id;
 
     const applicant = await Application.findAll({
-        attributes: ['first_name', 'last_name', 'age', 'phone', 'blood_group', 'diseases_description', 'history'],
+        attributes: [[
+                Sequelize.fn('concat', Sequelize.col('first_name'), ' ', Sequelize.col('last_name')), 
+                'name'
+            ] , 
+            'age', 
+            'phone', 
+            'blood_group', 
+            ['diseases_description', 'description'], 
+            'history'
+        ],
         where: {
             application_id: application_id,
             doc_id: userId

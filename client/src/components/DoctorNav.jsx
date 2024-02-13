@@ -1,9 +1,10 @@
-import "../style/nav.css"
-import React, { useState } from 'react';
+import React from "react";
+import { useState } from "react";
+import "../style/nav.css";
 import { useAuth } from "../utils/authentication";
 
-export const Navbar = () => {
-  const [showNav, setShowNav] = useState(false);
+export const DoctorNav=()=> {
+    const [showNav, setShowNav] = useState(false);
   const auth=useAuth()
   const logout=()=>{
     auth.logout();
@@ -16,17 +17,13 @@ export const Navbar = () => {
     <nav className="navbar">
       <div className="logo">HEALTH CARE</div>
       <div className={`nav-links ${showNav ? 'show' : ''}`}>
-        <a href="/allpatients">All Patients</a>
-        <a href="/addpatient">Add Patients</a>
-        <a href="/viewstatus">View Status</a>
-        <a href="/doctordetails">Doctors Details</a>
+        <a href="/mypatients">Patient List</a>
+        <a href="/pending">Pending List</a>
         <a onClick={logout}>Logout</a>
       </div>
       <button className="menu-icon" onClick={toggleNav}>
         <span>&#9776;</span>
       </button>
     </nav>
-  );
-};
-
-
+    );
+}

@@ -7,14 +7,14 @@ const Doctor = require('../models/Doctor');
 const loginUser = async(req, res) => {
     const { username, password, type } = req.body;
 
-    if (!type) {
-        return res.status(400).json({msg: 'Please select type of user'});
+    if (type==="") {
+        return res.status(200).json({msg: 'select'});
     }
 
     //Admin Login
     if (type === 'admin') {
         if (username !== 'root' || password !== '123') {
-            return res.status(404).json({msg: 'Invalid credentials'});
+            return res.status(200).json({msg: 'Invalid credentials'});
         }
         const token = jwt.sign({ name: username }, process.env.JWT_SECRET, {
             expiresIn: '30d'

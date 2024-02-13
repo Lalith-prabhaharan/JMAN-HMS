@@ -10,7 +10,7 @@ export const Login = () => {
   const navigate=useNavigate()
   const [email,setEmail]=useState("");
   const [pass,setPass]=useState("");
-  const [selectedOption, setSelectedOption] = useState();
+  const [selectedOption, setSelectedOption] = useState("");
   const auth=useAuth();
 
   const handleOptionChange = (event) => {
@@ -28,19 +28,21 @@ export const Login = () => {
           type:selectedOption
         })
         if(response.data.msg==="success"){
-          alert("Success")
+          console.log(response.data.token)
+          // alert("Success")
           localStorage.setItem("mail",email)
           localStorage.setItem("password",pass)
+          localStorage.setItem("token",response.data.token)
           if(selectedOption=="admin")
           navigate("/addpatient")
           else
-          navigate("/viewpatient")
+          navigate("/mypatients")
         }
-        else if(response.data.msg="select"){
+        else if(response.data.msg=="select"){
           alert("Enter type of user")
         }
-        else{
-          alert("Enter details correctly")
+        else {
+          alert("Enter the valid credentials")
         }
       }
       login();
@@ -56,7 +58,7 @@ export const Login = () => {
                 <p>Login to your account</p>
                 <form className='login-form' onSubmit={submit}>
                     <div className='login-input'>
-                    <label> <span>Name:</span></label>
+                    <label> <span>E-Mail :</span></label>
                     <input type='text'onChange={(e)=>{setEmail(e.target.value)}}  placeholder='Enter your E-Mail Address'></input>
                     </div>
                     <div  className='login-input'>
@@ -70,14 +72,14 @@ export const Login = () => {
                         checked={selectedOption === 'admin'}
                         onChange={handleOptionChange}
                         />
-                        Admin
+                        <label>Admin</label>  
                         <input
                         type="radio"
                         value="doctor"
                         checked={selectedOption === 'doctor'}
                         onChange={handleOptionChange}
                         />
-                        Doctor
+                        <label>Doctor</label>
                     </label>
                     <button className="login-button">Login</button>
                 </form>
