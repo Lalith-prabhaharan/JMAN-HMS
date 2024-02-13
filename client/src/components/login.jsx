@@ -5,6 +5,9 @@ import "../style/login.css"
 import logindoc from "../images/login_doctor.jpg"
 import { useAuth } from '../utils/authentication'
 import { useNavigate } from 'react-router-dom'
+import {ToastContainer,toast} from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
+
 export const Login = () => {
 
   const navigate=useNavigate()
@@ -29,20 +32,28 @@ export const Login = () => {
         })
         if(response.data.msg==="success"){
           console.log(response.data.token)
-          // alert("Success")
+          const toastSuccess = () => 
+          {
+            toast.success('Logged in Successfully');
+            console.log("Toast performed")
+          }
           localStorage.setItem("mail",email)
           localStorage.setItem("password",pass)
           localStorage.setItem("token",response.data.token)
+          toastSuccess()
           if(selectedOption=="admin")
           navigate("/addpatient")
           else
           navigate("/mypatients")
         }
         else if(response.data.msg=="select"){
-          alert("Enter type of user")
+          const toastWarning=()=>{
+            toast.warn('Enter the type of user');
+          }
+          toastWarning()
         }
         else {
-          alert("Enter the valid credentials")
+          toast.error("Enter the valid credentials")
         }
       }
       login();
@@ -50,6 +61,7 @@ export const Login = () => {
   }
 
   return (
+    <div>
     <div className='login-bg'>
         <div className="leftPanel">
             <div className='login-inner'>
@@ -88,6 +100,7 @@ export const Login = () => {
       <div className="rightPanel">
         <img src={logindoc} className='login-img'></img>
       </div>
+    </div>
     </div>
   )
 }

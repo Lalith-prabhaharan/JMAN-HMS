@@ -44,6 +44,7 @@ export const Addpatient = () => {
   const [flag,setFlag]=useState(true)
 
   useEffect(()=>{
+    if(selectedDepartment){
     axios.get(`http://localhost:5000/api/v1/admin/doctor/${selectedDepartment}`)
     .then((response)=>{
 
@@ -60,6 +61,7 @@ export const Addpatient = () => {
     .catch(error => {
       console.error('Error fetching doctor data:', error);
     });
+  }
     // if(response.data.msg=="No doctor in the specified department")
     //   setFlag(false)
   });
