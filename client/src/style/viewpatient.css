@@ -1,0 +1,36 @@
+/* Glass card styling */
+.glass-card {
+    background: rgba(255, 255, 255, 0.185);
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+    padding: 20px;
+    transition: all 0.3s ease-in-out;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 25px;
+    flex-basis: calc(15% - 20px);
+  }
+  
+  .glass-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Container styling */
+  .card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content:center;
+  }
+  
+  /* Responsive styling */
+  @media screen and (max-width: 768px) {
+    /* .card-container {
+      flex-direction: column;
+    } */
+    .glass-card{
+        flex-basis: calc(40% - 20px);
+    }
+  }
+  

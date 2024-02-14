@@ -1,0 +1,64 @@
+.status table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 20px;
+}
+
+.status th, td {
+    padding: 8px;
+    text-align: center;
+}
+#search-bar {
+    width: 70%;
+    padding: 10px;
+    margin: 20px auto;
+    font-size: 18px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    box-sizing: border-box;
+}
+
+
+.status  {
+    max-width: 800px; /* Set your desired maximum width */
+    width: 100%;
+    margin: 0px auto;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: 5%;
+    /* height: 65vh; */
+}
+
+.status th {
+    background-color: rgba(240, 141, 25, 0.59);
+}
+
+.status1 {
+    color: black; /* Change color based on your status design */
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.status tr {
+    border-bottom: 1px solid #ddd;
+}
+
+.status tr:last-child {
+    border-bottom: none;
+}
+
+.status tr:nth-child(even) {
+    background-color: #D57FFE; 
+}
+
+.status tr:nth-child(odd) {
+    background-color: #F4C1C1;
+}
+/* h2{
+    text-align: center;
+    color: white;
+} */
+
