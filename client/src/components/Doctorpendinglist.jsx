@@ -3,17 +3,14 @@ import '../style/Doctorpendinglist.css';
 import { DoctorNav } from './DoctorNav';
 import { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import axios from 'axios';
+import axiosInstance from '../interceptor/axios-config';
 import { useState } from 'react';
-import Doctorviewpendingpatient from './Doctorviewpendingpatient';
+import { doctorpending } from '../services/services';
+
 export default function Doctorpendinglist() {
     const [pendingList, setPendingList] = useState([])
     useEffect(() => {
-        axios.get("http://localhost:5000/api/v1/doctor/pending",{
-            headers:{
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
-            },
-        })
+        doctorpending()
         .then(response=>{
             setPendingList(response.data)
         })

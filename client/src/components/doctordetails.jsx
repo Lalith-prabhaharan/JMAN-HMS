@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import "../style/viewpatient.css"
-import axios from 'axios'
 import { Navbar } from './navbar'
+import { doctordetails } from '../services/services'
 
 export const Doctordetails = () => {
   const [doctorList,setDoctorList]=useState([])
   useEffect(()=>{
-    axios.get("http://localhost:5000/api/v1/admin/doctor")
-    .then((response)=>{
+    doctordetails().then((response)=>{
       setDoctorList(response.data)
     })
     .catch(error=>{

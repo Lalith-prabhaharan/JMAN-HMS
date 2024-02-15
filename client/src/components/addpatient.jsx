@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react';
-import axios from 'axios';
 import '../style/addpatient.css'
 import { Navbar } from './navbar';
+import { adminadd, getdeptdoctors } from '../services/services';
 export const Addpatient = () => {
 
   const [selectedOption, setSelectedOption] = useState('Male');
@@ -45,18 +45,15 @@ export const Addpatient = () => {
 
   useEffect(()=>{
     if(selectedDepartment){
-    axios.get(`http://localhost:5000/api/v1/admin/doctor/${selectedDepartment}`)
+    getdeptdoctors(selectedDepartment)
     .then((response)=>{
 
-      // console.log(response.data)
       if(response.length==0)console.log("No data found")
       else{
         setDoctorList(response.data)
         console.log(doctorList)
       }
-      // console.log(doctorList)
-      // console.log(doctor)
-      // console.log(docid)
+
     })
     .catch(error => {
       console.error('Error fetching doctor data:', error);
@@ -82,14 +79,9 @@ export const Addpatient = () => {
 
   const submit=(e)=>{
     e.preventDefault();
-    // doctorList.forEach(element => {
-    //   if(element.first_name==doctor){
-    //     const id=element.doc_id
-    //     setDocid(id)
-    //   }
-    // });
+
     const addPatient=async()=>{
-      const response=axios.post("http://localhost:5000/api/v1/admin/patient/application",{
+      const response=adminadd({
         firstname:firstname, 
         lastname:lastname, 
         age:age, 
@@ -106,11 +98,7 @@ export const Addpatient = () => {
         doctor_name:doctor,
         doctor_id:docid
       })
-      // console.log("record added")
-      // console.log(response)
-      // if(response.data.msg==="success"){
-      //   alert("Success")
-      // }
+
     }
     console.log(firstname,lastname,dob,doctor,docid,selectedDepartment,bloodgroup,selectedOption)
     addPatient();

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import '../style/AdminAllPatientStatus.css';
 import { Navbar } from './navbar';
-import axios from 'axios';
+import { adminstatus } from '../services/services';
 export default function AdminStatus() {
   const[statusList,setStatusList]=useState([])
   useEffect(() => {
-        axios.get("http://localhost:5000/api/v1/admin/patient/application/status")
+        adminstatus()
         .then((response)=>{
             if(response.length==0){console.log("No data found")}
             else{
