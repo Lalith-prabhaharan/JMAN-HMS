@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { useAuth } from '../utils/authentication';
 
 export const Navbar = ({ children }) => {
   const [showNav, setShowNav] = useState(false);
   const [activeTab, setActiveTab] = useState('addpatient');
 
-  const activeColor = '#0e0e0e  '; 
+  const activeColor = '#0e0e0e'; 
   const inactiveColor = '#f8f9fa'; 
   const auth=useAuth();
 

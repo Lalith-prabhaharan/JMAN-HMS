@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import "../style/viewpatient.css"
-import axios from 'axios'
 import { Navbar } from './navbar'
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
+import { doctordetails } from '../services/services'
 
 export const Doctordetails = () => {
   const [doctorList,setDoctorList]=useState([])
@@ -14,8 +14,7 @@ export const Doctordetails = () => {
     setDept(event.target.value)
   }
   useEffect(()=>{
-    axios.get(`http://localhost:5000/api/v1/admin/doctor/${dept}`)
-    .then((response)=>{
+    doctordetails().then((response)=>{
       setDoctorList(response.data)
     })
     .catch(error=>{
