@@ -15,8 +15,7 @@ export const Doctordetails = () => {
     })
   })
   return (
-    <div>
-    <Navbar/>
+    <Navbar>
     <h1 style={{padding:"20px",textAlign:"center",textDecoration:"underline",color:"wheat"}}>Doctors List</h1>
     <div className="card-container">
     {
@@ -28,9 +27,8 @@ export const Doctordetails = () => {
         Department:{doctor.department}
       </div>
       ))
-    }
-      
+    } 
     </div>
-    </div>
+    </Navbar>
   )
 }

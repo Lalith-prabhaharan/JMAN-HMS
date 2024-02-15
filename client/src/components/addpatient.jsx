@@ -119,8 +119,7 @@ export const Addpatient = () => {
   
 
   return (
-    <div>
-    <Navbar/>
+    <Navbar>
     <div className='addform'>
       <form onSubmit={submit}>
         <h1 className='addhead'>ADD PATIENT</h1>
@@ -211,7 +210,7 @@ export const Addpatient = () => {
         <button class="button-1" role="button">Add Patient</button>
       </form>
     </div>
-    </div>
+    </Navbar>
 
   )
 }

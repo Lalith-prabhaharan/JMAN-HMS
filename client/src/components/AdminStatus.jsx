@@ -18,10 +18,7 @@ export default function AdminStatus() {
         })
   }, )
   return (
-      <div>
-          <div>
-          <Navbar/>
-          </div>
+        <Navbar>
           <div className='status'>
             <h2>Application Status</h2>
                     <table>
@@ -45,7 +42,6 @@ export default function AdminStatus() {
                         </tbody>
                     </table>
             </div>
-
-    </div>
+        </Navbar>
   )
 }

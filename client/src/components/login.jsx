@@ -7,6 +7,8 @@ import { useAuth } from '../utils/authentication'
 import { useNavigate } from 'react-router-dom'
 import {ToastContainer,toast} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
+import { RadioButton } from 'primereact/radiobutton';
+        
 
 export const Login = () => {
 
@@ -66,17 +68,16 @@ export const Login = () => {
         <div className="leftPanel">
             <div className='login-inner'>
                 <h1>HEALTH CARE</h1>
-                <h2>LOGIN PAGE</h2>
                 <p>Login to your account</p>
                 <form className='login-form' onSubmit={submit}>
-                    <div className='login-input'>
-                    <label> <span>E-Mail :</span></label>
-                    <input type='text'onChange={(e)=>{setEmail(e.target.value)}}  placeholder='Enter your E-Mail Address'></input>
-                    </div>
-                    <div  className='login-input'>
-                    <label><span>Password:</span></label>
-                    <input type='password' onChange={(e)=>{setPass(e.target.value)}} placeholder='Enter your Password'></input>
-                    </div>
+                <div className='login-input-row'>
+                  <label> <span>EMail:</span></label>
+                  <input type='text' onChange={(e) => setEmail(e.target.value)} placeholder='Enter your E-Mail Address'></input>
+                </div>
+                <div className='login-input-row'>
+                  <label><span>Password:</span></label>
+                  <input type='password' onChange={(e) => setPass(e.target.value)} placeholder='Enter your Password'></input>
+                </div>
                     <label className='radio'>
                         <input
                         type="radio"
