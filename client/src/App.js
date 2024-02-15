@@ -11,6 +11,8 @@ import AdminStatus from './components/AdminStatus';
 import { Requiredauth } from './utils/requiredauth';
 import Doctorpendinglist from './components/Doctorpendinglist';
 import Doctorviewpendingpatient from './components/Doctorviewpendingpatient';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
@@ -28,6 +30,17 @@ function App() {
       <Route path="/pending/:id" element={<Doctorviewpendingpatient/>}></Route>
       </Routes>
       </Authentication>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </div>
   );
 }

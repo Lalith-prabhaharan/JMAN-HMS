@@ -44,6 +44,7 @@ export const Addpatient = () => {
   const [flag,setFlag]=useState(true)
 
   useEffect(()=>{
+    if(selectedDepartment){
     axios.get(`http://localhost:5000/api/v1/admin/doctor/${selectedDepartment}`)
     .then((response)=>{
 
@@ -60,6 +61,7 @@ export const Addpatient = () => {
     .catch(error => {
       console.error('Error fetching doctor data:', error);
     });
+  }
     // if(response.data.msg=="No doctor in the specified department")
     //   setFlag(false)
   });
@@ -117,8 +119,7 @@ export const Addpatient = () => {
   
 
   return (
-    <div>
-    <Navbar/>
+    <Navbar>
     <div className='addform'>
       <form onSubmit={submit}>
         <h1 className='addhead'>ADD PATIENT</h1>
@@ -209,7 +210,7 @@ export const Addpatient = () => {
         <button class="button-1" role="button">Add Patient</button>
       </form>
     </div>
-    </div>
+    </Navbar>
 
   )
 }

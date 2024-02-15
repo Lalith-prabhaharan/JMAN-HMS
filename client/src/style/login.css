@@ -1,5 +1,5 @@
 body {
-  background-color: #6442AA;
+  background-color: #afd0bb8a;
 }
 
 .login-bg {
@@ -21,7 +21,7 @@ body {
   background: linear-gradient(145deg, white 0%, rgba(255, 255, 255, 0) 100%);
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   width: 40vw;
-  height:80vh;
+  height:70vh;
   max-width: 400px;
   text-align: center;
 }
@@ -41,9 +41,15 @@ h2 {
   align-items: center;
 }
 
+.login-input-row {
+  display: flex;
+  align-items: center;
+  width: 80%;
+}
+
 .radio {
   display: flex;
-  flex-direction: row; /* Display radio buttons in the same line */
+  /* flex-direction: row;  */
   justify-content:safe;
   align-items:center;
   margin-top: 4%;
@@ -58,17 +64,17 @@ h2 {
 }
 
 .login-form input {
-  margin: 8px 0;
-  width: 80%;
+  margin: 20px 5px;
+  width: 70%;
 }
 
-.login-input label {
+.login-input-row label {
   font-size: 18px;
   font-weight: 500;
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
-.login-input input {
+.login-input-row input {
   padding: 8px;
   border-radius: 5px;
   border-style: none;

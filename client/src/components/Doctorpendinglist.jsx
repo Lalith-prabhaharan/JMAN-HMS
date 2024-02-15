@@ -25,10 +25,7 @@ export default function Doctorpendinglist() {
     const id=useParams();
 
     return (
-        <div>
-            <div>
-                <DoctorNav/>
-            </div>
+        <DoctorNav>
             <div className='status'>
             <h2>Pending Patients List</h2>
                     <table>
@@ -53,7 +50,7 @@ export default function Doctorpendinglist() {
                         </tbody>
                     </table>
             </div>
-        </div>
+        </DoctorNav>
     )
 
     

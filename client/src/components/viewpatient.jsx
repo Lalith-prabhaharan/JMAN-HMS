@@ -3,10 +3,7 @@ import "../style/viewpatient.css"
 import { DoctorNav } from '../components/DoctorNav'
 export const Viewpatient = () => {
   return (
-    <div>
-    <div>
-      <DoctorNav/>
-    </div>
+    <DoctorNav>
     <h1 style={{padding:"20px",textAlign:"center",textDecoration:"underline",color:"wheat"}}>Patient List</h1>
     <div className="card-container">
       <div className="glass-card">
@@ -29,10 +26,7 @@ export const Viewpatient = () => {
         Abhay <br></br>
         Age:23
       </div>
-      
-      
     </div>
-
-    </div>
+    </DoctorNav>
   )
 }

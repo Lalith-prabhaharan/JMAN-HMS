@@ -3,10 +3,7 @@ import '../style/AdminAllPatientStatus.css';
 import { Navbar } from './navbar';
 export default function AdminAllPatient() {
   return (
-      <div>
-          <div>
-            <Navbar/>
-          </div>
+        <Navbar>
           <div className='status'>
           <input type="text" id="search-bar" placeholder=" search by name"/>   
                     <table>
@@ -52,6 +49,6 @@ export default function AdminAllPatient() {
                     </table>
             </div>
 
-    </div>
+        </Navbar>
   )
 }
