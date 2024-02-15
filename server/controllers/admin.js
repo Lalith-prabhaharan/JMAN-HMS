@@ -1,11 +1,12 @@
 const Doctor = require('../models/Doctor');
 const Application = require('../models/Application');
+const {Op} = require('sequelize');
 
 const getDeptDoctors = async (req, res) => {
     const department= req.params.dept; 
     
     const doctor = await Doctor.findAll({
-        where: {department: department}
+        where: {department: { [Op.regexp]: `^${department}`}}
     }) 
     
     if(doctor.length === 0){
@@ -35,7 +36,7 @@ const getPatients = async(req, res) => {
     }
     res.status(200).json(applicant);
 }
-const getPatientsStatus = async(req, res) => {
+const getAllPatientStatus = async(req, res) => {
     // const getPatientsStatus = `SELECT patient_id,first_name,last_name,status FROM patient;`;
     // const {rows,rowCount} = await db.query(getPatientsStatus);
     // if(rowCount === 0){
@@ -102,5 +103,5 @@ module.exports = {
     getPatients,
     postPatientForm,
     getAllDeptDoctors,
-    getPatientsStatus,
+    getAllPatientStatus,
 }

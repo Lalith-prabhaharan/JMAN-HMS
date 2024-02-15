@@ -33,7 +33,8 @@
 }
 
 .status th {
-    background-color: rgba(240, 141, 25, 0.59);
+    background-color: #00866E;
+    color: #ddd;
 }
 
 .status1 {
@@ -44,6 +45,8 @@
 
 .status tr {
     border-bottom: 1px solid #ddd;
+    transition: background-color 0.1s, color 0.1s;
+    cursor: pointer;
 }
 
 .status tr:last-child {
@@ -51,14 +54,34 @@
 }
 
 .status tr:nth-child(even) {
-    background-color: #D57FFE; 
+    background-color: #acf0c58a; 
 }
 
 .status tr:nth-child(odd) {
-    background-color: #F4C1C1;
+    background-color: #afd0bb8a;
 }
+
+.status tr:hover{
+    background-color: #00866E;
+    color: white;
+}
+
 /* h2{
     text-align: center;
     color: white;
 } */
+
+.dropdown {
+    background-color: #00866E;
+    color: white;
+    width: 15%;
+    border-radius: 5%;
+    cursor: pointer;
+}
+
+.dropdown-content {
+    background-color: #f7fffae7;
+    color: black;
+}
+
 
