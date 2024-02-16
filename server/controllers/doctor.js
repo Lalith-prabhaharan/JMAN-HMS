@@ -22,8 +22,50 @@ const getPatient = (req, res) => {
     res.status(200).json('Get a handling patient');
 }
 
-const postApproval = (req, res) => {
-    res.status(200).json('Approve patient');
+const approvePatient = async(req, res) => {
+    const {userId} = req.user;
+    const patient_id = req.params.id;
+    const patient = await Application.update({
+        status: 'approved'
+    },  
+    {
+        where: {
+            application_id: patient_id, 
+            doc_id: userId,
+            status: 'pending'
+        },
+        
+        returning: true,
+    });
+    if(patient[0] != 1) {
+        return res.status(404).json({msg: "No such patient available"});
+    }
+    const updatedPatient = patient[1][0].dataValues;
+    const {application_id, ...newPatient} = updatedPatient;
+    newPatient.status = 'active';
+    await Patient.create(newPatient);
+    return res.status(200).json({msg: "Success"});
+}
+
+const rejectPatient = async(req, res) => {
+    const {userId} = req.user;
+    const patient_id = req.params.id;
+    const patient = await Application.update({
+        status: 'Rejected'
+    },  
+    {
+        where: {
+            application_id: patient_id, 
+            doc_id: userId,
+            status: 'pending'
+        },
+        
+        returning: true,
+    });
+    if(patient[0] != 1) {
+        return res.status(404).json({msg: "No such patient available"});
+    }
+    return res.status(200).json({msg: "Success"});
 }
 
 const getAllPendingPatients = async(req, res) => {
@@ -91,6 +133,7 @@ module.exports = {
     getPatient,
     getPendingPatient,
     getAllPendingPatients,
-    postApproval,
-    postSuggestions
+    approvePatient,
+    postSuggestions,
+    rejectPatient
 }

@@ -3,8 +3,9 @@ const {sequelize} = require('../db/connect');
 const Doctor = require('./Doctor'); 
 const Patient = sequelize.define('Patient', {
     patient_id: {
-        type: DataTypes.STRING(100),
+        type: DataTypes.INTEGER,
         primaryKey: true,
+        autoIncrement: true,
         allowNull: false
     },
     entry_date: {
