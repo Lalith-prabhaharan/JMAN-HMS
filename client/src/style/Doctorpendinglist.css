@@ -77,11 +77,48 @@
     width: 15%;
     border-radius: 5%;
     cursor: pointer;
+    transition: all 0.1s;
+}
+
+.dropdown:hover {
+    background-color: white;
+    color: #00866E;
+    border: 1px solid #00866E;
 }
 
 .dropdown-content {
-    background-color: #f7fffae7;
-    color: black;
+    background-color: white;
+    color: #00866E;
+}
+
+.p-paginator {
+    display: flex;
+    justify-content: center;
+    margin-top: 3%;
+  }
+  
+.p-paginator .p-paginator-pages {
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.p-paginator .p-paginator-page {
+    margin: 0 5px;
+    padding: 5px 10px;
+    border: 1px solid #00866E;
+    color: #00866E;
+    cursor: pointer;
+    transition: background-color 0.1s, color 0.1s;
+}
+
+.p-paginator .p-paginator-page:hover {
+    background-color: #00866E;
+    color: white;
+}
+
+.p-paginator .p-paginator-page:focus {
+    background-color: #00866E;
+    color: white;
 }
 
 
