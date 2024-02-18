@@ -1,0 +1,124 @@
+.status table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 20px;
+}
+
+.status th, td {
+    padding: 8px;
+    text-align: center;
+}
+#search-bar {
+    width: 70%;
+    padding: 10px;
+    margin: 20px auto;
+    font-size: 18px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    box-sizing: border-box;
+}
+
+
+.status  {
+    max-width: 800px; /* Set your desired maximum width */
+    width: 100%;
+    margin: 0px auto;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: 5%;
+    /* height: 65vh; */
+}
+
+.status th {
+    background-color: #00866E;
+    color: #ddd;
+}
+
+.status1 {
+    color: black; /* Change color based on your status design */
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.status tr {
+    border-bottom: 1px solid #ddd;
+    transition: background-color 0.1s, color 0.1s;
+    cursor: pointer;
+}
+
+.status tr:last-child {
+    border-bottom: none;
+}
+
+.status tr:nth-child(even) {
+    background-color: #acf0c58a; 
+}
+
+.status tr:nth-child(odd) {
+    background-color: #afd0bb8a;
+}
+
+.status tr:hover{
+    background-color: #00866E;
+    color: white;
+}
+
+/* h2{
+    text-align: center;
+    color: white;
+} */
+
+.dropdown {
+    background-color: #00866E;
+    color: white;
+    width: 15%;
+    border-radius: 5%;
+    cursor: pointer;
+    transition: all 0.1s;
+}
+
+.dropdown:hover {
+    background-color: white;
+    color: #00866E;
+    border: 1px solid #00866E;
+}
+
+.dropdown-content {
+    background-color: white;
+    color: #00866E;
+}
+
+.p-paginator {
+    display: flex;
+    justify-content: center;
+    margin-top: 3%;
+  }
+  
+.p-paginator .p-paginator-pages {
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.p-paginator .p-paginator-page {
+    margin: 0 5px;
+    padding: 5px 10px;
+    border: 1px solid #00866E;
+    color: #00866E;
+    cursor: pointer;
+    transition: background-color 0.1s, color 0.1s;
+}
+
+.p-paginator .p-paginator-page:hover {
+    background-color: #00866E;
+    color: white;
+}
+
+.p-paginator .p-paginator-page:focus {
+    background-color: #00866E;
+    color: white;
+}
+
+

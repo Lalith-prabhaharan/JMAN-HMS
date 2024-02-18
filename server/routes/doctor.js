@@ -1,20 +1,22 @@
 const express = require('express');
 const {
-    getAllPaients,
+    getAllPatients,
     getPatient,
     postSuggestions,
     getAllPendingPatients,
     getPendingPatient,
-    postApproval,
+    approvePatient,
+    rejectPatient
 } = require('../controllers/doctor');
 
 const router = express.Router();
 
-router.route('/').get(getAllPaients);
-router.route('/:id').get(getPatient);
+router.route('/handling').get(getAllPatients);
+router.route('/handling/:id').get(getPatient);
 router.route('/suggestion/:id').post(postSuggestions);
 router.route('/pending').get(getAllPendingPatients);
 router.route('/pending/:id').get(getPendingPatient);
-router.route('/approve/:id').post(postApproval);
+router.route('/approve/:id').put(approvePatient);
+router.route('/reject/:id').patch(rejectPatient);
 
 module.exports = router;
