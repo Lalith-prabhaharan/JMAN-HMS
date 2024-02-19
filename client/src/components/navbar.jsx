@@ -67,7 +67,7 @@ export const Navbar = ({ children }) => {
           {showDropdown && (
               <div className="navdropdown-content">
                 <a href="/doctordetails"  onClick={() => handleTabClick('doctordetails')}>View Doctors</a>
-                <a href="/adddoctor">Add Doctor</a>
+                <a href="/adddoctor" onClick={() => handleTabClick('doctordetails')}>Add Doctor</a>
               </div>
             )}
         </div>
