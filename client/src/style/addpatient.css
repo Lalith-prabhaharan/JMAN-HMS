@@ -65,7 +65,7 @@
    */
   
   .button-1 {
-    background-color: #EA4C89;
+    background-color: #07945c;
     border-radius: 8px;
     border-style: none;
     box-sizing: border-box;
@@ -76,7 +76,8 @@
     font-size: 14px;
     font-weight: 500;
     height: 40px;
-    width: 80%;
+    margin-left: 5px;
+    width: 200px;
     line-height: 20px;
     list-style: none;
     margin-bottom:20px;
@@ -94,10 +95,15 @@
   
   .button-1:hover,
   .button-1:focus {
-    background-color: #F082AC;
+    background-color: #05382e;
   }
   
-  
+  input[type="radio"]{
+    margin-top: 10px;
+    margin-bottom: 20px;
+    border-radius: 50%;
+  }
+
 
    /* .addpatient{
     background-color: darkseagreen;
@@ -127,7 +133,7 @@
 .form-right {
   flex: 1;
   padding: 20px;
-  background-color: #fee1c0; /* Example background color for form-right */
+  background-color: #c3ffd7d2; /* Example background color for form-right */
 }
 
 .addhotelinp,
@@ -136,14 +142,19 @@
     border: none;
     font-size: 16px;
     height: auto;
-    margin: 0;
-    outline: 0;
+    margin: 2px;
+    outline: 2px;
     padding: 10px;
     width: 80%;
-    background-color: #e8eeef;
-    color: #8a97a0;
+    background-color: #eff3ef;
+    color: #151616;
     box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
     margin-bottom: 30px;
+  }
+
+  .addhotelinp,
+  select {
+    border: solid 0.2px rgba(158, 158, 158, 0.584);
   }
   
   .fieldset {
@@ -162,8 +173,8 @@
   }
 
   .required {
-    color: red; /* Example color for the asterisk */
-    margin-left: 4px; /* Adjust spacing as needed */
+    color: red; 
+    margin-left: 4px; 
   }
 
 

@@ -4,9 +4,10 @@ import '../style/addpatient.css'
 import { Navbar } from './navbar';
 import { adminadd, getdeptdoctors } from '../services/services';
 import { RadioButton } from 'primereact/radiobutton';
+import { Navigate, useNavigate } from 'react-router-dom';
 export const Addpatient = () => {
-  const [ingredient, setIngredient] = useState('');
 
+  const navigate=useNavigate()
   const [selectedOption, setSelectedOption] = useState('Male');
 
   const handleOptionChange = (event) => {
@@ -53,7 +54,6 @@ export const Addpatient = () => {
       if(response.length==0)console.log("No data found")
       else{
         setDoctorList(response.data)
-        console.log(doctorList)
       }
 
     })
@@ -103,6 +103,8 @@ export const Addpatient = () => {
     }
     console.log(firstname,lastname,dob,doctor,docid,selectedDepartment,bloodgroup,selectedOption)
     addPatient();
+    navigate('/addpatient')
+    
   }
 
   
@@ -222,10 +224,10 @@ export const Addpatient = () => {
             <input type="text" value={lastname} className="addhotelinp" onChange={(e)=>setLastname(e.target.value)} />
             
             <label>Age<span className="required">*</span>:</label>
-            <input type="text" value={age} className="addhotelinp"  onChange={(e)=>setAge(e.target.value)}/>
+            <input type="text" value={age} className="addhotelinp"  onChange={(e)=>setAge(e.target.value)} required/>
             
             <label>Date of Birth<span className="required">*</span>:</label>
-            <input type="date" value={dob} className="addhotelinp" onChange={(e)=>setDob(e.target.value)}  />
+            <input type="date" value={dob} className="addhotelinp" onChange={(e)=>setDob(e.target.value)} required />
             
           </div>
           <div className='form-right'>
@@ -242,13 +244,13 @@ export const Addpatient = () => {
             Prefer Not to Say
             </label>       
             <label >Contact<span className="required">*</span>:</label>
-            <input type="tel" className="addhotelinp" onChange={(e)=>setContact(e.target.value)} />
+            <input type="tel" value={contact} className="addhotelinp" onChange={(e)=>setContact(e.target.value)} required/>
             
             <label >Email<span className="required">*</span>:</label>
-            <input type="email" className="addhotelinp" onChange={(e)=>setEmail(e.target.value)}  />
+            <input type="email" value={email} className="addhotelinp" onChange={(e)=>setEmail(e.target.value)} required />
             
             <label >Address<span className="required">*</span>:</label>
-            <textarea className="addhotelinp" onChange={(e)=>setAddress(e.target.value)}> </textarea>
+            <textarea className="addhotelinp" value={address} onChange={(e)=>setAddress(e.target.value)} required> </textarea>
           <button className="button-1" onClick={nextStep}>Next</button>
           </div>
         </form>
@@ -260,12 +262,12 @@ export const Addpatient = () => {
         <h1 className='heading'>Enter Medical Details</h1>
       <form className='addform'>
         <div className='form-left'>
-          <label >Weight:</label>
-          <input type="text" className="addhotelinp" onChange={(e)=>setWeight(e.target.value)} />
+          <label >Weight<span className="required">*</span>:</label>
+          <input type="text" className="addhotelinp" value={weight} onChange={(e)=>setWeight(e.target.value)} />
           
-          <label for="job">Blood Group:</label>
-          <select value={bloodgroup} onChange={handleBloodgroup} >
-              <option value=""></option>
+          <label for="job">Blood Group<span className="required">*</span>:</label>
+          <select value={bloodgroup} onChange={handleBloodgroup} required >
+              <option value="">Select Blood Group</option>
               <option value="A+">A+</option>
               <option value="A-">A-</option>
               <option value="B+">B+</option>
@@ -276,15 +278,15 @@ export const Addpatient = () => {
               <option value="O-">O-</option>
           </select>
           
-          <label >Diseases Description:</label>
-          <textarea className="addhotelinp" onChange={(e)=>setDisease(e.target.value)}> </textarea>
+          <label >Diseases Description<span className="required">*</span>:</label>
+          <textarea className="addhotelinp" value={disease} onChange={(e)=>setDisease(e.target.value)} required> </textarea>
           
-          <label >Medical History:</label>
-          <textarea className="addhotelinp" onChange={(e)=>setHistory(e.target.value)}> </textarea>
+          <label >Medical History<span className="required">*</span>:</label>
+          <textarea className="addhotelinp" value={history} onChange={(e)=>setHistory(e.target.value)} required> </textarea>
         </div>
         <div className='form-right'>
-        <label>Department:</label>
-          <select value={selectedDepartment} onChange={handleDepartmentChange}>
+        <label>Department<span className="required">*</span>:</label>
+          <select value={selectedDepartment}  onChange={handleDepartmentChange} required>
               
               <option value="">Select the Department</option>
               {
@@ -294,8 +296,8 @@ export const Addpatient = () => {
               }
           </select>          
           
-          <label>Doctor:</label>
-          <select value={doctor} onChange={handleDoctorChange}>
+          <label>Doctor<span className="required">*</span>:</label>
+          <select value={doctor} onChange={handleDoctorChange} required>
               <option value="">Select the Doctor</option>
               {doctorList.length!=0 && flag &&(
                 doctorList.map((doctor)=>(
