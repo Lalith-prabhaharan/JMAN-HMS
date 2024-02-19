@@ -12,18 +12,18 @@ export const Doctordetails = () => {
   const [doctorList,setDoctorList]=useState([])
   const [dept, setDept] = useState("");
   const departments = ['cardiology','dermatology','pediatrics','gynecology','neurology','urology','orthopedics','radiology','oncology','general'];
-  const [selectedCustomer, setSelectedCustomer] = useState(null);
+  const [selectedDetails, setSelectedDetails] = useState(null);
   const handleDepratment=(event)=>{
     setDept(event.target.value)
   }
 
   const handleRowClick = (e) => {
     console.log(e.data);
-    setSelectedCustomer(e.data);
+    setSelectedDetails(e.data);
   };
 
   const handleCloseCard = () => {
-    setSelectedCustomer(null);
+    setSelectedDetails(null);
   };
 
   useEffect(()=>{
@@ -65,12 +65,12 @@ export const Doctordetails = () => {
               <Column field="department" alignHeader={'center'} sortable header="Department"></Column>
           </DataTable>
        
-            {selectedCustomer && (
+            {selectedDetails && (
               <div className="custom-card-overlay">
-                  <Card className="custom-card" title={`Name: ${selectedCustomer.first_name} ${selectedCustomer.last_name}`}>
-                      <p>Age: {selectedCustomer.age}</p>
-                      <p>Year of Experience: {selectedCustomer.year_of_exp}</p>
-                      <p>Department: {selectedCustomer.department}</p>
+                  <Card className="custom-card" title={`Name: ${selectedDetails.first_name} ${selectedDetails.last_name}`}>
+                      <p>Age: {selectedDetails.age}</p>
+                      <p>Year of Experience: {selectedDetails.year_of_exp}</p>
+                      <p>Department: {selectedDetails.department}</p>
                       <Button label="Close" className='close' onClick={handleCloseCard} text
                       />
                   </Card>
