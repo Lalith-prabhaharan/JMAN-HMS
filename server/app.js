@@ -11,7 +11,7 @@ const notFoundMiddleware = require('./middleware/not-found');
 const errorHandlerMiddleware = require('./middleware/error-handler');
 
 app.use(express.json());
-// extra packages
+// extra package
 const auth = require('./routes/auth');
 const admin = require('./routes/admin');
 const doctor = require('./routes/doctor');
