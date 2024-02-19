@@ -36,6 +36,7 @@ const getPatients = async(req, res) => {
     }
     res.status(200).json(applicant);
 }
+
 const getAllPatientStatus = async(req, res) => {
     // const getPatientsStatus = `SELECT patient_id,first_name,last_name,status FROM patient;`;
     // const {rows,rowCount} = await db.query(getPatientsStatus);
