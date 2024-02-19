@@ -22,11 +22,12 @@ fieldset{
     border-radius: 20px;
 }
 #btn1doc{
-    background-color: rgb(55, 209, 55);
-     color: white;
-      padding: 15px;
-       margin-right: 10px ;
-       cursor: pointer;
+    background-color:#00866E;
+    color: white;
+    padding: 7px;
+    cursor: pointer;
+    font-size: medium;
+    border-radius: 5px;
   }
 .btndoctor button{
     margin-top: 3px;
@@ -37,11 +38,10 @@ fieldset{
 #btn2doc{
     background-color: rgb(209, 48, 48);
     color: white;
-     padding: 15px;
-     padding-left: 18px;
-     padding-right: 18px;
-      margin-right: 10px ;
-      cursor: pointer;
+    padding: 7px;
+    cursor: pointer;
+    font-size: medium;
+    border-radius: 5px;
   }
 .inputboxDoc{
     border-radius: 5px;

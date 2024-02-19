@@ -61,10 +61,6 @@ export default function Doctorviewpendingpatient() {
                             <b>{detailsList.history}</b>
                         </div>                      
                     </fieldset>
-                    <div className='btndoctor'>
-                        <button id='btn1doc' >Approve</button>
-                        <button id='btn2doc'> Reject </button>
-                    </div>
                 </form>
             </div>
         </div>
