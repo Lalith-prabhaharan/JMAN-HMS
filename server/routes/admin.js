@@ -6,11 +6,13 @@ const {
     postPatientForm,
     getAllDeptDoctors,
     getAllPatientStatus,
+    getSpecificStatus
 } = require('../controllers/admin');
 const createValidator = require('../middleware/validator');
 
 router.post('/patient/application', createValidator,postPatientForm);
 router.route('/patient/application/status').get(getPatients);
+router.route('/patient/application/status/:status').get(getSpecificStatus);
 router.route('/doctor/:dept').get(getDeptDoctors);
 router.route('/doctor').get(getAllDeptDoctors);
 router.route('/patient/status').get(getAllPatientStatus);

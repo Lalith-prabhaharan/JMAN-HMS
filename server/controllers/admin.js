@@ -46,6 +46,17 @@ const getAllPatientStatus = async(req, res) => {
     // res.status(200).json(rows);
 }
 
+const getSpecificStatus = async(req,res)=>{
+    const status=req.params.status;
+    const patient=await Application.findAll({
+        where: {status: { [Op.regexp]: `^${status}`}}
+    }) 
+    if(patient.length === 0){
+        return res.status(404).json({msg:'No Patient in the specified status'})
+    }
+    res.status(200).json(patient);
+}
+
 const postPatientForm = async(req, res) => {
     const {  
         firstname, 
@@ -105,4 +116,5 @@ module.exports = {
     postPatientForm,
     getAllDeptDoctors,
     getAllPatientStatus,
+    getSpecificStatus
 }
