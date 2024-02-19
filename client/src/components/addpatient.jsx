@@ -4,7 +4,10 @@ import '../style/addpatient.css'
 import { Navbar } from './navbar';
 import { adminadd, getdeptdoctors } from '../services/services';
 import { RadioButton } from 'primereact/radiobutton';
+import { Dropdown } from 'primereact/dropdown';
 import { Navigate, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { Calendar } from 'primereact/calendar';
 export const Addpatient = () => {
 
   const navigate=useNavigate()
@@ -23,6 +26,8 @@ export const Addpatient = () => {
 
   const departments = ['cardiology','dermatology','pediatrics','gynecology','neurology','urology','orthopedics','radiology'
   ,'oncology','general'];
+
+  const bloodgroups=['A+','A-','O+','O-','AB+','AB-','B+','B-']
   
 
   const handleDepartmentChange=(event)=>{
@@ -31,17 +36,21 @@ export const Addpatient = () => {
   }
   
   const handleDoctorChange=(event)=>{
-    const doc=event.target.value;
-    setDoctor(doc)
-
-    const selectedDoctorObject = doctorList.find((doctor) => doctor.first_name === doc);
-    console.log(selectedDoctorObject)
-
-  if (selectedDoctorObject) {
-    const selectedDoctorId = selectedDoctorObject.doc_id;
-    setDocid(selectedDoctorId);
-  }
-    
+    if(selectedDepartment===''){
+      toast.warn("Select the Department");
+    }
+    else{
+      const doc=event.target.value;
+      setDoctor(doc)
+      
+      const selectedDoctorObject = doctorList.find((doctor) => doctor.first_name === doc);
+      console.log(selectedDoctorObject)
+      
+      if (selectedDoctorObject) {
+        const selectedDoctorId = selectedDoctorObject.doc_id;
+        setDocid(selectedDoctorId);
+      }
+    } 
   }
   const [doctorList,setDoctorList]=useState([" "])
   const [flag,setFlag]=useState(true)
@@ -227,12 +236,14 @@ export const Addpatient = () => {
             <input type="text" value={age} className="addhotelinp"  onChange={(e)=>setAge(e.target.value)} required/>
             
             <label>Date of Birth<span className="required">*</span>:</label>
-            <input type="date" value={dob} className="addhotelinp" onChange={(e)=>setDob(e.target.value)} required />
-            
+            {/* <input type="date" value={dob} className="addhotelinp" onChange={(e)=>setDob(e.target.value)} required /> */}
+            <div className="card flex justify-content-center">
+                <Calendar value={dob} onChange={(e) => setDob(e.value)} />
+            </div>
           </div>
           <div className='form-right'>
             <label>Gender<span className="required">*</span>:</label>
-            <label>
+            <span>
             <input type="radio"  value="M" checked={selectedOption === 'M'}
             onChange={handleOptionChange}  ></input>
             Male
@@ -242,7 +253,7 @@ export const Addpatient = () => {
             <input type="radio"  value="N"  checked={selectedOption === 'N'}
             onChange={handleOptionChange}></input>
             Prefer Not to Say
-            </label>       
+            </span>       
             <label >Contact<span className="required">*</span>:</label>
             <input type="tel" value={contact} className="addhotelinp" onChange={(e)=>setContact(e.target.value)} required/>
             
@@ -266,7 +277,7 @@ export const Addpatient = () => {
           <input type="text" className="addhotelinp" value={weight} onChange={(e)=>setWeight(e.target.value)} />
           
           <label for="job">Blood Group<span className="required">*</span>:</label>
-          <select value={bloodgroup} onChange={handleBloodgroup} required >
+          {/* <select value={bloodgroup} onChange={handleBloodgroup} required >
               <option value="">Select Blood Group</option>
               <option value="A+">A+</option>
               <option value="A-">A-</option>
@@ -276,7 +287,9 @@ export const Addpatient = () => {
               <option value="AB-">AB-</option>
               <option value="O+">O+</option>
               <option value="O-">O-</option>
-          </select>
+          </select> */}
+          <Dropdown value={bloodgroup} onChange={handleBloodgroup} options={bloodgroups} optionLabel="" 
+              placeholder="Select the Blood Group" className="w-full md:w-14rem" /> 
           
           <label >Diseases Description<span className="required">*</span>:</label>
           <textarea className="addhotelinp" value={disease} onChange={(e)=>setDisease(e.target.value)} required> </textarea>
@@ -286,7 +299,7 @@ export const Addpatient = () => {
         </div>
         <div className='form-right'>
         <label>Department<span className="required">*</span>:</label>
-          <select value={selectedDepartment}  onChange={handleDepartmentChange} required>
+          {/* <select value={selectedDepartment}  onChange={handleDepartmentChange} required>
               
               <option value="">Select the Department</option>
               {
@@ -294,10 +307,15 @@ export const Addpatient = () => {
                   <option value={department}>{department}</option>
                 ))
               }
-          </select>          
+          </select>              */}
+
+          <div className="card flex justify-content-center">
+          <Dropdown value={selectedDepartment} onChange={handleDepartmentChange} options={departments} optionLabel="" 
+              placeholder="Select the Department" className="w-full md:w-14rem" />    
+          </div>  
           
           <label>Doctor<span className="required">*</span>:</label>
-          <select value={doctor} onChange={handleDoctorChange} required>
+          {/* <select value={doctor} onChange={handleDoctorChange} required>
               <option value="">Select the Doctor</option>
               {doctorList.length!=0 && flag &&(
                 doctorList.map((doctor)=>(
@@ -305,7 +323,11 @@ export const Addpatient = () => {
                   
                 ))
               )}
-          </select>  
+          </select>   */}
+          <div className="card flex justify-content-center">
+          <Dropdown value={doctor} onChange={handleDoctorChange} options={doctorList} optionLabel="first_name" 
+              placeholder="Select the Doctor" className="w-full md:w-14rem" />    
+          </div> 
 
         <button className="button-1" onClick={prevStep}>Previous</button>
         <button className="button-1" onClick={submit}>Submit</button>

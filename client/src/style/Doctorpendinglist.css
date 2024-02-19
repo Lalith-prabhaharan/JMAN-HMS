@@ -122,6 +122,12 @@
     color: white;
 }
 
+.p-paginator .p-paginator-page.p-highlight {
+    background-color: #00866E;
+    color: white;
+}
+  
+
 .custom-card-overlay {
     position: absolute;
     top: 0;

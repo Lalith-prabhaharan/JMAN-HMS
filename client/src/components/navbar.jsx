@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../utils/authentication';
+import "../style/nav.css"
 
 export const Navbar = ({ children }) => {
   const [showNav, setShowNav] = useState(false);
   const [activeTab, setActiveTab] = useState('addpatient');
+  const [showDropdown,setShowDropdown]=useState(false);
 
   const activeColor = '#0e0e0e'; 
   const inactiveColor = '#f8f9fa'; 
@@ -19,7 +21,11 @@ export const Navbar = ({ children }) => {
 
   const toggleNav = () => {
     setShowNav(!showNav);
+    setShowDropdown(false);
+  };
 
+  const toggleDropdown = () => {
+    setShowDropdown(!showDropdown);
   };
 
   return (
@@ -48,13 +54,23 @@ export const Navbar = ({ children }) => {
         >
           View Status
         </a>
-        <a
-          href="/doctordetails"
-          style={{ color: localStorage.getItem("activetab") === 'doctordetails' ? activeColor : inactiveColor }}
-          onClick={() => handleTabClick('doctordetails')}
-        >
-          Doctors Details
-        </a>
+        <div className="navdropdown">
+          <div className="navdropdown-toggle"
+              onClick={toggleDropdown}
+              style={{
+                color: localStorage.getItem('activetab') === 'doctordetails' ? activeColor : inactiveColor,
+                marginLeft:"20px"
+              }}
+             >
+                Doctor
+          </div>
+          {showDropdown && (
+              <div className="navdropdown-content">
+                <a href="/doctordetails"  onClick={() => handleTabClick('doctordetails')}>View Doctors</a>
+                <a href="/adddoctor">Add Doctor</a>
+              </div>
+            )}
+        </div>
         <a onClick={logout}>
           Logout
         </a>

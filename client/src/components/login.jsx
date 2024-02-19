@@ -42,6 +42,7 @@ export const Login = () => {
           localStorage.setItem("mail",email)
           localStorage.setItem("password",pass)
           localStorage.setItem("token",response.data.token)
+          localStorage.setItem('activetab','addpatient')
           toastSuccess()
           if(selectedOption=="admin")
           navigate("/addpatient")
