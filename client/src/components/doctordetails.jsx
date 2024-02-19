@@ -3,18 +3,17 @@ import "../style/viewpatient.css"
 import { Navbar } from './navbar'
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
-import { doctordetails } from '../services/services'
+import { doctordetails, getdeptdoctors } from '../services/services'
 
 export const Doctordetails = () => {
   const [doctorList,setDoctorList]=useState([])
   const [dept, setDept] = useState("");
-  const[check, setCheck] = useState("hsghsagd");
   const departments = ['cardiology','dermatology','pediatrics','gynecology','neurology','urology','orthopedics','radiology','oncology','general'];
   const handleDepratment=(event)=>{
     setDept(event.target.value)
   }
   useEffect(()=>{
-    doctordetails().then((response)=>{
+    getdeptdoctors(dept).then((response)=>{
       setDoctorList(response.data)
     })
     .catch(error=>{
@@ -45,7 +44,7 @@ export const Doctordetails = () => {
               }
             }>Doctors List</p>    
           </div>
-          <DataTable removableSort value={doctorList}>
+          <DataTable removableSort paginator rows={10} value={doctorList}>
               <Column field="first_name" alignHeader={'center'} sortable header="Name"></Column>
               <Column field="age" alignHeader={'center'} sortable header="Age"></Column>
               <Column field="year_of_exp" alignHeader={'center'} sortable header="Yoe"></Column>

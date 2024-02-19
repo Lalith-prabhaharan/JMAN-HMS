@@ -17,7 +17,7 @@ const Prescription = sequelize.define('Prescription', {
         }
     },
     patient_id: {
-        type: DataTypes.STRING(10),
+        type: DataTypes.INTEGER,
         allowNull: false,
         references: {
             model: Patient,
