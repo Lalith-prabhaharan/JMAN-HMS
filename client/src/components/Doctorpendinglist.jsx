@@ -28,18 +28,22 @@ export default function Doctorpendinglist() {
                     <table>
                         <thead>
                             <tr>
-                                <th>App_ID</th>
+                                <th>S. No.</th>
                                 <th>Name</th>
                                 <th>Status</th>
+                                <th>Approve</th>
+                                <th>Reject</th>
                             </tr>
                         </thead>
                         <tbody>
                             {
-                                pendingList.map((pendings)=>(
+                                pendingList.map((pendings, index)=>(
                                     <tr key={pendings.application_id}>
-                                    <td>{pendings.application_id}</td>
+                                    <td>{index+1}</td>
                                     <td>{pendings.name}</td>
                                     <td><Link className="status1" to={`/pending/${pendings.application_id}`} state={{data:pendings}}>View</Link></td>
+                                    <td><button id='btn1doc' >Approve</button></td>
+                                    <td><button id='btn2doc'> Reject </button></td>
                                     </tr>
                                 ))
                                 
