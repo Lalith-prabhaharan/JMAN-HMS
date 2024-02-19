@@ -1,4 +1,4 @@
-.addform {
+/* .addform {
     max-width: 500px;
     margin: 10px auto;
     padding: 10px 20px;
@@ -54,10 +54,16 @@
     font-weight: 300;
     display: inline;
   }
-  
 
+  @media screen and (min-width: 480px) {
   
-  /* CSS */
+    form {
+      max-width: 480px;
+    }
+  
+  }
+   */
+  
   .button-1 {
     background-color: #EA4C89;
     border-radius: 8px;
@@ -70,10 +76,10 @@
     font-size: 14px;
     font-weight: 500;
     height: 40px;
-    width: 100%;
+    width: 80%;
     line-height: 20px;
     list-style: none;
-    margin-top: -20px;
+    margin-bottom:20px;
     outline: none;
     padding: 10px 16px;
     position: relative;
@@ -91,11 +97,84 @@
     background-color: #F082AC;
   }
   
-  @media screen and (min-width: 480px) {
   
-    form {
-      max-width: 480px;
-    }
-  
+
+   /* .addpatient{
+    background-color: darkseagreen;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   } */
+
+   .addform{
+    /* background-color: antiquewhite; */
+    width:80%;
+    height: 80%;
+    margin:10px auto;
+    border-radius: 15px;
+    display: flex;
+   }
+
+   .heading {
+    text-align: center;
   }
+
+  
+.form-left,
+.form-right {
+  flex: 1;
+  padding: 20px;
+  background-color: #fee1c0; /* Example background color for form-right */
+}
+
+.addhotelinp,
+  select {
+    background: rgba(255,255,255,0.1);
+    border: none;
+    font-size: 16px;
+    height: auto;
+    margin: 0;
+    outline: 0;
+    padding: 10px;
+    width: 80%;
+    background-color: #e8eeef;
+    color: #8a97a0;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
+    margin-bottom: 30px;
+  }
+  
+  .fieldset {
+    margin-bottom: 30px;
+    border: none;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 8px;
+  }
+  
+  label.light {
+    font-weight: 300;
+    display: inline;
+  }
+
+  .required {
+    color: red; /* Example color for the asterisk */
+    margin-left: 4px; /* Adjust spacing as needed */
+  }
+
+
+@media (max-width: 768px) {
+  .addform {
+    flex-direction: column; /* Change to column layout for mobile view */
+  }
+  /* .addpatient{
+    background-color: darkseagreen;
+    height: 100%;
+  } */
+}
+  
   
