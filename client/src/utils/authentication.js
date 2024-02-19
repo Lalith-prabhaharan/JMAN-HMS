@@ -12,6 +12,8 @@ export const Authentication = (props) => {
         setMail("")
         localStorage.removeItem("mail")
         localStorage.removeItem("password")
+        localStorage.removeItem("activetab")
+
         navigate("/")
     }
 

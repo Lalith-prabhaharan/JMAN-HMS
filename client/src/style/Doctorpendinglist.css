@@ -1,0 +1,161 @@
+.status table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 20px;
+    position: relative;
+}
+
+.status th, td {
+    padding: 8px;
+    text-align: center;
+}
+#search-bar {
+    width: 70%;
+    padding: 10px;
+    margin: 20px auto;
+    font-size: 18px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    box-sizing: border-box;
+}
+
+
+.status  {
+    max-width: 800px; /* Set your desired maximum width */
+    width: 100%;
+    margin: 0px auto;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* margin-bottom: 5%; */
+    /* height: 65vh; */
+}
+
+.status th {
+    background-color: #00866E;
+    color: #ddd;
+}
+
+.status1 {
+    color: black; /* Change color based on your status design */
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.status tr {
+    border-bottom: 1px solid #ddd;
+    transition: background-color 0.1s, color 0.1s;
+    cursor: pointer;
+}
+
+.status tr:last-child {
+    border-bottom: none;
+}
+
+.status tr:nth-child(even) {
+    background-color: #acf0c58a; 
+}
+
+.status tr:nth-child(odd) {
+    background-color: #afd0bb8a;
+}
+
+.status tr:hover{
+    background-color: #00866E;
+    color: white;
+}
+
+/* h2{
+    text-align: center;
+    color: white;
+} */
+
+.dropdown {
+    background-color: #00866E;
+    color: white;
+    width: 15%;
+    border-radius: 5%;
+    cursor: pointer;
+    transition: all 0.1s;
+}
+
+.dropdown:hover {
+    background-color: white;
+    color: #00866E;
+    border: 1px solid #00866E;
+}
+
+.dropdown-content {
+    background-color: white;
+    color: #00866E;
+}
+
+.p-paginator {
+    display: flex;
+    justify-content: center;
+    margin-top: 3%; 
+  }
+  
+.p-paginator .p-paginator-pages {
+    padding-left: 30px;
+    padding-right: 30px; 
+}
+
+.p-paginator .p-paginator-page {
+    margin: 0 5px;
+    padding: 5px 10px;
+    border: 1px solid #00866E;
+    color: #00866E;
+    cursor: pointer;
+    transition: background-color 0.1s, color 0.1s;
+}
+
+.p-paginator .p-paginator-page:hover {
+    background-color: #00866E;
+    color: white;
+}
+
+.p-paginator .p-paginator-page:focus {
+    background-color: #00866E;
+    color: white;
+}
+
+.custom-card-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5); 
+}
+
+.custom-card {
+    z-index: 1; 
+    width: 400px;
+    color: black;
+    background-color: #d3e2df;
+    padding: 20px; 
+    border-radius: 20px; 
+}
+
+.close {
+    background-color: rgb(255, 46, 46);
+    color: white;
+    border-width: 0;
+    width: 30%;
+    height: 30px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 550;
+    margin-left: 120px;
+    transition: box-shadow 0.5s;
+}
+
+.close:hover {
+    box-shadow: 0 12px 16px 0 rgba(255, 46, 46, 0.24)
+}

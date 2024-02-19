@@ -4,8 +4,9 @@ const cors=require('cors');
 const express = require('express');
 const app = express();
 
-const db = require('./db/connect');
-
+const {sequelize} = require('./db/connect');
+const Doctor = require('./models/Doctor');
+const Admin = require('./models/Admin');
 // error handler
 const notFoundMiddleware = require('./middleware/not-found');
 const errorHandlerMiddleware = require('./middleware/error-handler');
@@ -33,7 +34,7 @@ const port = 5000;
 
 const start = async() => {
     try {
-        //
+        await sequelize.authenticate();
         app.listen(port, () =>
             console.log(`Server is listening on port ${port}...`)
         );
