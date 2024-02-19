@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react';
-import axios from 'axios';
 import '../style/addpatient.css'
 import { Navbar } from './navbar';
+import { adminadd, getdeptdoctors } from '../services/services';
 export const Addpatient = () => {
 
   const [selectedOption, setSelectedOption] = useState('Male');
@@ -20,6 +20,7 @@ export const Addpatient = () => {
 
   const departments = ['cardiology','dermatology','pediatrics','gynecology','neurology','urology','orthopedics','radiology'
   ,'oncology','general'];
+  
 
   const handleDepartmentChange=(event)=>{
     const dep=event.target.value;
@@ -43,21 +44,21 @@ export const Addpatient = () => {
   const [flag,setFlag]=useState(true)
 
   useEffect(()=>{
-    axios.get(`http://localhost:5000/api/v1/admin/doctor/${selectedDepartment}`)
+    if(selectedDepartment){
+    getdeptdoctors(selectedDepartment)
     .then((response)=>{
 
-      // console.log(response.data)
       if(response.length==0)console.log("No data found")
       else{
         setDoctorList(response.data)
+        console.log(doctorList)
       }
-      // console.log(doctorList)
-      // console.log(doctor)
-      // console.log(docid)
+
     })
     .catch(error => {
       console.error('Error fetching doctor data:', error);
     });
+  }
     // if(response.data.msg=="No doctor in the specified department")
     //   setFlag(false)
   });
@@ -78,14 +79,9 @@ export const Addpatient = () => {
 
   const submit=(e)=>{
     e.preventDefault();
-    // doctorList.forEach(element => {
-    //   if(element.first_name==doctor){
-    //     const id=element.doc_id
-    //     setDocid(id)
-    //   }
-    // });
+
     const addPatient=async()=>{
-      const response=axios.post("http://localhost:5000/api/v1/admin/patient/application",{
+      const response=adminadd({
         firstname:firstname, 
         lastname:lastname, 
         age:age, 
@@ -102,11 +98,7 @@ export const Addpatient = () => {
         doctor_name:doctor,
         doctor_id:docid
       })
-      // console.log("record added")
-      // console.log(response)
-      // if(response.data.msg==="success"){
-      //   alert("Success")
-      // }
+
     }
     console.log(firstname,lastname,dob,doctor,docid,selectedDepartment,bloodgroup,selectedOption)
     addPatient();
@@ -115,8 +107,7 @@ export const Addpatient = () => {
   
 
   return (
-    <div>
-    <Navbar/>
+    <Navbar>
     <div className='addform'>
       <form onSubmit={submit}>
         <h1 className='addhead'>ADD PATIENT</h1>
@@ -207,7 +198,7 @@ export const Addpatient = () => {
         <button class="button-1" role="button">Add Patient</button>
       </form>
     </div>
-    </div>
+    </Navbar>
 
   )
 }

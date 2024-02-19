@@ -1,13 +1,20 @@
 .flex-container {
     padding: 15px;
-   /* align-items: center;*/
+   align-items: center;
+   justify-content:stretch;
     display:flex;
 }
 .form-container{
 justify-content: center;
 display: flex;
 padding: 40px;
+
 }
+
+.flex-container label{
+    margin-right: 2%;
+}
+
 fieldset{
     border-width: 0px;
     padding: 10px;
@@ -15,24 +22,26 @@ fieldset{
     border-radius: 20px;
 }
 #btn1doc{
-    background-color: rgb(55, 209, 55);
-     color: white;
-      padding: 15px;
-       margin-right: 10px ;
+    background-color:#00866E;
+    color: white;
+    padding: 7px;
+    cursor: pointer;
+    font-size: medium;
+    border-radius: 5px;
   }
-button{
-    margin-top: 20px;
-    border-radius: 20px;
+.btndoctor button{
+    margin-top: 3px;
+    border-radius: 10px;
     border-width: 0px;
     
   }
 #btn2doc{
     background-color: rgb(209, 48, 48);
     color: white;
-     padding: 15px;
-     padding-left: 18px;
-     padding-right: 18px;
-      margin-right: 10px ;
+    padding: 7px;
+    cursor: pointer;
+    font-size: medium;
+    border-radius: 5px;
   }
 .inputboxDoc{
     border-radius: 5px;
@@ -40,5 +49,5 @@ button{
     margin-left: 10px;
 }
 .btndoctor{
-    margin-left: 28%;
+    margin-left: 20%;
 }

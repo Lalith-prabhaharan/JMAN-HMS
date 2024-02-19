@@ -6,6 +6,13 @@ import { Login } from './components/login';
 import { Authentication } from './utils/authentication';
 import { Viewpatient } from './components/viewpatient';
 import { Doctordetails } from './components/doctordetails';
+import AdminAllPatient from './components/AdminAllPatients';
+import AdminStatus from './components/AdminStatus';
+import { Requiredauth } from './utils/requiredauth';
+import Doctorpendinglist from './components/Doctorpendinglist';
+import Doctorviewpendingpatient from './components/Doctorviewpendingpatient';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
@@ -15,11 +22,25 @@ function App() {
       <Routes>
       <Route path="/" element={<Login/>}></Route>
       <Route path="/addpatient" element={<Addpatient/>}></Route>
-      <Route path="/viewpatient" element={<Viewpatient/>}></Route>
+      <Route path="/mypatients" element={<Requiredauth><Viewpatient/></Requiredauth>}></Route>
       <Route path="/doctordetails" element={<Doctordetails/>}></Route>
-      
+      <Route path="/allpatients" element={<AdminAllPatient/>}></Route>
+      <Route path="/viewstatus" element={<AdminStatus/>}></Route>
+      <Route path="/pending" element={<Doctorpendinglist/>}></Route>
+      <Route path="/pending/:id" element={<Doctorviewpendingpatient/>}></Route>
       </Routes>
       </Authentication>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </div>
   );
 }

@@ -1,6 +1,6 @@
 .navbar {
-    background-color: #F08D19 ;
-    padding: 30px;
+    background-color: #00866E ;
+    padding: 18px;
     display: flex;
     justify-content:space-between;
     align-items: center;
@@ -15,6 +15,8 @@
   .nav-links {
     display: flex;
   }
+
+  
   
   .nav-links a {
     color: #fff;
@@ -26,7 +28,7 @@
   }
   
   .nav-links a:hover {
-    color: #0e0e0e;
+    color: #9b1616;
   }
   
   .menu-icon {
@@ -44,7 +46,7 @@
       top: 80px;
       left: 0;
       right: 0;
-      background-color: #F08D19;
+      background-color:  #00866E ;
       padding: 15px;
     }
   
