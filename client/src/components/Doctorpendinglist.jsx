@@ -8,22 +8,26 @@ import { useState } from 'react';
 import { doctorpending } from '../services/services';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
+import { toast } from 'react-toastify';
 
 export default function Doctorpendinglist() {
-    const [pendingList, setPendingList] = useState([""])
-    const navigate=useNavigate();
+    const [pendingList, setPendingList] = useState([[]])
+    const [flag, setflag] = useState(true)
     useEffect(() => {
         doctorpending()
         .then(response=>{
             setPendingList(response.data)
+            if(pendingList.msg=="No applicants Available" && flag==true){
+                toast.warn(pendingList.msg)
+                setflag(false)
+            }
         })
         .catch(err=>{
             console.log(err)
-        })
+        }) 
     })
 
     const viewButton=(pending)=>{
-        console.log(pending.applicaton_id)
         return <Link className="status1" to={`/pending/${pending.application_id}`} state={{data:pending}}>View</Link>
     }
 
@@ -66,13 +70,16 @@ export default function Doctorpendinglist() {
                             }
                         </tbody>
                     </table> */}
-                    <DataTable removableSort paginator rows={10} value={pendingList}>
+                    {
+                        pendingList.length>1 &&
+                        <DataTable removableSort paginator rows={10} value={pendingList}>
                         <Column field="application_id" alignHeader={'center'} sortable header="Application ID"></Column>
                         <Column field="name" alignHeader={'center'} sortable header="Name"></Column>
                         <Column  alignHeader={'center'}  body={viewButton}  header="Status"></Column>
                         <Column  alignHeader={'center'}  body={approveButton}  header="Status"></Column>
                         <Column  alignHeader={'center'}  body={rejectButton}  header="Status"></Column>
                     </DataTable>
+                    }
                     
             </div>
         </DoctorNav>
