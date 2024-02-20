@@ -23,6 +23,8 @@
     flex-wrap: wrap;
     justify-content:center;
   }
+
+  
   
   /* Responsive styling */
   @media screen and (max-width: 768px) {
@@ -33,4 +35,3 @@
         flex-basis: calc(40% - 20px);
     }
   }
-  
