@@ -110,11 +110,52 @@ const postPatientForm = async(req, res) => {
     res.status(200).json({ msg: 'Success' });
 }
 
+
+const postDoctorForm=async(req,res)=>{
+    const{
+        first_name,
+        last_name,
+        email,
+        password,
+        age,
+        dob,
+        gender,
+        phone,
+        department,
+        year_of_exp,
+    }=req.body
+    const maxDocId = await Doctor.max('doc_id')
+    const numericPart = parseInt(maxDocId.slice(1), 10);
+    const newNumericPart = numericPart + 1;
+    // Format the new doc_id
+    const newDocId = `D${newNumericPart.toString().padStart(4, '0')}`;
+
+    const doctor=await Doctor.create({
+        doc_id:newDocId,
+        first_name:first_name,
+        last_name:last_name,
+        email:email,
+        dob:dob,
+        password:password,
+        age:age,
+        gender:gender,
+        phone:phone,
+        department:department,
+        year_of_exp:year_of_exp
+    })
+    if(!doctor)
+        return res.status(500).json({msg:'Failed'})
+    else
+        res.status(200).json({msg:'Success'})
+}
+
+
 module.exports = {
     getDeptDoctors,
     getPatients,
     postPatientForm,
     getAllDeptDoctors,
     getAllPatientStatus,
-    getSpecificStatus
+    getSpecificStatus,
+    postDoctorForm
 }
