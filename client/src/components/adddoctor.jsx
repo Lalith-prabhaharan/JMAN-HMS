@@ -86,20 +86,20 @@ export const Adddoctor = () => {
             </span>
             </div>
             <div className='right-det'>
-            <div className="card flex justify-content-center" >
+            <div  className="card flex justify-content-center" >
                 <Calendar value={docdetails.docdob} onChange={handleChange} name='docdob' placeholder='select DOB' />
             </div>
-            <div  className="card flex justify-content-center">
+            <div style={{marginLeft:"3%"}} className="card flex justify-content-center">
             <Password value={docdetails.docpass} onChange={handleChange} header={header} footer={footer} placeholder='Enter Password'  name='docpass' toggleMask/>    
             </div>
             <div  className="card flex justify-content-center">
                 <Dropdown value={docdetails.docgender} onChange={handleChange} options={gender} optionLabel="label"  name='docgender'
                     placeholder="Select Gender" className="w-full md:w-14rem" />    
             </div>
-            <div className="card flex justify-content-center">
+            {/* <div className="card flex justify-content-center"> */}
                 <Dropdown value={docdetails.docdept} onChange={handleChange} options={departments} optionLabel=""  name='docdept'
                     placeholder="Select the Department" className="w-full md:w-14rem" />    
-            </div>
+            {/* </div> */}
             <span className="p-float-label" >
                 <InputText id="username" value={docdetails.docexp} onChange={handleChange} name='docexp' />
                 <label htmlFor="username">Year of Experience</label>

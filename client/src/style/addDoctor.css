@@ -5,9 +5,9 @@
     margin: 2px;
     outline: 2px;
     padding: 15px;
-    width: 400px;
+    width: 80%;
     background-color: #bfc5bf;
-    color: #151616;
+    color: #111212;
     box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
     transition-duration: 4ms ease;
     border-radius: 5px;
@@ -15,7 +15,8 @@
 label{
     font-size: 18px;
     font-weight: 200;
-        margin-left: 10px;
+    margin-left: 10px;
+    color: #111212;
 }
 .p-float-label{
     margin-bottom:10%;
@@ -37,13 +38,20 @@ label{
     align-items: center;
 }
 
-.p-password-panel{
+
+.p-password{
+    
     margin-top: 10px;
+    width: 100%;
+}
+
+.p-password-panel{
     background-color: #f0eeee;
+    color: #111212;
 }
 
 .p-password-show-icon,.p-password-hide-icon{
-    right: 10px;
+    right: 25%;
 }
 
 .p-password-meter{
@@ -59,8 +67,14 @@ label{
 @media (max-width:768px){
     .add-doctor{
         flex-direction: column;
-        width: 20px;
-        margin-left: 50%;
     }
 
+    .p-inputtext{
+        margin-top: 2%;
+        width:100%;
+    }
+    .left-det,.right-det{
+        margin-left: 3%;
+        width:80%
+    }
 }
