@@ -90,39 +90,6 @@
 .dropdown-content {
     background-color: white;
     color: #00866E;
-<<<<<<< HEAD
-}
-
-.p-paginator {
-    display: flex;
-    justify-content: center;
-    margin-top: 3%;
-  }
-  
-.p-paginator .p-paginator-pages {
-    padding-left: 30px;
-    padding-right: 30px;
-}
-
-.p-paginator .p-paginator-page {
-    margin: 0 5px;
-    padding: 5px 10px;
-    border: 1px solid #00866E;
-    color: #00866E;
-    cursor: pointer;
-    transition: background-color 0.1s, color 0.1s;
-}
-
-.p-paginator .p-paginator-page:hover {
-    background-color: #00866E;
-    color: white;
-}
-
-.p-paginator .p-paginator-page:focus {
-    background-color: #00866E;
-    color: white;
-=======
->>>>>>> d21fb4d164239096f9469c3859f5ae809b9ae0f3
 }
 
 .p-paginator {

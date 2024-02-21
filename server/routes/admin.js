@@ -7,6 +7,8 @@ const {
     getAllPatientStatus,
     getPatientDetails,
     postPatientForm,
+    getSpecificStatus,
+    postDoctorForm
 } = require('../controllers/admin');
 const createValidator = require('../middleware/validator');
 
@@ -30,8 +32,9 @@ router.route('/patient/status/:id').get(getPatientDetails);
 // post the application form for new patient
 router.post('/patient/application', createValidator, postPatientForm);
 
+//r
+router.post('/doctor/add',postDoctorForm)
 
-
-
+router.route('/patient/application/status/:status').get(getSpecificStatus);
 
 module.exports = router;
