@@ -25,7 +25,7 @@ router.route('/patient/application/status').get(getPatients);
 router.route('/patient/status').get(getAllPatientStatus);
 
 // get the details of a patient
-router.route('/patient/:id').get(getPatientDetails);
+router.route('/patient/status/:id').get(getPatientDetails);
 
 // post the application form for new patient
 router.post('/patient/application', createValidator, postPatientForm);

@@ -24,7 +24,7 @@ const getDeptDoctors = async (req, res) => {
     const department= req.params.dept; 
     
     const doctor = await Doctor.findAll({
-        // attributes: ['doc_id', 'first_name', 'last_name','age','department', 'year_of_exp'],
+        attributes: ['doc_id', 'first_name', 'last_name','age','department', 'year_of_exp'],
         where: {department: { [Op.regexp]: `^${department}`}}
     });
     
