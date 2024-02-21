@@ -7,8 +7,15 @@ import { useAuth } from '../utils/authentication'
 import { useNavigate } from 'react-router-dom'
 import {ToastContainer,toast} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
-// import { RadioButton } from 'primereact/radiobutton';
-        
+import { RadioButton } from 'primereact/radiobutton';
+import { Button } from 'primereact/button';
+import { InputText } from 'primereact/inputtext';
+import 'primereact/resources/themes/saga-blue/theme.css';
+import 'primereact/resources/primereact.min.css';
+import 'primeicons/primeicons.css';
+
+
+                
 
 export const Login = () => {
 
@@ -71,31 +78,31 @@ export const Login = () => {
                 <h1>HEALTH CARE</h1>
                 <p>Login to your account</p>
                 <form className='login-form' onSubmit={submit}>
-                <div className='login-input-row'>
-                  <label> <span>EMail:</span></label>
-                  <input type='text' onChange={(e) => setEmail(e.target.value)} placeholder='Enter your E-Mail Address'></input>
+                <div className='login-input-row'> 
+                  <label> <span>Email:</span></label>
+                  <InputText type='text' onChange={(e) => setEmail(e.target.value)} placeholder='Enter your E-Mail Address' style={{marginLeft: "35px"}}/>
                 </div>
                 <div className='login-input-row'>
                   <label><span>Password:</span></label>
-                  <input type='password' onChange={(e) => setPass(e.target.value)} placeholder='Enter your Password'></input>
+                  <InputText type='password' onChange={(e) => setPass(e.target.value)} placeholder='Enter your Password'/>
                 </div>
                     <label className='radio'>
-                        <input
-                        type="radio"
-                        value="admin"
-                        checked={selectedOption === 'admin'}
-                        onChange={handleOptionChange}
-                        />
-                        <label>Admin</label>  
-                        <input
-                        type="radio"
-                        value="doctor"
-                        checked={selectedOption === 'doctor'}
-                        onChange={handleOptionChange}
-                        />
-                        <label>Doctor</label>
+                          <RadioButton
+                            inputId="ingredient1" 
+                            value="admin"
+                            checked={selectedOption === 'admin'} 
+                            onChange={handleOptionChange}
+                          />
+                          <label>Admin</label>  
+                          <RadioButton
+                            inputId="ingredient2" 
+                            value="doctor"
+                            checked={selectedOption === 'doctor'}
+                            onChange={handleOptionChange}
+                          />
+                          <label>Doctor</label>
                     </label>
-                    <button className="login-button">Login</button>
+                    <Button className="login-button">Login</Button>
                 </form>
             </div>
       </div>

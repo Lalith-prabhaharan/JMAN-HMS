@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import React, { useState } from 'react';
 import '../style/AdminAllPatientStatus.css';
 import { Navbar } from './navbar';
 import axios from 'axios';
@@ -32,7 +33,6 @@ export default function AdminAllPatient() {
                         <Column field="status" alignHeader={'center'} sortable header="Status"></Column>
                     </DataTable>
             </div>
-
         </Navbar>
-  )
+    );
 }
