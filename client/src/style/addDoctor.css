@@ -1,0 +1,66 @@
+.p-inputtext{
+    border: none;
+    font-size: 15px;
+    height: auto;
+    margin: 2px;
+    outline: 2px;
+    padding: 15px;
+    width: 400px;
+    background-color: #bfc5bf;
+    color: #151616;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
+    transition-duration: 4ms ease;
+    border-radius: 5px;
+}
+label{
+    font-size: 18px;
+    font-weight: 200;
+        margin-left: 10px;
+}
+.p-float-label{
+    margin-bottom:10%;
+
+}
+.add-doctor{
+    display: flex;
+    align-items:center;
+    justify-content: center;
+}
+
+.left-det , .right-det{
+    flex:0.3;
+}
+
+.btn-center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.p-password-panel{
+    margin-top: 10px;
+    background-color: #f0eeee;
+}
+
+.p-password-show-icon,.p-password-hide-icon{
+    right: 10px;
+}
+
+.p-password-meter{
+    height: 10px;
+    font-size: 20px;
+}
+
+.p-password-info{
+    font-size: 12px;
+    color: #999;
+}
+
+@media (max-width:768px){
+    .add-doctor{
+        flex-direction: column;
+        width: 20px;
+        margin-left: 50%;
+    }
+
+}

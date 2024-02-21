@@ -130,7 +130,6 @@ const postPatientForm = async(req, res) => {
 
 
 
-
 module.exports = {
     getAllDeptDoctors,
     getDeptDoctors,

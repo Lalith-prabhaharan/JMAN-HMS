@@ -13,6 +13,7 @@ import Doctorpendinglist from './components/Doctorpendinglist';
 import Doctorviewpendingpatient from './components/Doctorviewpendingpatient';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Adddoctor } from './components/adddoctor';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
       <Route path="/allpatients" element={<AdminAllPatient/>}></Route>
       <Route path="/viewstatus" element={<AdminStatus/>}></Route>
       <Route path="/pending" element={<Doctorpendinglist/>}></Route>
+      <Route path="/adddoctor" element={<Adddoctor/>}></Route>
       <Route path="/pending/:id" element={<Doctorviewpendingpatient/>}></Route>
       </Routes>
       </Authentication>

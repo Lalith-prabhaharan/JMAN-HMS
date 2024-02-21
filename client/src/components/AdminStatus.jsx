@@ -2,10 +2,24 @@ import React, { useEffect, useState } from 'react';
 import '../style/AdminAllPatientStatus.css';
 import { Navbar } from './navbar';
 import { adminstatus } from '../services/services';
+<<<<<<< HEAD
+=======
+import { DataTable } from 'primereact/datatable';
+import { Column } from 'primereact/column';
+>>>>>>> d21fb4d164239096f9469c3859f5ae809b9ae0f3
 export default function AdminStatus() {
   const[statusList,setStatusList]=useState([])
+  const statuses=["approved","pending","Rejected"]
+  const[status,setStatus]=useState("")
+  const handleStatus=(event)=>{
+    setStatus(event.target.value)
+  }
   useEffect(() => {
+<<<<<<< HEAD
         adminstatus()
+=======
+        adminstatus(status)
+>>>>>>> d21fb4d164239096f9469c3859f5ae809b9ae0f3
         .then((response)=>{
             if(response.length==0){console.log("No data found")}
             else{
@@ -20,8 +34,19 @@ export default function AdminStatus() {
   return (
         <Navbar>
           <div className='status'>
-            <h2>Application Status</h2>
-                    <table>
+            <div style={{marginTop:"50px"}}>
+                <select value = {status} onChange={handleStatus} style={{margin: "0"}} className='dropdown'>
+                <option value="" className='dropdown-content'>All</option>
+                {
+                    statuses.map((status)=>(
+                        <option key = {status} value={status} className='dropdown-content'>{status}</option>
+                    ))
+                    }
+                </select>
+                <h2 style={{textAlign:"center",color:"#00866E",display: "inline",marginLeft: "20%",
+                verticalAlign:"middle"}}>Application Status</h2>
+            </div>
+                    {/* <table>
                         <thead>
                             <tr>
                                 <th>App_ID</th>
@@ -40,7 +65,12 @@ export default function AdminStatus() {
                                 ))
                             }
                         </tbody>
-                    </table>
+                    </table> */}
+                    <DataTable removableSort paginator rows={10} value={statusList}>
+                        <Column field="application_id" alignHeader={'center'} sortable header="Application ID"></Column>
+                        <Column field="first_name" alignHeader={'center'} sortable header="Name"></Column>
+                        <Column field="status" alignHeader={'center'} sortable header="Status"></Column>
+                    </DataTable>
             </div>
         </Navbar>
   )
