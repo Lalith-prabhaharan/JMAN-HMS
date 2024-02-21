@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Navbar } from './navbar'
 import { InputText } from 'primereact/inputtext'
 import "../style/addDoctor.css"
-import { doctordetails } from '../services/services'
+import { adddoctor, doctordetails } from '../services/services'
 import { Dropdown } from 'primereact/dropdown'
 import { Calendar} from 'primereact/calendar'
 import { Password } from 'primereact/password'
@@ -43,7 +43,7 @@ export const Adddoctor = () => {
     const submit=()=>{
         console.log(docdetails)
         const addDoctor=async()=>{
-            const response=axios.post("http://localhost:5000/api/v1/admin/doctor/add",{
+            const response=adddoctor({
                 first_name:docdetails.docfirstname,
                 last_name:docdetails.doclastname,
                 email:docdetails.docemail,
