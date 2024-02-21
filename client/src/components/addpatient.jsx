@@ -3,11 +3,14 @@ import { useState } from 'react';
 import '../style/addpatient.css'
 import { Navbar } from './navbar';
 import { adminadd, getdeptdoctors } from '../services/services';
+<<<<<<< HEAD
+=======
 import { RadioButton } from 'primereact/radiobutton';
 import { Dropdown } from 'primereact/dropdown';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Calendar } from 'primereact/calendar';
+>>>>>>> d21fb4d164239096f9469c3859f5ae809b9ae0f3
 export const Addpatient = () => {
 
   const navigate=useNavigate()
