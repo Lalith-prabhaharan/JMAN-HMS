@@ -2,8 +2,11 @@ import React, { useEffect, useState } from 'react';
 import '../style/AdminAllPatientStatus.css';
 import { Navbar } from './navbar';
 import { adminstatus } from '../services/services';
+<<<<<<< HEAD
+=======
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
+>>>>>>> d21fb4d164239096f9469c3859f5ae809b9ae0f3
 export default function AdminStatus() {
   const[statusList,setStatusList]=useState([])
   const statuses=["approved","pending","Rejected"]
@@ -12,7 +15,11 @@ export default function AdminStatus() {
     setStatus(event.target.value)
   }
   useEffect(() => {
+<<<<<<< HEAD
+        adminstatus()
+=======
         adminstatus(status)
+>>>>>>> d21fb4d164239096f9469c3859f5ae809b9ae0f3
         .then((response)=>{
             if(response.length==0){console.log("No data found")}
             else{
