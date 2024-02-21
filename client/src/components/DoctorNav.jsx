@@ -37,14 +37,14 @@ export const DoctorNav=({children})=> {
           style={{ color: localStorage.getItem("activetab") === 'mypatients' ? activeColor : inactiveColor }}
           onClick={() => handleTabClick('mypatients')}
         >
-          All Patients
+          My Patients
         </a>
         <a
           href="/pending"
           style={{ color: localStorage.getItem("activetab") === 'pending' ? activeColor : inactiveColor }}
           onClick={() => handleTabClick('pending')}
         >
-          Doctors Details
+          Pending List
         </a>
         <a onClick={logout}>
           Logout

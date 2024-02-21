@@ -22,3 +22,10 @@ export const doctorpending=()=>{
     return  axiosInstance.get(`${url}/doctor/pending`);
 }
 
+export const approvedpatients=()=>{
+    return axiosInstance.get(`${url}/admin/patient/status`);
+}
+
+export const adddoctor=(doctordetails)=>{
+    return axiosInstance.post(`${url}/admin/doctor/add`,doctordetails)
+}

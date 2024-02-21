@@ -32,9 +32,10 @@ router.route('/patient/status/:id').get(getPatientDetails);
 // post the application form for new patient
 router.post('/patient/application', createValidator, postPatientForm);
 
-//r
+// post the doctor form for new doctor
 router.post('/doctor/add',postDoctorForm)
 
+// get specific status for the patient
 router.route('/patient/application/status/:status').get(getSpecificStatus);
 
 module.exports = router;
