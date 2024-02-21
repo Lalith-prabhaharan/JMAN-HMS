@@ -238,7 +238,7 @@ export const Addpatient = () => {
             <label>Date of Birth<span className="required">*</span>:</label>
             {/* <input type="date" value={dob} className="addhotelinp" onChange={(e)=>setDob(e.target.value)} required /> */}
             <div className="card flex justify-content-center">
-                <Calendar value={dob} onChange={(e) => setDob(e.value)} />
+                <Calendar  className="addhotelinp" value={dob} onChange={(e) => setDob(e.value)} />
             </div>
           </div>
           <div className='form-right'>
