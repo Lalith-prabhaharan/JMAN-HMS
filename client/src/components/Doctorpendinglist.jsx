@@ -2,12 +2,6 @@ import React from 'react';
 import '../style/Doctorpendinglist.css';
 import { DoctorNav } from './DoctorNav';
 import { useEffect } from 'react';
-<<<<<<< HEAD
-import { Link, useParams } from 'react-router-dom';
-import axiosInstance from '../interceptor/axios-config';
-import { useState } from 'react';
-import { doctorpending } from '../services/services';
-=======
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import axiosInstance from '../interceptor/axios-config';
 import { useState } from 'react';
@@ -15,7 +9,6 @@ import { doctorpending } from '../services/services';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { toast } from 'react-toastify';
->>>>>>> d21fb4d164239096f9469c3859f5ae809b9ae0f3
 
 export default function Doctorpendinglist() {
     const [pendingList, setPendingList] = useState([[]])
