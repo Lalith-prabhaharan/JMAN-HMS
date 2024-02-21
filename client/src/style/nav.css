@@ -4,7 +4,7 @@
     display: flex;
     justify-content:space-between;
     align-items: c++enter;
-    width: 97.65vw;
+    width: 100vw;
     
   }
   
@@ -30,7 +30,7 @@
   }
   
   .nav-links a:hover {
-    color: #9b1616;
+    color: #0d0d0d;
   }
   
   .menu-icon {

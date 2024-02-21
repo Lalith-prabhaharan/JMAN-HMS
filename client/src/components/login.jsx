@@ -15,8 +15,6 @@ import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 
 
-                
-
 export const Login = () => {
 
   const navigate=useNavigate()

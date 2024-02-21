@@ -46,8 +46,9 @@
 
 .status tr {
     border-bottom: 1px solid #ddd;
-    transition: background-color 0.1s, color 0.1s;
+    transition: background-corgb(254, 251, 251)0.1s, color 0.1s;
     cursor: pointer;
+    color: black;
 }
 
 .status tr:last-child {
