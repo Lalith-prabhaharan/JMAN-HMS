@@ -1,14 +1,11 @@
 import React from 'react';
-import DoctorNav from './components/DoctorNav';
-import './styles/Doctorviewpatient.css';
+import { DoctorNav } from './DoctorNav';
+import '../style/Doctorviewpatient.css';
 import "primereact/resources/themes/lara-light-cyan/theme.css";
 import { ScrollPanel } from 'primereact/scrollpanel';
 export default function Doctorviewpatient() {
     return (
-        <div>
-            <div>
-                <DoctorNav />
-            </div>
+        <DoctorNav>
             <div className='docviewcontainer'>
                 <div className='form-containerdocview' id='left-col'>
                     <form>
@@ -71,6 +68,6 @@ export default function Doctorviewpatient() {
                     </div>
                 </div>
             </div >
-        </div>
+        </DoctorNav>
     )
 }

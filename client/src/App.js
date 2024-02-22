@@ -14,6 +14,7 @@ import Doctorviewpendingpatient from './components/Doctorviewpendingpatient';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Adddoctor } from './components/adddoctor';
+import Doctorviewpatient from './components/Doctorviewpatient';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
       <Route path="/" element={<Login/>}></Route>
       <Route path="/addpatient" element={<Addpatient/>}></Route>
       <Route path="/mypatients" element={<Requiredauth><Viewpatient/></Requiredauth>}></Route>
+      <Route path="/viewpatient" element={<Requiredauth><Doctorviewpatient/></Requiredauth>}></Route>
       <Route path="/doctordetails" element={<Doctordetails/>}></Route>
       <Route path="/allpatients" element={<AdminAllPatient/>}></Route>
       <Route path="/viewstatus" element={<AdminStatus/>}></Route>
