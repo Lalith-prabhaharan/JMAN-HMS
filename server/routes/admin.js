@@ -41,6 +41,7 @@ router.post('/doctor/add',postDoctorForm)
 // get specific status for the patient
 router.route('/patient/application/status/:status').get(getSpecificStatus);
 
+// post email for doctor 
 router.post('/add/doctor',email_post);
 
 
