@@ -57,6 +57,14 @@ export const Adddoctor = () => {
             })
         }
         addDoctor();
+        const sendMail=async()=>{
+            const res=axios.post("http://localhost:5000/api/v1/admin/add/doctor",{
+                name:docdetails.docfirstname,
+                email:docdetails.docemail,
+                department:docdetails.docdept
+            })
+        }
+        sendMail()
     }
 
   return (
