@@ -37,9 +37,7 @@ const getDeptDoctors = async (req, res) => {
 
 // get all the application status
 const getPatients = async(req, res) => {
-    const applicant = await Application.findAll({
-        attributes: ['application_id','first_name','last_name', 'status']
-    });
+    const applicant = await Application.findAll({});
 
     if(applicant.length === 0){
         return res.status(404).json({msg:'No patients'})

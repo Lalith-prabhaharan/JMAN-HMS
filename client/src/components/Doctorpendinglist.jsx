@@ -44,7 +44,7 @@ export default function Doctorpendinglist() {
     return (
         <DoctorNav>
             <div className='status'>
-            <h2>Pending Patients List</h2>
+            <h1 className='heading'>Pending Patients List</h1>
                     {/* <table>
                         <thead>
                             <tr>
@@ -73,7 +73,7 @@ export default function Doctorpendinglist() {
                     {
                         pendingList.length>1 &&
                         <DataTable removableSort paginator rows={10} value={pendingList}>
-                        <Column field="application_id" alignHeader={'center'} sortable header="Application ID"></Column>
+                        <Column field="application_id" alignHeader={'center'} sortable header="Application ID" hidden></Column>
                         <Column field="name" alignHeader={'center'} sortable header="Name"></Column>
                         <Column  alignHeader={'center'}  body={viewButton}  header="Status"></Column>
                         <Column  alignHeader={'center'}  body={approveButton}  header="Status"></Column>

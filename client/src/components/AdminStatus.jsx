@@ -36,34 +36,15 @@ export default function AdminStatus() {
                     ))
                     }
                 </select>
-                <h2 style={{textAlign:"center",color:"#00866E",display: "inline",marginLeft: "20%",
-                verticalAlign:"middle"}}>Application Status</h2>
+                <h2 className='page-heading'>Application Status</h2>
             </div>
-                    {/* <table>
-                        <thead>
-                            <tr>
-                                <th>App_ID</th>
-                                <th>Name</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {
-                                statusList.map((status)=>(
-                                    <tr>
-                                    <td>{status.application_id}</td>
-                                    <td>{status.first_name} {status.last_name}</td>
-                                    <td><a className="status1" href="">{status.status}</a></td>
-                                </tr>
-                                ))
-                            }
-                        </tbody>
-                    </table> */}
-                    <DataTable removableSort paginator rows={10} value={statusList}>
-                        <Column field="application_id" alignHeader={'center'} sortable header="Application ID"></Column>
-                        <Column field="first_name" alignHeader={'center'} sortable header="Name"></Column>
-                        <Column field="status" alignHeader={'center'} sortable header="Status"></Column>
-                    </DataTable>
+                <DataTable removableSort paginator rows={10} value={statusList}>
+                    <Column field="application_id" alignHeader={'center'} sortable header="Application ID" hidden></Column>
+                    <Column field="first_name" alignHeader={'center'} sortable header="Name"></Column>
+                    <Column field="entry_date" alignHeader={'center'} sortable header="Entry Date"></Column>
+                    <Column field="doctor_name" alignHeader={'center'} sortable header="Doctor"></Column>
+                    <Column field="status" alignHeader={'center'} sortable header="Status"></Column>
+                </DataTable>
             </div>
         </Navbar>
   )
