@@ -50,19 +50,9 @@ export const Doctordetails = () => {
                   ))
                 }
             </select>
-            <h2 style={
-              {
-                // fontSize:"2rem", 
-                // fontWeight:"bold",
-                textAlign:"center",
-                color:"#00866E", 
-                display: "inline",
-                marginLeft: "20%",
-                verticalAlign:"middle"
-              }
-            }>Doctors List</h2>    
+            <h2 className='page-heading'>Doctors List</h2>    
           </div>
-          <DataTable removableSort paginator rows={10} tableStyle={{ minWidth: '50rem' }} stripedRows  value={doctorList} onRowClick={handleRowClick}>
+          <DataTable removableSort paginator rows={10} stripedRows  value={doctorList} onRowClick={handleRowClick}>
               <Column field="first_name" alignHeader={'center'} sortable header="Name"></Column>
               <Column field="age" alignHeader={'center'} sortable header="Age"></Column>
               <Column field="year_of_exp" alignHeader={'center'} sortable header="Yoe"></Column>
