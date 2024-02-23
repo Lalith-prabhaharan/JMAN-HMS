@@ -5,14 +5,16 @@ import axios from 'axios';
 import "primereact/resources/themes/lara-light-cyan/theme.css";
 import { ScrollPanel } from 'primereact/scrollpanel';
 import axiosInstance from '../interceptor/axios-config';
+import { useLocation } from 'react-router-dom';
 
 
 
 export default function Doctorviewpatient() {
-
+    const loc=useLocation();
+    const {data}=loc.state;
     const [handlingDetails,setHandlingDetails]=useState([]);
     useEffect(() => {
-        axiosInstance.get("http://localhost:5000/api/v1/doctor/handling/4").then((res)=>{
+        axiosInstance.get(`http://localhost:5000/api/v1/doctor/handling/${data}`).then((res)=>{
             setHandlingDetails(res.data)
         })
         .catch((err)=>console.log(err))
