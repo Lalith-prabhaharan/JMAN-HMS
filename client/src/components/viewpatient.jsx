@@ -1,32 +1,32 @@
-import React from 'react'
 import "../style/viewpatient.css"
 import { DoctorNav } from '../components/DoctorNav'
+import { DataTable } from 'primereact/datatable';
+import { Column } from 'primereact/column';
+import { Card } from 'primereact/card';
+import { Button } from 'primereact/button';
+import React, { useEffect, useState } from 'react'
+import { doctorhandling} from "../services/services";
 export const Viewpatient = () => {
+  const [patientList,setPatientList]=useState([])
+  useEffect(()=>{
+    doctorhandling().then((response)=>{
+      setPatientList(response.data)
+    })
+    .catch(error=>{
+      console.error("error in fetching data",error)
+    })
+  })
   return (
     <DoctorNav>
-    <h1 style={{padding:"20px",textAlign:"center",textDecoration:"underline",color:"wheat"}}>Patient List</h1>
-    <div className="card-container">
-      <div className="glass-card">
-        Abhay <br></br>
-        Age:23
+      <div className="status">
+      <h1 className='heading'>Handling Patients</h1>
+          <DataTable removableSort paginator rows={10} stripedRows  value={patientList}>
+              <Column field="patient_id" alignHeader={'center'} sortable header="id" hidden></Column>
+              <Column field="first_name" alignHeader={'center'} sortable header="FirstName"></Column>
+              <Column field="last_name" alignHeader={'center'} sortable header="LastName"></Column>
+              <Column field="age" alignHeader={'center'} sortable header="Age"></Column>
+          </DataTable>
       </div>
-      <div className="glass-card">
-        Abhay <br></br>
-        Age:23
-      </div>
-      <div className="glass-card">
-        Abhay <br></br>
-        Age:23
-      </div>
-      <div className="glass-card">
-        Abhay <br></br>
-        Age:23
-      </div>
-      <div className="glass-card">
-        Abhay <br></br>
-        Age:23
-      </div>
-    </div>
     </DoctorNav>
   )
 }
