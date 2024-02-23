@@ -8,7 +8,7 @@ import React, { useEffect, useState } from 'react'
 import { doctorhandling} from "../services/services";
 import { useNavigate} from "react-router-dom";
 export const Viewpatient = () => {
-  
+
   const [patientList,setPatientList]=useState([])
   const navigate=useNavigate();
   const handleRowClick = (e) => {
@@ -17,6 +17,7 @@ export const Viewpatient = () => {
 
   useEffect(()=>{
     doctorhandling().then((response)=>{
+      if(response.length>0)
       setPatientList(response.data)
     })
     .catch(error=>{
