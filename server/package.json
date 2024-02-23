@@ -18,8 +18,9 @@
         "http-status-codes": "^2.3.0",
         "i": "^0.3.7",
         "jsonwebtoken": "^9.0.2",
+        "nodemailer": "^6.9.10",
         "nodemon": "^3.0.3",
         "pg": "^8.11.3",
-        "sequelize": "^6.36.0"
+        "sequelize": "^6.37.1"
     }
 }

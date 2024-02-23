@@ -5,10 +5,14 @@ import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Card } from 'primereact/card';
 import { Button } from 'primereact/button';
+import { Paginator } from 'primereact/paginator';
 import { doctordetails, getdeptdoctors } from '../services/services'
+import { Dropdown } from 'primereact/dropdown';
 
 
 export const Doctordetails = () => {
+  const [first, setFirst] = useState(0);
+  const [rows, setRows] = useState(10);
   const [doctorList,setDoctorList]=useState([])
   const [dept, setDept] = useState("");
   const departments = ['cardiology','dermatology','pediatrics','gynecology','neurology','urology','orthopedics','radiology','oncology','general'];
@@ -46,19 +50,9 @@ export const Doctordetails = () => {
                   ))
                 }
             </select>
-            <p style={
-              {
-                fontSize:"2rem", 
-                fontWeight:"bold",
-                textAlign:"center",
-                color:"#00866E", 
-                display: "inline",
-                marginLeft: "175px",
-                verticalAlign:"middle"
-              }
-            }>Doctors List</p>    
+            <h2 className='page-heading'>Doctors List</h2>    
           </div>
-          <DataTable removableSort paginator rows={10} value={doctorList} onRowClick={handleRowClick}>
+          <DataTable removableSort paginator rows={10} stripedRows  value={doctorList} onRowClick={handleRowClick}>
               <Column field="first_name" alignHeader={'center'} sortable header="Name"></Column>
               <Column field="age" alignHeader={'center'} sortable header="Age"></Column>
               <Column field="year_of_exp" alignHeader={'center'} sortable header="Yoe"></Column>

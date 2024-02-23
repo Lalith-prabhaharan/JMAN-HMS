@@ -1,0 +1,235 @@
+@import url("https://fonts.googleapis.com/css2?family=Karla:wght@200;400&display=swap");
+/* * {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Karla", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #ccc;
+} */
+
+.docviewcontainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.form-containerdocview,.right-col {
+    padding: 40px;
+    width: 600px;
+}
+@media (max-width:675px) {
+    .form-containerdocview,.right-col {
+        width: auto;
+    }
+}
+
+@media (max-width: 650px) {
+    .docviewcontainer {
+        flex-direction: column;
+        width: auto;
+    }
+
+    .left-col,
+    .right-col {
+        flex: none;
+        width: 100%;
+    }
+    .right-col{
+        width: auto;
+    }
+}
+
+@media (max-width: 600px) {
+    .docviewcontainer {
+        flex-direction: column;
+    }
+
+    .left-col,
+    .right-col {
+        flex: none;
+        width: 100%;
+    }
+
+    .form-containerdocview,.right-col {
+        width: auto;
+    }
+}
+
+@media (max-width:500px) {
+    .form-containerdocview,.right-col {
+        width: auto;
+    }
+
+    .card {
+        width: auto;
+    }
+}
+
+@media (max-width:400px) {
+    .card {
+        width: auto;
+    }
+}
+
+.docviewcontainer  .card {
+    background-color: #bfc5bf;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    overflow: hidden;
+    max-width: 400px;
+    margin: 10px auto;
+    padding: 20px;
+}
+
+.docviewcontainer  .card-header {
+    background-color:#bfc5bf;
+    color: black;
+    padding: 10px;
+    text-align: center;
+}
+
+.docviewcontainer .card-body {
+    text-align: left;
+}
+
+.docviewcontainer .report-link {
+    display: block;
+    margin-bottom: 8px;
+    color: #333;
+    text-decoration: none;
+    padding: 8px;
+    background-color: white;
+    border-radius: 4px;
+}
+
+.docviewcontainer .report-link:hover {
+    background-color: #ccc;
+}
+
+.docviewcontainer label {
+    font-size: 18px;
+    /* Adjust the size as needed */
+}
+.btndoctor{
+    background-color: #bfc5bf;
+    border-radius: 20px;
+}
+
+.form-container {
+    justify-content: center;
+    display: flex;
+    padding: 40px;
+}
+
+.card h2 {
+    margin: 0px auto;
+    margin-bottom: 10px;
+}
+
+fieldset {
+    border-width: 0px;
+    padding: 25px;
+    background-color:#bfc5bf;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#btn1doc {
+    background-color:#00866E;
+    color: white;
+    padding: 15px;
+    border-radius: 20px;
+    border-width: 0px;
+    cursor: pointer;
+    padding-left: 25px;
+    padding-right: 25px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.btnViewdoc {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.inputboxDoc {
+    border-radius: 5px;
+    border-width: 0px;
+    margin-left: 10px;
+}
+
+.text-box {
+    width: 97%;
+    height: 180px;
+    resize: none;
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 20px;
+    margin: 10px;
+    margin-bottom: 0px;
+
+}
+
+#suggestions-card {
+    background-color: #bfc5bf;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+#suggestions-card h2 {
+    color: black;
+    margin-bottom: 15px;
+}
+
+.slider-container {
+    width: 100%;
+    overflow: hidden;
+    margin-top: 20px;
+}
+
+.suggestion-list {
+    max-height: 200px;
+    overflow-y: auto;
+    padding: 10px;
+}
+.suggestion-item {
+    margin-bottom: 8px;
+    padding: 8px;
+    border-radius: 4px;
+    background-color:white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.suggestion-item:hover {
+    background-color: #e0e0e0;
+}
+
+.form-row {
+    margin-bottom: 5px;
+    display: flex;
+}
+
+.form-label {
+    display: inline-block;
+    width: 30%;
+    text-align: left;
+    line-height: 30px;
+}
+
+.form-input {
+    width: 65%;
+    box-sizing: border-box;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}

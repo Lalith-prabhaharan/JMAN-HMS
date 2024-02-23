@@ -17,6 +17,11 @@
     border: 1px solid #ddd;
     border-radius: 20px;
     box-sizing: border-box;
+    
+}
+
+.search_icon{
+    margin-right: 9px;
 }
 
 

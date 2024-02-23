@@ -13,11 +13,19 @@ export const adminadd=(patientDetails)=>{
     return axiosInstance.post(`${url}/admin/patient/application`,patientDetails);
 }
 
-export const adminstatus=()=>{
-    return axiosInstance.get(`${url}/admin/patient/application/status`);
+
+export const adminstatus=(status)=>{
+    return axiosInstance.get(`${url}/admin/patient/application/status/${status}`);
 }
 
 export const doctorpending=()=>{
     return  axiosInstance.get(`${url}/doctor/pending`);
 }
 
+export const approvedpatients=()=>{
+    return axiosInstance.get(`${url}/admin/patient/status`);
+}
+
+export const adddoctor=(doctordetails)=>{
+    return axiosInstance.post(`${url}/admin/doctor/add`,doctordetails)
+}
