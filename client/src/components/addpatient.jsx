@@ -36,20 +36,20 @@ export const Addpatient = () => {
   }
   
   const handleDoctorChange=(event)=>{
-    if(selectedDepartment===''){
-      toast.warn("Select the Department");
-    }
-    else{
+    // if(selectedDepartment===''){
+    //   toast.warn("Select the Department");
+    // }
+    // else{
       const doc=event.target.value;
       setDoctor(doc)
       
       const selectedDoctorObject = doctorList.find((doctor) => doctor.first_name === doc);
-      console.log(selectedDoctorObject)
+      // console.log(selectedDoctorObject)
       
       if (selectedDoctorObject) {
         const selectedDoctorId = selectedDoctorObject.doc_id;
         setDocid(selectedDoctorId);
-      }
+      // }
     } 
   }
   const [doctorList,setDoctorList]=useState([" "])
@@ -90,6 +90,7 @@ export const Addpatient = () => {
   const submit=(e)=>{
     e.preventDefault();
 
+    console.log(firstname,lastname,dob,selectedDepartment,doctor.doc_id,bloodgroup,selectedOption)
     const addPatient=async()=>{
       const response=adminadd({
         firstname:firstname, 
@@ -105,12 +106,11 @@ export const Addpatient = () => {
         description:disease,
         history:history,
         dept:selectedDepartment,
-        doctor_name:doctor,
-        doctor_id:docid
+        doctor_name:doctor.first_name,
+        doctor_id:doctor.doc_id
       })
 
     }
-    console.log(firstname,lastname,dob,doctor,docid,selectedDepartment,bloodgroup,selectedOption)
     addPatient();
     navigate('/addpatient')
     
