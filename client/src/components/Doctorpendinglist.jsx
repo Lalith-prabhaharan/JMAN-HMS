@@ -30,8 +30,6 @@ export default function Doctorpendinglist() {
     const viewButton=(pending)=>{
         return <Link className="status1" to={`/pending/${pending.application_id}`} state={{data:pending}}>View</Link>
     }
-
-
     const approveButton=()=>{
         return <button id='btn1doc' >Approve</button>
     }
@@ -45,31 +43,6 @@ export default function Doctorpendinglist() {
         <DoctorNav>
             <div className='status'>
             <h1 className='heading'>Pending Patients List</h1>
-                    {/* <table>
-                        <thead>
-                            <tr>
-                                <th>S. No.</th>
-                                <th>Name</th>
-                                <th>Status</th>
-                                <th>Approve</th>
-                                <th>Reject</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {
-                                pendingList.map((pendings, index)=>(
-                                    <tr key={pendings.application_id}>
-                                    <td>{index+1}</td>
-                                    <td>{pendings.name}</td>
-                                    <td><Link className="status1" to={`/pending/${pendings.application_id}`} state={{data:pendings}}>View</Link></td>
-                                    <td><button id='btn1doc' >Approve</button></td>
-                                    <td><button id='btn2doc'> Reject </button></td>
-                                    </tr>
-                                ))
-                                
-                            }
-                        </tbody>
-                    </table> */}
                     {
                         pendingList.length>1 &&
                         <DataTable removableSort paginator rows={10} value={pendingList}>

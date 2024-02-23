@@ -21,7 +21,9 @@ export const adminstatus=(status)=>{
 export const doctorpending=()=>{
     return  axiosInstance.get(`${url}/doctor/pending`);
 }
-
+export const doctorhandling=()=>{
+    return axiosInstance.get(`${url}/doctor/handling`);
+}
 export const approvedpatients=()=>{
     return axiosInstance.get(`${url}/admin/patient/status`);
 }
