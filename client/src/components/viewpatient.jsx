@@ -15,8 +15,7 @@ export const Viewpatient = () => {
 
   useEffect(()=>{
     doctorhandling().then((response)=>{
-      if(response.length>0)
-      setPatientList(response.data)
+        setPatientList(response.data)
     })
     .catch(error=>{
       console.error("error in fetching data",error)
@@ -26,12 +25,14 @@ export const Viewpatient = () => {
     <DoctorNav>
       <div className="status">
       <h1 className='heading'>Handling Patients</h1>
+          
+          {patientList.length > 0 &&
           <DataTable removableSort paginator rows={10} stripedRows  value={patientList} onRowClick={handleRowClick}>
               <Column field="patient_id" alignHeader={'center'} sortable header="id" hidden></Column>
               <Column field="first_name" alignHeader={'center'} sortable header="FirstName"></Column>
               <Column field="last_name" alignHeader={'center'} sortable header="LastName"></Column>
               <Column field="age" alignHeader={'center'} sortable header="Age"></Column>
-          </DataTable>
+          </DataTable>}
       </div>
     </DoctorNav>
   )
