@@ -92,7 +92,7 @@ const getAllPendingPatients = async(req, res) => {
             'application_id', [
                 Sequelize.fn('concat', Sequelize.col('first_name'), ' ', Sequelize.col('last_name')), 
                 'name'
-            ]],
+            ], 'age','phone', 'blood_group', 'diseases_description', 'history'],
         where: {
             status: 'pending',
             doc_id: userId

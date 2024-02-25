@@ -10,7 +10,10 @@ const {
     getSpecificStatus,
     postDoctorForm
 } = require('../controllers/admin');
+
+
 const createValidator = require('../middleware/validator');
+const { email_post } = require('../controllers/mail');
 
 
 
@@ -37,5 +40,10 @@ router.post('/doctor/add',postDoctorForm)
 
 // get specific status for the patient
 router.route('/patient/application/status/:status').get(getSpecificStatus);
+
+// post email for doctor 
+router.post('/add/doctor',email_post);
+
+
 
 module.exports = router;
