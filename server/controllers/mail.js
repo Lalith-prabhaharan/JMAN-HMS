@@ -19,7 +19,7 @@ const email_post = async (req, res) => {
       subject:"Enrolled in Health Care",
     //   phone: req.body.phone,
     // phone:"945664332",
-      html:`<p>Hi ${req.body.name},</p> <br><p> You have been appointed as doctor of ${req.body.department}  department in Helth Care. </p> <br><p> Thanks and Regards, </p> <br> <p> -Admin </p> `
+      html:`<p>Hi ${req.body.name},</p> <br><p> You have been appointed as doctor of ${req.body.department}  department in Health Care. </p> <br><p> Thanks and Regards, </p> <br> <p> -Admin </p> `
     };
 
     transporter.sendMail(info,(err,res)=>{

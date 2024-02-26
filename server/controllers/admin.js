@@ -2,9 +2,7 @@ const Doctor = require('../models/Doctor');
 const Application = require('../models/Application');
 const Patient = require('../models/Patient');
 const {Op} = require('sequelize');
-
-
-
+const bcrypt = require('bcryptjs');
 
 // get all doctors
 const getAllDeptDoctors = async(req, res) => {
@@ -148,12 +146,17 @@ const postDoctorForm=async(req,res)=>{
         phone,
         department,
         year_of_exp,
-    }=req.body
+    } = req.body
     const maxDocId = await Doctor.max('doc_id')
     const numericPart = parseInt(maxDocId.slice(1), 10);
     const newNumericPart = numericPart + 1;
     // Format the new doc_id
     const newDocId = `D${newNumericPart.toString().padStart(4, '0')}`;
+
+    //Password Hashing
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+    console.log(hashedPassword);
 
     const doctor=await Doctor.create({
         doc_id:newDocId,
@@ -161,7 +164,7 @@ const postDoctorForm=async(req,res)=>{
         last_name:last_name,
         email:email,
         dob:dob,
-        password:password,
+        password:hashedPassword,
         age:age,
         gender:gender,
         phone:phone,
