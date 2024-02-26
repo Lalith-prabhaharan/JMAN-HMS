@@ -7,10 +7,13 @@ const {
     getAllPatientStatus,
     getPatientDetails,
     postPatientForm,
-    choosereport,
-    uploadreport
+    getSpecificStatus,
+    postDoctorForm
 } = require('../controllers/admin');
+
+
 const createValidator = require('../middleware/validator');
+const { email_post } = require('../controllers/mail');
 
 
 
@@ -32,9 +35,14 @@ router.route('/patient/status/:id').get(getPatientDetails);
 // post the application form for new patient
 router.post('/patient/application', createValidator, postPatientForm);
 
-// post the report details and upload file
-router.route('/patient/report').get(choosereport).post(uploadreport);
+// post the doctor form for new doctor
+router.post('/doctor/add',postDoctorForm)
 
+// get specific status for the patient
+router.route('/patient/application/status/:status').get(getSpecificStatus);
+
+// post email for doctor 
+router.post('/add/doctor',email_post);
 
 
 

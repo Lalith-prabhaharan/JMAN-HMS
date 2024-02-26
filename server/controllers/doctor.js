@@ -5,17 +5,9 @@ const Patient = require('../models/Patient');
 const Report = require('../models/Report');
 const { Sequelize } = require('sequelize');
 
-
-const azureStorage = require('azure-storage');
-const path = require('path');
-let { username } = require('os').userInfo();
-
-
-
-
-
-const getAllPatients = async (req, res) => {
-    const { userId } = req.user;
+//Get all Handling Patients
+const getAllPatients = async(req, res) => {
+    const {userId} = req.user;
     const patient = await Patient.findAll({
         attributes: ['patient_id', 'first_name', 'last_name', 'age'],
         where: { doc_id: userId }
@@ -28,12 +20,24 @@ const getAllPatients = async (req, res) => {
     return res.status(200).json(patient);
 }
 
-const getPatient = (req, res) => {
-    res.status(200).json('Get a handling patient');
+//Get a Handling Patient
+const getPatient = async (req, res) => {
+    const {userId} = req.user;
+    const patient_id = req.params.id;
+    const patient = await Patient.findAll({
+        where: {doc_id: userId, patient_id: patient_id}
+    });
+    
+    if(patient.length === 0) {
+        return res.status(404).json({msg: 'No such patient availabe'});
+    }
+
+    return res.status(200).json(patient[0]);
 }
 
-const approvePatient = async (req, res) => {
-    const { userId } = req.user;
+//Approve Patient
+const approvePatient = async(req, res) => {
+    const {userId} = req.user;
     const patient_id = req.params.id;
     const patient = await Application.update({
         status: 'approved'
@@ -57,8 +61,9 @@ const approvePatient = async (req, res) => {
     return res.status(200).json({ msg: "Success" });
 }
 
-const rejectPatient = async (req, res) => {
-    const { userId } = req.user;
+//Reject Patient
+const rejectPatient = async(req, res) => {
+    const {userId} = req.user;
     const patient_id = req.params.id;
     const patient = await Application.update({
         status: 'Rejected'
@@ -78,8 +83,9 @@ const rejectPatient = async (req, res) => {
     return res.status(200).json({ msg: "Success" });
 }
 
-const getAllPendingPatients = async (req, res) => {
-    const { userId } = req.user;
+//Get all Applicants
+const getAllPendingPatients = async(req, res) => {
+    const {userId} = req.user;
     // Query to fetch all the pending patients
 
     const applicant = await Application.findAll({
@@ -87,7 +93,7 @@ const getAllPendingPatients = async (req, res) => {
             'application_id', [
                 Sequelize.fn('concat', Sequelize.col('first_name'), ' ', Sequelize.col('last_name')),
                 'name'
-            ]],
+            ], 'age','phone', 'blood_group', 'diseases_description', 'history'],
         where: {
             status: 'pending',
             doc_id: userId
@@ -102,8 +108,9 @@ const getAllPendingPatients = async (req, res) => {
     return res.status(200).json(applicant);
 }
 
-const getPendingPatient = async (req, res) => {
-    const { userId } = req.user;
+//Get a Applicants
+const getPendingPatient = async(req, res) => {
+    const {userId} = req.user;
     const application_id = req.params.id;
 
     const applicant = await Application.findAll({

@@ -1,54 +1,38 @@
-import React from 'react';
-import '../style/AdminAllPatientStatus.css';
+import React, { useState } from 'react';
+import { InputText } from 'primereact/inputtext';
+import { DataTable } from 'primereact/datatable';
+import { Column } from 'primereact/column';
 import { Navbar } from './navbar';
-export default function AdminAllPatient() {
-  return (
-        <Navbar>
-          <div className='status'>
-          <input type="text" id="search-bar" placeholder=" search by name"/>   
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>App_ID</th>
-                                <th>Name</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>21</td>
-                                <td>Shubham Singh</td>
-                                <td><a className="status1" href="">View</a></td>
-                            </tr>
-                            <tr>
-                                <td>456</td>
-                                <td>Soofa Singh</td>
-                                <td><a className="status1" href="">View</a></td>
-                            </tr>
-                            <tr>
-                                <td>789</td>
-                                <td>Bob Smith</td>
-                                <td><a className="status1" href="">View</a></td>
-                            </tr>
-                            <tr>
-                                <td>782</td>
-                                <td>Steve Smith</td>
-                                <td><a className="status1" href="">View</a></td>
-                            </tr>
-                            <tr>
-                                <td>782</td>
-                                <td>Virat Kohli</td>
-                                <td><a className="status1" href="">View</a></td>
-                            </tr>
-                            <tr>
-                                <td>782</td>
-                                <td>Sanju Samson</td>
-                                <td><a className="status1" href="">View</a></td>
-                            </tr>
-                        </tbody>
-                    </table>
-            </div>
+import '../style/AdminAllPatientStatus.css';
 
+export default function AdminAllPatient() {
+    const [globalFilter, setGlobalFilter] = useState('');
+
+    const statuses = [
+        { appId: 21, name: 'Shubham Singh', status: 'View' },
+        { appId: 456, name: 'Soofa Singh', status: 'View' },
+        { appId: 789, name: 'Bob Smith', status: 'View' },
+        { appId: 782, name: 'Steve Smith', status: 'View' },
+        { appId: 782, name: 'Virat Kohli', status: 'View' },
+        { appId: 782, name: 'Sanju Samson', status: 'View' }
+    ];
+
+    const header = (
+        <div  style={{ textAlign: 'left' }}>
+            <i className="pi pi-search" style={{ margin: '4px 4px 0 0' }}></i>
+            <InputText id='search-bar' type="search" onInput={(e) => setGlobalFilter(e.target.value)} placeholder="Search" />
+        </div>
+    );
+
+    return (
+        <Navbar>
+            <div className='status'>
+                <DataTable value={statuses} header={header} globalFilter={globalFilter}>
+                    <Column field="appId" header="App_ID" />
+                    <Column field="name" header="Name" />
+                    <Column field="status" header="Status" />
+                </DataTable>
+            </div>
         </Navbar>
-  )
+    );
 }

@@ -7,8 +7,9 @@
 }
 
 .status th, td {
-    padding: 8px;
-    text-align: center;
+    padding: 5px;
+    /* text-align: center; */
+    margin: 0%;
 }
 #search-bar {
     width: 70%;
@@ -46,8 +47,9 @@
 
 .status tr {
     border-bottom: 1px solid #ddd;
-    transition: background-color 0.1s, color 0.1s;
+    transition: background-corgb(254, 251, 251)0.1s, color 0.1s;
     cursor: pointer;
+    color: black;
 }
 
 .status tr:last-child {
@@ -67,6 +69,15 @@
     color: white;
 }
 
+.p-datatable .p-sortable-column .p-sortable-column-icon {
+    color: white;
+}
+
+.p-datatable .p-sortable-column .p-column-title {
+    color: white;
+    padding-left: 10px;  
+}
+
 /* h2{
     text-align: center;
     color: white;
@@ -75,10 +86,12 @@
 .dropdown {
     background-color: #00866E;
     color: white;
-    width: 15%;
+    width: fit-content;
     border-radius: 5%;
     cursor: pointer;
     transition: all 0.1s;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 .dropdown:hover {
@@ -90,45 +103,13 @@
 .dropdown-content {
     background-color: white;
     color: #00866E;
-<<<<<<< HEAD
-}
-
-.p-paginator {
-    display: flex;
-    justify-content: center;
-    margin-top: 3%;
-  }
-  
-.p-paginator .p-paginator-pages {
-    padding-left: 30px;
-    padding-right: 30px;
-}
-
-.p-paginator .p-paginator-page {
-    margin: 0 5px;
-    padding: 5px 10px;
-    border: 1px solid #00866E;
-    color: #00866E;
-    cursor: pointer;
-    transition: background-color 0.1s, color 0.1s;
-}
-
-.p-paginator .p-paginator-page:hover {
-    background-color: #00866E;
-    color: white;
-}
-
-.p-paginator .p-paginator-page:focus {
-    background-color: #00866E;
-    color: white;
-=======
->>>>>>> d21fb4d164239096f9469c3859f5ae809b9ae0f3
 }
 
 .p-paginator {
     display: flex;
     justify-content: center;
     margin-top: 3%; 
+    background-color: #f1f1f18a;
   }
   
 .p-paginator .p-paginator-pages {
@@ -143,6 +124,7 @@
     color: #00866E;
     cursor: pointer;
     transition: background-color 0.1s, color 0.1s;
+    font-size: small;
 }
 
 .p-paginator .p-paginator-page:hover {
@@ -186,7 +168,7 @@
     background-color: rgb(255, 46, 46);
     color: white;
     border-width: 0;
-    width: 30%;
+    width: fit-content;
     height: 30px;
     border-radius: 20px;
     font-size: 0.9rem;
@@ -197,4 +179,65 @@
 
 .close:hover {
     box-shadow: 0 12px 16px 0 rgba(255, 46, 46, 0.24)
+}
+
+.approve {
+    background-color: rgb(0, 133, 108);
+    color: white;
+    border-width: 0;
+    width: fit-content;
+    height: 30px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 550;
+    transition: backgroud-color 0.1s, color 0.1s;
+}
+
+.approve:hover {
+    background-color: white;
+    color: rgb(0, 133, 108);
+}
+
+.reject {
+    background-color: rgb(255, 46, 46);
+    color: white;
+    border-width: 0;
+    width: fit-content;
+    height: 30px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 550;
+    transition: backgroud-color 0.1s, color 0.1s;
+}
+
+.reject:hover {
+    background-color: white;
+    color: rgb(255, 46, 46);
+}
+
+.page-heading {
+      text-align: center;
+      color: #00866E;
+      display: inline;
+      margin-left: 23%;
+      vertical-align:"middle"; 
+}
+
+.view {
+    text-decoration: none;
+    color: black;
+}
+
+view:hover {
+    color: white;
+}
+
+@media screen and (max-width: 768px) {
+    .dropdown {
+        width:fit-content;
+    }
+    .page-heading {
+        margin-left: 50px;
+        margin-top: 100px;
+    }
 }

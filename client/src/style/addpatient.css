@@ -60,6 +60,7 @@
 
    .heading {
     text-align: center;
+    color:#00866E
   }
 
   
@@ -119,7 +120,7 @@
     margin: 2px;
     outline: 2px;
     padding: 10px;
-    width: 80%;
+    width: 84%;
     background-color: #eff3ef;
     color: #151616;
     box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
@@ -140,7 +141,7 @@
     font-size: 16px;
     height: auto;
     padding: 10px;
-    width: 50%;
+    width: 84%;
     background-color: #eff3ef;
     color: #151616;
     box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
@@ -152,8 +153,12 @@
     color: #070707;
   }
   
-  .p-datepicker-inline{
-    padding: 10px;
+  
+
+  .p-monthpicker-month{
+    background-color: #eef1f0;
+    color: #070707;
+    padding: 5px;
   }
 
 

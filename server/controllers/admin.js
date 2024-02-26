@@ -2,15 +2,8 @@ require('dotenv').config();
 const Doctor = require('../models/Doctor');
 const Application = require('../models/Application');
 const Patient = require('../models/Patient');
-const Report = require('../models/Report');
-const { Op } = require('sequelize');
-const azureStorage = require('azure-storage');
-const intoStream = require('into-stream');
-const path = require('path');
-
-
-
-
+const {Op} = require('sequelize');
+const bcrypt = require('bcryptjs');
 
 // get all doctors
 const getAllDeptDoctors = async (req, res) => {
@@ -42,10 +35,8 @@ const getDeptDoctors = async (req, res) => {
 
 
 // get all the application status
-const getPatients = async (req, res) => {
-    const applicant = await Application.findAll({
-        attributes: ['application_id', 'first_name', 'last_name', 'status']
-    });
+const getPatients = async(req, res) => {
+    const applicant = await Application.findAll({});
 
     if (applicant.length === 0) {
         return res.status(404).json({ msg: 'No patients' })
@@ -203,6 +194,58 @@ const choosereport = (req, res) => {
 
 
 
+const getSpecificStatus = async(req,res)=>{
+    const status=req.params.status;
+    const patient=await Application.findAll({
+        where: {status: { [Op.regexp]: `^${status}`}}
+    }) 
+    if(patient.length === 0){
+        return res.status(404).json({msg:'No Patient in the specified status'})
+    }
+    res.status(200).json(patient);
+}
+const postDoctorForm=async(req,res)=>{
+    const{
+        first_name,
+        last_name,
+        email,
+        password,
+        age,
+        dob,
+        gender,
+        phone,
+        department,
+        year_of_exp,
+    } = req.body
+    const maxDocId = await Doctor.max('doc_id')
+    const numericPart = parseInt(maxDocId.slice(1), 10);
+    const newNumericPart = numericPart + 1;
+    // Format the new doc_id
+    const newDocId = `D${newNumericPart.toString().padStart(4, '0')}`;
+
+    //Password Hashing
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+    console.log(hashedPassword);
+
+    const doctor=await Doctor.create({
+        doc_id:newDocId,
+        first_name:first_name,
+        last_name:last_name,
+        email:email,
+        dob:dob,
+        password:hashedPassword,
+        age:age,
+        gender:gender,
+        phone:phone,
+        department:department,
+        year_of_exp:year_of_exp
+    })
+    if(!doctor)
+        return res.status(500).json({msg:'Failed'})
+    else
+        res.status(200).json({msg:'Success'})
+}
 
 
 module.exports = {
@@ -212,6 +255,6 @@ module.exports = {
     getAllPatientStatus,
     getPatientDetails,
     postPatientForm,
-    choosereport,
-    uploadreport
+    getSpecificStatus,
+    postDoctorForm
 }

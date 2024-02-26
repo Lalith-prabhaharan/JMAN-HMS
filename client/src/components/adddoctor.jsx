@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Navbar } from './navbar'
 import { InputText } from 'primereact/inputtext'
 import "../style/addDoctor.css"
-import { doctordetails } from '../services/services'
+import { adddoctor, doctordetails } from '../services/services'
 import { Dropdown } from 'primereact/dropdown'
 import { Calendar} from 'primereact/calendar'
 import { Password } from 'primereact/password'
@@ -43,7 +43,7 @@ export const Adddoctor = () => {
     const submit=()=>{
         console.log(docdetails)
         const addDoctor=async()=>{
-            const response=axios.post("http://localhost:5000/api/v1/admin/doctor/add",{
+            const response=adddoctor({
                 first_name:docdetails.docfirstname,
                 last_name:docdetails.doclastname,
                 email:docdetails.docemail,
@@ -57,6 +57,14 @@ export const Adddoctor = () => {
             })
         }
         addDoctor();
+        const sendMail=async()=>{
+            const res=axios.post("http://localhost:5000/api/v1/admin/add/doctor",{
+                name:docdetails.docfirstname,
+                email:docdetails.docemail,
+                department:docdetails.docdept
+            })
+        }
+        sendMail()
     }
 
   return (
@@ -86,20 +94,20 @@ export const Adddoctor = () => {
             </span>
             </div>
             <div className='right-det'>
-            <div className="card flex justify-content-center" >
+            <div  className="card flex justify-content-center" >
                 <Calendar value={docdetails.docdob} onChange={handleChange} name='docdob' placeholder='select DOB' />
             </div>
-            <div  className="card flex justify-content-center">
+            <div style={{marginLeft:"3%"}} className="card flex justify-content-center">
             <Password value={docdetails.docpass} onChange={handleChange} header={header} footer={footer} placeholder='Enter Password'  name='docpass' toggleMask/>    
             </div>
             <div  className="card flex justify-content-center">
                 <Dropdown value={docdetails.docgender} onChange={handleChange} options={gender} optionLabel="label"  name='docgender'
                     placeholder="Select Gender" className="w-full md:w-14rem" />    
             </div>
-            <div className="card flex justify-content-center">
+            {/* <div className="card flex justify-content-center"> */}
                 <Dropdown value={docdetails.docdept} onChange={handleChange} options={departments} optionLabel=""  name='docdept'
                     placeholder="Select the Department" className="w-full md:w-14rem" />    
-            </div>
+            {/* </div> */}
             <span className="p-float-label" >
                 <InputText id="username" value={docdetails.docexp} onChange={handleChange} name='docexp' />
                 <label htmlFor="username">Year of Experience</label>

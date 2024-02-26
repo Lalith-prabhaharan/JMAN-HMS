@@ -13,17 +13,30 @@ export const adminadd=(patientDetails)=>{
     return axiosInstance.post(`${url}/admin/patient/application`,patientDetails);
 }
 
-<<<<<<< HEAD
-export const adminstatus=()=>{
-    return axiosInstance.get(`${url}/admin/patient/application/status`);
-=======
-
 export const adminstatus=(status)=>{
     return axiosInstance.get(`${url}/admin/patient/application/status/${status}`);
->>>>>>> d21fb4d164239096f9469c3859f5ae809b9ae0f3
 }
 
 export const doctorpending=()=>{
     return  axiosInstance.get(`${url}/doctor/pending`);
 }
 
+export const doctorhandling=()=>{
+    return axiosInstance.get(`${url}/doctor/handling`);
+}
+
+export const approvedpatients=()=>{
+    return axiosInstance.get(`${url}/admin/patient/status`);
+}
+
+export const adddoctor=(doctordetails)=>{
+    return axiosInstance.post(`${url}/admin/doctor/add`,doctordetails)
+}
+
+export const approvePatients= (id)=> {
+    return axiosInstance.put(`${url}/doctor/approve/${id}`)
+}
+
+export const rejectPatients= (id)=> {
+    return axiosInstance.patch(`${url}/doctor/reject/${id}`)
+}
