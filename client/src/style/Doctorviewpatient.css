@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Karla:wght@200;400&display=swap");
-* {
+/* * {
   margin: 0;
   padding: 0;
 }
@@ -11,7 +11,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #ccc;
-}
+} */
 
 .docviewcontainer {
     width: 100%;
@@ -77,7 +77,7 @@ body {
     }
 }
 
-.card {
+.docviewcontainer  .card {
     background-color: #bfc5bf;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 20px;
@@ -87,18 +87,18 @@ body {
     padding: 20px;
 }
 
-.card-header {
+.docviewcontainer  .card-header {
     background-color:#bfc5bf;
     color: black;
     padding: 10px;
     text-align: center;
 }
 
-.card-body {
+.docviewcontainer .card-body {
     text-align: left;
 }
 
-.report-link {
+.docviewcontainer .report-link {
     display: block;
     margin-bottom: 8px;
     color: #333;
@@ -108,11 +108,11 @@ body {
     border-radius: 4px;
 }
 
-.report-link:hover {
+.docviewcontainer .report-link:hover {
     background-color: #ccc;
 }
 
-label {
+.docviewcontainer label {
     font-size: 18px;
     /* Adjust the size as needed */
 }

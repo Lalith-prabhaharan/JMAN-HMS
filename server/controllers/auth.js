@@ -3,6 +3,7 @@ const statusCode = require('http-status-codes');
 const jwt = require('jsonwebtoken');
 const db = require('../db/connect');
 const Doctor = require('../models/Doctor');
+const bcrypt = require('bcryptjs');
 
 const loginUser = async(req, res) => {
     const { username, password, type } = req.body;
@@ -28,7 +29,7 @@ const loginUser = async(req, res) => {
             where: {email: username},
         });
 
-        if (doctor.length == 0 || (doctor.length > 0 && doctor[0].password !== password)) {
+        if (doctor.length == 0 || (doctor.length > 0 && !await bcrypt.compare(password, doctor[0].password))) {
             return res.status(200).json({msg: 'Invalid credentials'});
         }
 
