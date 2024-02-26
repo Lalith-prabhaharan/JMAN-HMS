@@ -8,6 +8,7 @@ import axiosInstance from '../interceptor/axios-config';
 import { useLocation } from 'react-router-dom';
 import { useState } from 'react';
 
+
 export default function Doctorviewpatient() {
     const loc=useLocation();
     const {data}=loc.state;
