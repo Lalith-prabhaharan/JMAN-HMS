@@ -18,12 +18,10 @@
         "http-status-codes": "^2.3.0",
         "i": "^0.3.7",
         "jsonwebtoken": "^9.0.2",
-<<<<<<< HEAD
-=======
         "nodemailer": "^6.9.10",
         "nodemon": "^3.0.3",
->>>>>>> 0b4c5db5f26ad17173c08cade74f41343a4eb380
         "pg": "^8.11.3",
-        "sequelize": "^6.37.1"
+        "sequelize": "^6.37.1",
+        "sequelize-cli": "^6.6.2"
     }
 }
