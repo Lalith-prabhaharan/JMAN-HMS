@@ -1,30 +1,23 @@
-@import url("https://fonts.googleapis.com/css2?family=Karla:wght@200;400&display=swap");
-/* * {
-  margin: 0;
-  padding: 0;
+body{
+    margin: 0;
+    padding: 0;
 }
 
-body {
-  font-family: "Karla", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
-    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: #ccc;
-} */
-
-.docviewcontainer {
-    width: 100%;
-    display: flex;
-    justify-content: center;
+.main {
+    background-color: #ccc;
+    margin: 0;
+    padding: 0;
 }
 
-.form-containerdocview,.right-col {
-    padding: 40px;
-    width: 600px;
+.form-containerdocview,
+.right-col {
+    padding: 10px;
+    width: 800px;
+    margin: 0px auto;
 }
 @media (max-width:675px) {
-    .form-containerdocview,.right-col {
+    .form-containerdocview,
+    .right-col {
         width: auto;
     }
 }
@@ -40,15 +33,13 @@ body {
         flex: none;
         width: 100%;
     }
-    .right-col{
+
+    .right-col {
         width: auto;
     }
 }
 
 @media (max-width: 600px) {
-    .docviewcontainer {
-        flex-direction: column;
-    }
 
     .left-col,
     .right-col {
@@ -56,13 +47,16 @@ body {
         width: 100%;
     }
 
-    .form-containerdocview,.right-col {
+    .form-containerdocview,
+    .right-col {
         width: auto;
     }
 }
 
 @media (max-width:500px) {
-    .form-containerdocview,.right-col {
+
+    .form-containerdocview,
+    .right-col {
         width: auto;
     }
 
@@ -77,28 +71,29 @@ body {
     }
 }
 
-.docviewcontainer  .card {
+.card {
     background-color: #bfc5bf;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 20px;
     overflow: hidden;
-    max-width: 400px;
-    margin: 10px auto;
+    max-width: 800px;
+    margin: 20px auto;
     padding: 20px;
 }
 
-.docviewcontainer  .card-header {
-    background-color:#bfc5bf;
+.card-header {
+    background-color: #bfc5bf;
     color: black;
     padding: 10px;
     text-align: center;
 }
 
-.docviewcontainer .card-body {
+.card-body {
     text-align: left;
+    padding: 10px;
 }
 
-.docviewcontainer .report-link {
+.report-link {
     display: block;
     margin-bottom: 8px;
     color: #333;
@@ -108,17 +103,19 @@ body {
     border-radius: 4px;
 }
 
-.docviewcontainer .report-link:hover {
+.report-link:hover {
     background-color: #ccc;
 }
 
-.docviewcontainer label {
+label {
     font-size: 18px;
     /* Adjust the size as needed */
 }
-.btndoctor{
+
+.btndoctor {
     background-color: #bfc5bf;
     border-radius: 20px;
+    padding: 20px;
 }
 
 .form-container {
@@ -135,22 +132,20 @@ body {
 fieldset {
     border-width: 0px;
     padding: 25px;
-    background-color:#bfc5bf;
+    background-color: #bfc5bf;
     border-radius: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 #btn1doc {
-    background-color:#00866E;
+    background-color: #00866E;
     color: white;
     padding: 15px;
     border-radius: 20px;
     border-width: 0px;
     cursor: pointer;
-    padding-left: 25px;
-    padding-right: 25px;
-    margin-right: 10px;
-    margin-bottom: 10px;
+    padding-left: 35px;
+    padding-right: 35px;
 }
 
 .btnViewdoc {
@@ -166,13 +161,12 @@ fieldset {
 }
 
 .text-box {
-    width: 97%;
+    width: 100%;
     height: 180px;
     resize: none;
-    padding: 10px;
+    padding: 20px;
     box-sizing: border-box;
     border-radius: 20px;
-    margin: 10px;
     margin-bottom: 0px;
 
 }
@@ -201,11 +195,12 @@ fieldset {
     overflow-y: auto;
     padding: 10px;
 }
+
 .suggestion-item {
     margin-bottom: 8px;
     padding: 8px;
     border-radius: 4px;
-    background-color:white;
+    background-color: white;
     cursor: pointer;
     transition: background-color 0.3s;
 }
@@ -232,4 +227,13 @@ fieldset {
     padding: 5px;
     border: 1px solid #ddd;
     border-radius: 4px;
+}
+
+.sidetabs {
+    display: flex;
+    flex-direction: row;
+    width: 240px;
+    margin-top: 10px;
+    border-right: 1px solid #ccc;
+    background: #f4f4f4;
 }
