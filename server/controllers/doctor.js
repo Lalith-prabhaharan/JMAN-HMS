@@ -7,6 +7,7 @@ const { Sequelize } = require('sequelize');
 const azureStorage = require('azure-storage');
 let { username } = require('os').userInfo();
 const path = require('path');
+const { log } = require('console');
 
 
 //Get all Handling Patients
@@ -68,9 +69,11 @@ const approvePatient = async(req, res) => {
 //Reject Patient
 const rejectPatient = async(req, res) => {
     const {userId} = req.user;
+    const {reason} = req.body;
     const patient_id = req.params.id;
     const patient = await Application.update({
-        status: 'Rejected'
+        status: 'Rejected',
+        reason: reason
     },
         {
             where: {
@@ -146,8 +149,6 @@ const getPendingPatient = async(req, res) => {
 const postSuggestions = (req, res) => {
     res.status(statusCode.OK).json('Post suggestions for patients');
 }
-
-
 
 
 
