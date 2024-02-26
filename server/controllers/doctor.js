@@ -4,6 +4,10 @@ const Application = require('../models/Application');
 const Patient = require('../models/Patient');
 const Report = require('../models/Report');
 const { Sequelize } = require('sequelize');
+const azureStorage = require('azure-storage');
+let { username } = require('os').userInfo();
+const path = require('path');
+
 
 //Get all Handling Patients
 const getAllPatients = async(req, res) => {

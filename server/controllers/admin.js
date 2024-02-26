@@ -2,8 +2,12 @@ require('dotenv').config();
 const Doctor = require('../models/Doctor');
 const Application = require('../models/Application');
 const Patient = require('../models/Patient');
+const Report = require('../models/Report');
 const {Op} = require('sequelize');
 const bcrypt = require('bcryptjs');
+const path = require('path');
+const azureStorage = require('azure-storage');
+const intoStream = require('into-stream');
 
 // get all doctors
 const getAllDeptDoctors = async (req, res) => {
@@ -256,5 +260,7 @@ module.exports = {
     getPatientDetails,
     postPatientForm,
     getSpecificStatus,
-    postDoctorForm
+    postDoctorForm,
+    uploadreport,
+    choosereport
 }

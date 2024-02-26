@@ -8,7 +8,9 @@ const {
     getPatientDetails,
     postPatientForm,
     getSpecificStatus,
-    postDoctorForm
+    postDoctorForm,
+    uploadreport,
+    choosereport
 } = require('../controllers/admin');
 
 
@@ -44,6 +46,8 @@ router.route('/patient/application/status/:status').get(getSpecificStatus);
 // post email for doctor 
 router.post('/add/doctor',email_post);
 
+
+router.route('/patient/report').get(choosereport).post(uploadreport);
 
 
 module.exports = router;
