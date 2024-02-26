@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Uploading The File Using Express</title>
+  </head>
+  <body>
+    <h1>Uploading The File Using Express</h1>
+    <form method="POST" action="/api/v1/admin/patient/report" enctype="multipart/form-data">
+      <input type="number" name="patient_id" placeholder="enter patient_id">
+      <input type="text" name="doc_id" placeholder="enter doc_id">
+      <input type="file" name="file" />
+      <input type="submit" />
+    </form>
+    <br>
+    <form method="POST" action="/api/v1/doctor/report/download" enctype="multipart/form-data">
+      <input type="number" name="report_id" placeholder="enter report_id">
+      <input type="submit" />
+    </form>
+  </body>
+</html>
+
+
