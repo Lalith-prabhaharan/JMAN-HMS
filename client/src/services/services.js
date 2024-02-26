@@ -37,6 +37,6 @@ export const approvePatients= (id)=> {
     return axiosInstance.put(`${url}/doctor/approve/${id}`)
 }
 
-export const rejectPatients= (id)=> {
-    return axiosInstance.patch(`${url}/doctor/reject/${id}`)
+export const rejectPatients= (id, reason)=> {
+    return axiosInstance.patch(`${url}/doctor/reject/${id}`, {reason});
 }
