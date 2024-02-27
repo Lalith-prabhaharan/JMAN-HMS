@@ -76,9 +76,15 @@ export default function Doctorpendinglist() {
     useEffect(() => {
         doctorpending()
         .then(response=>{
-            setPendingList(response.data)
-            if(pendingList.msg === "No applicants Available" && flag === true){
-                setflag(false)
+            if(pendingList.length>0){
+                setPendingList(response.data)
+                console.log(pendingList)
+                if(pendingList.msg === "No applicants Available" && flag === true){
+                    setflag(false)
+                }
+            }
+            else{
+                toast.warn("No pending applicants")
             }
         })
         .catch(err=>{

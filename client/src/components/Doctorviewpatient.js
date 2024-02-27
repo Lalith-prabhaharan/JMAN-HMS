@@ -6,7 +6,6 @@ import "primereact/resources/themes/lara-light-cyan/theme.css";
 import { ScrollPanel } from 'primereact/scrollpanel';
 import axiosInstance from '../interceptor/axios-config';
 import { useLocation } from 'react-router-dom';
-import { useState } from 'react';
 
 
 export default function Doctorviewpatient() {
@@ -27,10 +26,8 @@ export default function Doctorviewpatient() {
     };
 
     return (
-        <div className='main'>
-        <div>
-            <DoctorNav />
-        </div>
+        <DoctorNav>
+        <div className='docviewpatient'>
         <div className='sidetabs'>
             <div
                 onClick={() => handleTabChange('personalInfo')}
@@ -51,7 +48,7 @@ export default function Doctorviewpatient() {
                     borderBottom: activeTab === 'prescription' ? '4px solid #3498db' : 'none',
                     color: activeTab === 'prescription' ? '#3498db' : '#333',
                 }}
-            >
+                >
                 Prescription
             </div>
         </div>
@@ -62,27 +59,27 @@ export default function Doctorviewpatient() {
                         <fieldset>
                             <div className="form-row">
                                 <label for="name" className="form-label">Name:</label>
-                                <input type="text" id="name" name="name" className="form-input" required />
+                                <input type="text" id="name" name="name" className="form-input" value={handlingDetails.first_name+" "+handlingDetails.last_name } required />
                             </div>
                             <div className="form-row">
                                 <label for="age" className="form-label">Age:</label>
-                                <input type="number" id="age" name="age" className="form-input" required />
+                                <input type="number" id="age" name="age" className="form-input" value={handlingDetails.age} required />
                             </div>
                             <div className="form-row">
                                 <label for="dob" className="form-label">Phone No:</label>
-                                <input type="text" id="phoneno" name="phoneno" className="form-input" required />
+                                <input type="text" id="phoneno" name="phoneno" className="form-input" value={handlingDetails.phone} required />
                             </div>
                             <div className="form-row">
                                 <label for="bloodGroup" className="form-label">Blood Group:</label>
-                                <input type="text" id="bloodGroup" name="bloodGroup" className="form-input" required />
+                                <input type="text" id="bloodGroup" name="bloodGroup" className="form-input"  value={handlingDetails.blood_group} required />
                             </div>
                             <div className="form-row">
                                 <label for="description" className="form-label">Description:</label>
-                                <textarea id="description" name="description" className="form-input" rows="4"></textarea>
+                                <textarea id="description" name="description" className="form-input" rows="4"  value={handlingDetails.diseases_description}></textarea>
                             </div>
                             <div className="form-row">
                                 <label for="medicalHistory" className="form-label">Medical History:</label>
-                                <textarea id="medicalHistory" name="medicalHistory" className="form-input" rows="4"></textarea>
+                                <textarea id="medicalHistory" name="medicalHistory" className="form-input" rows="4"  value={handlingDetails.history}  ></textarea>
                             </div>
                         </fieldset>
                     </form>
@@ -121,6 +118,7 @@ export default function Doctorviewpatient() {
                 </div>
             )}
         </div>
-    </div>
+        </div>
+    </DoctorNav>
     )
 }
