@@ -1,10 +1,9 @@
-const Doctor = require('../models/Doctor');
 const Patient = require('../models/Patient');
 const Prescription = require('../models/Prescription');
-const statusCode = require('http-status-codes');
-let { username } = require('os').userInfo();
 
-// get all doctors
+
+
+// upload prescription
 const uploadprescription = async (req, res) => {
     const { patient_id, doc_id, suggestion } = req.body;
 
@@ -19,24 +18,26 @@ const uploadprescription = async (req, res) => {
         return res.status(400).json({ msg: "Invalid Doctor" });
     }
 
-    const timestamp = Date.now();
-
-    console.log(patient_id, doc_id, timestamp, suggestion);
+    let date = new Date();
+    var currdatetime = date.getFullYear()+'/'+(date.getMonth()+1)+'/'+date.getDate(); 
+    currdatetime += ' '+date.getHours()+':'+date.getMinutes()+':'+date.getSeconds(); 
     
     const prescription = await Prescription.create({
         patient_id: Number(patient_id),
         doc_id: doc_id,
-        time_stamp: timestamp,
+        time_stamp: currdatetime,
         medication: suggestion
     });
 
     if (!prescription) {
         return res.status(500).json({ msg: 'Failed To insert' });
     }
+    
     res.status(200).json({ message: 'Success' });
 };
 
 
+// get prescriptions of a patient
 const getprescription = async (req, res) => {
     const patient_id=req.params.id;
     const prescription= await Prescription.findAll({
@@ -45,9 +46,11 @@ const getprescription = async (req, res) => {
     if (prescription.length===0){
         return res.status(200).json({msg:"No prescription available"})
     }
-    else
-    return res.status(200).json(prescription);
+    res.status(200).json(prescription);
 };
+
+
+
 
 
 module.exports = {
