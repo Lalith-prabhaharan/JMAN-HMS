@@ -93,7 +93,13 @@ export default function Doctorpendinglist() {
     })
 
     const viewButton=(pending)=>{
-        return <i className="pi pi-eye" style={{ fontSize: '1rem' }} onClick={() => handleView(pending)}></i>
+        return(
+            <div>
+            <i className="pi pi-eye" style={{ fontSize: '1rem',marginBottom:'2%' }} onClick={() => handleView(pending)}></i><br></br>
+            <Button className='approve'  style={{ marginBottom:'2%' }}  onClick={() => {setAppID(pending.application_id); handleApprove(appId)}}>Approve</Button> <br></br>
+            <Button className='reject' onClick={() => {setAppID(pending.application_id); setReasonCard(true)}}>Reject</Button>
+            </div>
+        ) 
     }
     const approveButton=(pending)=>{
         return <Button className='approve' onClick={() => {setAppID(pending.application_id); handleApprove(appId)}}>Approve</Button>
@@ -112,8 +118,8 @@ export default function Doctorpendinglist() {
                         <Column field="application_id" alignHeader={'center'} sortable header="Application ID" hidden></Column>
                         <Column field="name" alignHeader={'center'} sortable header="Name"></Column>
                         <Column alignHeader={'center'}  body={viewButton}  header="View"></Column>
-                        <Column alignHeader={'center'}  body={approveButton}  header="Approve"></Column>
-                        <Column alignHeader={'center'}  body={rejectButton}  header="Reject"></Column>
+                        {/* <Column alignHeader={'center'}  body={approveButton}  header="Approve"></Column>
+                        <Column alignHeader={'center'}  body={rejectButton}  header="Reject"></Column> */}
                     </DataTable>
                     }
 
