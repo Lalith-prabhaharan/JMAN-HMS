@@ -5,18 +5,24 @@ import axios from 'axios';
 import "primereact/resources/themes/lara-light-cyan/theme.css";
 import { ScrollPanel } from 'primereact/scrollpanel';
 import axiosInstance from '../interceptor/axios-config';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 
 export default function Doctorviewpatient() {
+    const navigate=useNavigate()
     const loc=useLocation();
     const {data}=loc.state;
     const [handlingDetails,setHandlingDetails]=useState([]);
+    const [prescriptionData,setPrescriptionData]=useState([])
     useEffect(() => {
         axiosInstance.get(`http://localhost:5000/api/v1/doctor/handling/${data}`).then((res)=>{
             setHandlingDetails(res.data)
         })
         .catch((err)=>console.log(err))
+
+        axiosInstance.get(`http://localhost:5000/api/v1/prescription/getDetails/${data}`).then((res)=>{
+            setPrescriptionData(res.data)
+        })
     },[handlingDetails])
 
     const [activeTab, setActiveTab] = useState('personalInfo');
@@ -24,6 +30,17 @@ export default function Doctorviewpatient() {
     const handleTabChange = (tab) => {
         setActiveTab(tab);
     };
+
+    const [medication,setMedication]=useState("")
+
+    const addSuggestion=()=>{
+        const response=axiosInstance.post("http://localhost:5000/api/v1/prescription/uploadprescription",{
+            patient_id:handlingDetails.patient_id,
+            doc_id:handlingDetails.doc_id,
+            suggestion:medication
+        })
+        navigate('\viewpatient')
+    }
 
     return (
         <DoctorNav>
@@ -96,23 +113,25 @@ export default function Doctorviewpatient() {
             {activeTab === 'prescription' && (
                 <div className='right-col'>
                     <div className='btndoctor'>
-                        <textarea className="text-box" placeholder="add new suggestion/medication" ></textarea>
+                        <textarea className="text-box" placeholder="add new suggestion/medication" value={medication} onChange={(e)=>setMedication(e.target.value)}></textarea>
                         <div className='btnViewdoc'>
-                            <button id='btn1doc'>Add</button>
+                            <button id='btn1doc' onClick={addSuggestion}>Add</button>
                         </div>
                     </div>
 
                     <div id="suggestions-card">
                         <h2>Suggestions and Medications</h2>
                         <ScrollPanel style={{ width: '100%', height: '200px' }}>
-                            <div className="suggestion-item">Suggestion 1</div>
-                            <div className="suggestion-item">Suggestion 2</div>
+                            {prescriptionData.map((prescription)=>(
+                                <div key={prescription.p_id} className="suggestion-item">{prescription.medication}</div>
+                            ))}
+                            {/* <div className="suggestion-item">Suggestion 2</div>
                             <div className="suggestion-item">Suggestion 3</div>
                             <div className="suggestion-item">Suggestion 4</div>
                             <div className="suggestion-item">Suggestion 5</div>
                             <div className="suggestion-item">Suggestion 6</div>
                             <div className="suggestion-item">Suggestion 7</div>
-                            <div className="suggestion-item">Suggestion 8</div>
+                            <div className="suggestion-item">Suggestion 8</div> */}
                         </ScrollPanel>
                     </div>
                 </div>
