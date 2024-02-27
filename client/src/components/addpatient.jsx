@@ -21,6 +21,9 @@ export const Addpatient = () => {
     setBloodgroup(event.target.value)
   }
   
+  const handleRiskChange=(event)=>{
+    setRisk(event.target.value)
+  }
 
   const [selectedDepartment, setSelectedDepartment] = useState('');
 
@@ -28,6 +31,8 @@ export const Addpatient = () => {
   ,'oncology','general'];
 
   const bloodgroups=['A+','A-','O+','O-','AB+','AB-','B+','B-']
+
+  const risk=["low","moderate","high"]
   
 
   const handleDepartmentChange=(event)=>{
@@ -85,6 +90,7 @@ export const Addpatient = () => {
   const [history,setHistory]=useState("")
   const [bloodgroup,setBloodgroup]=useState("")
   const [doctor,setDoctor]=useState("")
+  const[selectedRisk,setRisk]=useState("")
   const [docid,setDocid]=useState("")
 
   const submit=(e)=>{
@@ -328,6 +334,12 @@ export const Addpatient = () => {
           <Dropdown value={doctor} onChange={handleDoctorChange} options={doctorList} optionLabel="first_name" 
               placeholder="Select the Doctor" className="w-full md:w-14rem" />    
           </div> 
+
+          <label>Patient Risk<span className="required">*</span>:</label>
+          <div className="card flex justify-content-center">
+          <Dropdown value={selectedRisk} onChange={handleRiskChange} options={risk} optionLabel="" 
+              placeholder="Patient Risk" className="w-full md:w-14rem" />    
+          </div>
 
         <button className="button-1" onClick={prevStep}>Previous</button>
         <button className="button-1" onClick={submit}>Submit</button>

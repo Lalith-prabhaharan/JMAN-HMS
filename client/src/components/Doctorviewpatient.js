@@ -6,6 +6,7 @@ import "primereact/resources/themes/lara-light-cyan/theme.css";
 import { ScrollPanel } from 'primereact/scrollpanel';
 import axiosInstance from '../interceptor/axios-config';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 
 export default function Doctorviewpatient() {
@@ -13,7 +14,7 @@ export default function Doctorviewpatient() {
     const loc=useLocation();
     const {data}=loc.state;
     const [handlingDetails,setHandlingDetails]=useState([]);
-    const [prescriptionData,setPrescriptionData]=useState([])
+    const [prescriptionData,setPrescriptionData]=useState([]);
     useEffect(() => {
         axiosInstance.get(`http://localhost:5000/api/v1/doctor/handling/${data}`).then((res)=>{
             setHandlingDetails(res.data)
@@ -21,6 +22,7 @@ export default function Doctorviewpatient() {
         .catch((err)=>console.log(err))
 
         axiosInstance.get(`http://localhost:5000/api/v1/prescription/getDetails/${data}`).then((res)=>{
+            if(res.data.length>0)
             setPrescriptionData(res.data)
         })
     },[handlingDetails])
