@@ -44,7 +44,7 @@ const getprescription = async (req, res) => {
         where:{patient_id: patient_id}
     });
     if (prescription.length===0){
-        return res.status(404).json({msg:"No prescription available"})
+        return res.status(200).json({msg:"No prescription available"})
     }
     res.status(200).json(prescription);
 };
