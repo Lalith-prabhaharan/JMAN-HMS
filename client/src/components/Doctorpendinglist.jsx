@@ -31,7 +31,7 @@ export default function Doctorpendinglist() {
         return <Link className="status1" to={`/pending/${pending.application_id}`} state={{data:pending}}>View</Link>
     }
     const approveButton=()=>{
-        return <button id='btn1doc' >Approve</button>
+        return <button id='btn1doc'>Approve</button>
     }
     const rejectButton=()=>{
        return <button id='btn2doc'>Reject</button>
