@@ -38,16 +38,19 @@ router.route('/patient/status/:id').get(getPatientDetails);
 router.post('/patient/application', createValidator, postPatientForm);
 
 // post the doctor form for new doctor
-router.post('/doctor/add',postDoctorForm)
+router.route('/doctor/add').post(postDoctorForm)
 
 // get specific status for the patient
 router.route('/patient/application/status/:status').get(getSpecificStatus);
 
 // post email for doctor 
-router.post('/add/doctor',email_post);
+router.route('/add/doctor').post(email_post);
 
-
+// upload report
 router.route('/patient/report').get(choosereport).post(uploadreport);
+
+
+
 
 
 module.exports = router;
