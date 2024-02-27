@@ -1,10 +1,11 @@
 const { UnauthenticatedError, BadRequestError } = require('../errors/index');
-const statusCode = require('http-status-codes');
 const jwt = require('jsonwebtoken');
-const db = require('../db/connect');
 const Doctor = require('../models/Doctor');
 const bcrypt = require('bcryptjs');
 
+
+
+// authentication
 const loginUser = async(req, res) => {
     const { username, password, type } = req.body;
 
@@ -39,5 +40,7 @@ const loginUser = async(req, res) => {
         return res.status(200).json({ msg: 'success', token });
     }
 }
+
+
 
 module.exports = { loginUser };

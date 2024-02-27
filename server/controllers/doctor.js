@@ -10,7 +10,8 @@ const path = require('path');
 const { log } = require('console');
 
 
-//Get all Handling Patients
+
+// Get all Handling Patients
 const getAllPatients = async(req, res) => {
     const {userId} = req.user;
     const patient = await Patient.findAll({
@@ -25,7 +26,8 @@ const getAllPatients = async(req, res) => {
     return res.status(200).json(patient);
 }
 
-//Get a Handling Patient
+
+// Get a particular Handling Patient
 const getPatient = async (req, res) => {
     const {userId} = req.user;
     const patient_id = req.params.id;
@@ -40,22 +42,23 @@ const getPatient = async (req, res) => {
     return res.status(200).json(patient[0]);
 }
 
-//Approve Patient
+
+// Approve Patient
 const approvePatient = async(req, res) => {
     const {userId} = req.user;
     const patient_id = req.params.id;
     const patient = await Application.update({
         status: 'approved'
     },
-        {
-            where: {
-                application_id: patient_id,
-                doc_id: userId,
-                status: 'pending'
-            },
+    {
+        where: {
+            application_id: patient_id,
+            doc_id: userId,
+            status: 'pending'
+        },
 
-            returning: true,
-        });
+        returning: true,
+    });
     if (patient[0] != 1) {
         return res.status(404).json({ msg: "No such patient available" });
     }
@@ -66,7 +69,8 @@ const approvePatient = async(req, res) => {
     return res.status(200).json({ msg: "Success" });
 }
 
-//Reject Patient
+
+// Reject Patient
 const rejectPatient = async(req, res) => {
     const {userId} = req.user;
     const {reason} = req.body;
@@ -75,22 +79,23 @@ const rejectPatient = async(req, res) => {
         status: 'Rejected',
         reason: reason
     },
-        {
-            where: {
-                application_id: patient_id,
-                doc_id: userId,
-                status: 'pending'
-            },
+    {
+        where: {
+            application_id: patient_id,
+            doc_id: userId,
+            status: 'pending'
+        },
 
-            returning: true,
-        });
+        returning: true,
+    });
     if (patient[0] != 1) {
         return res.status(404).json({ msg: "No such patient available" });
     }
     return res.status(200).json({ msg: "Success" });
 }
 
-//Get all Applicants
+
+// Get all pending Applicants
 const getAllPendingPatients = async(req, res) => {
     const {userId} = req.user;
     // Query to fetch all the pending patients
@@ -115,7 +120,8 @@ const getAllPendingPatients = async(req, res) => {
     return res.status(200).json(applicant);
 }
 
-//Get a Applicants
+
+// Get a particular Applicant details
 const getPendingPatient = async(req, res) => {
     const {userId} = req.user;
     const application_id = req.params.id;
@@ -146,12 +152,13 @@ const getPendingPatient = async(req, res) => {
     return res.status(200).json(applicant[0]);
 }
 
+
 const postSuggestions = (req, res) => {
     res.status(statusCode.OK).json('Post suggestions for patients');
 }
 
 
-
+// Download patient report
 const downloadreport = async (req, res) => {
     const { report_id } = req.body;
 
