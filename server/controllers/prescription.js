@@ -1,6 +1,8 @@
 const Doctor = require('../models/Doctor');
 const Patient = require('../models/Patient');
 const Prescription = require('../models/Prescription');
+const statusCode = require('http-status-codes');
+let { username } = require('os').userInfo();
 
 // get all doctors
 const uploadprescription = async (req, res) => {
@@ -36,8 +38,15 @@ const uploadprescription = async (req, res) => {
 
 
 const getprescription = async (req, res) => {
-    
-    return res.status(200).json(doctor);
+    const patient_id=req.params.id;
+    const prescription= await Prescription.findAll({
+        where:{patient_id: patient_id}
+    });
+    if (prescription.length===0){
+        return res.status(404).json({msg:"No prescription available"})
+    }
+    else
+    return res.status(200).json(prescription);
 };
 
 

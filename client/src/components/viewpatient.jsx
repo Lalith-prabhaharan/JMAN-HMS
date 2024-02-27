@@ -28,7 +28,7 @@ export const Viewpatient = () => {
           
           {patientList.length > 0 &&
           <DataTable removableSort paginator rows={10} stripedRows  value={patientList} onRowClick={handleRowClick}>
-              <Column field="patient_id" alignHeader={'center'} sortable header="id" hidden></Column>
+              <Column field="patient_id" alignHeader={'center'} sortable header="id" ></Column>
               <Column field="first_name" alignHeader={'center'} sortable header="FirstName"></Column>
               <Column field="last_name" alignHeader={'center'} sortable header="LastName"></Column>
               <Column field="age" alignHeader={'center'} sortable header="Age"></Column>

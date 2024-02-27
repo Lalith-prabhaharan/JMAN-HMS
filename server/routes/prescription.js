@@ -7,7 +7,7 @@ const {
 
 
 // get prescription details
-router.route('/getDetails').post(getprescription);
+router.route('/getDetails/:id').get(getprescription);
 
 // post prescription 
 router.route('/uploadprescription').post(uploadprescription);
