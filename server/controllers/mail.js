@@ -13,18 +13,18 @@ const email_post = async (req, res) => {
     // Send the email using nodemailer
 
     const info = {
-    //   from: req.body.from,
-      from:"lalitkishorep.20cse@kongu.edu",
+      //   from: req.body.from,
+      from: "lalitkishorep.20cse@kongu.edu",
       to: req.body.email,
-      subject:"Enrolled in Health Care",
-    //   phone: req.body.phone,
-    // phone:"945664332",
-      html:`<p>Hi ${req.body.name},</p> <br><p> You have been appointed as doctor of ${req.body.department}  department in Health Care. </p> <br><p> Thanks and Regards, </p> <br> <p> -Admin </p> `
+      subject: "Enrolled in Health Care",
+      //   phone: req.body.phone,
+      // phone:"945664332",
+      html: `<p>Hi ${req.body.name},</p> <br><p> You have been appointed as doctor of ${req.body.department}  department in Health Care. </p> <br><p> Thanks and Regards, </p> <br> <p> -Admin </p> `
     };
 
-    transporter.sendMail(info,(err,res)=>{
-        console.log("Email sent successfully");
-        res.json({ message: "Email sent successfully", info });
+    transporter.sendMail(info, (err, res) => {
+      console.log("Email sent successfully");
+      res.json({ message: "Email sent successfully", info });
     })
     // Send a response to the client
   } catch (err) {
@@ -33,6 +33,6 @@ const email_post = async (req, res) => {
   }
 };
 
-module.exports={
-    email_post
+module.exports = {
+  email_post
 }

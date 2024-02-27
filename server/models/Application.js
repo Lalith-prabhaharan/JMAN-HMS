@@ -85,7 +85,7 @@ const Application = sequelize.define('Application', {
     },
     
     reason: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(500),
         defaultValue:null
     }
 }, {

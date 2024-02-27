@@ -9,6 +9,8 @@ const path = require('path');
 const azureStorage = require('azure-storage');
 const intoStream = require('into-stream');
 
+
+
 // get all doctors
 const getAllDeptDoctors = async (req, res) => {
     const doctor = await Doctor.findAll({
@@ -130,7 +132,7 @@ const postPatientForm = async (req, res) => {
 }
 
 
-// post the application form for new patient
+// upload the patient report
 const uploadreport = async (req, res) => {
     const {
         patient_id,
@@ -208,6 +210,9 @@ const getSpecificStatus = async(req,res)=>{
     }
     res.status(200).json(patient);
 }
+
+
+// add new doctor
 const postDoctorForm=async(req,res)=>{
     const{
         first_name,
@@ -230,7 +235,7 @@ const postDoctorForm=async(req,res)=>{
     //Password Hashing
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
-    console.log(hashedPassword);
+    // console.log(hashedPassword);
 
     const doctor=await Doctor.create({
         doc_id:newDocId,
@@ -247,8 +252,7 @@ const postDoctorForm=async(req,res)=>{
     })
     if(!doctor)
         return res.status(500).json({msg:'Failed'})
-    else
-        res.status(200).json({msg:'Success'})
+    res.status(200).json({msg:'Success'})
 }
 
 
