@@ -3,6 +3,7 @@ const router = express.Router();
 const {
     getAllPatients,
     getPatient,
+    updateRisk,
     getAllPendingPatients,
     getPendingPatient,
     approvePatient,
@@ -17,6 +18,9 @@ router.route('/handling').get(getAllPatients);
 
 // Get a particular Handling Patient
 router.route('/handling/:id').get(getPatient);
+
+//Update a Handling Patient risk
+router.route('/handling/risk/:id').patch(updateRisk);
 
 // Get all pending applicants
 router.route('/pending').get(getAllPendingPatients);

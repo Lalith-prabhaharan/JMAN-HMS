@@ -47,7 +47,7 @@
 
 .status tr {
     border-bottom: 1px solid #ddd;
-    transition: background-corgb(254, 251, 251)0.1s, color 0.1s;
+    transition: color 0.1s;
     cursor: pointer;
     color: black;
 }
@@ -66,6 +66,10 @@
 
 .status tr:hover{
     background-color: #00866E;
+    color: white;
+}
+
+.status tr:hover .pi-trash, .status tr:hover .pi-check, .status tr:hover .pi-eye{
     color: white;
 }
 
@@ -164,6 +168,29 @@
     border-radius: 20px; 
 }
 
+.action {
+    display: flex;
+    margin-left: 15%;
+    margin-right: 15%;
+}
+
+.action .pi-eye {
+    flex: 1;
+    transition: color 0.1s;
+}
+
+.action .pi-check {
+    flex: 1;
+    color: #00866E;
+    transition: color 0.1s;
+}
+
+.action .pi-trash {
+    flex: 1;
+    color: red;
+    transition: color 0.1s;
+}
+
 .close {
     background-color: rgb(255, 46, 46);
     color: white;
@@ -239,5 +266,24 @@ view:hover {
     .page-heading {
         margin-left: 50px;
         margin-top: 100px;
+    }
+
+    .action .pi-eye {
+        padding-right: 10px;
+        padding-left: 10px;
+    }
+    
+    .action .pi-check {
+        padding-right: 10px;
+        padding-left: 10px;
+    }
+    
+    .action .pi-trash {
+        padding-right: 10px;
+        padding-left: 10px;
+    }
+    .action {
+        margin-left: 5%;
+        margin-right: 5%;
     }
 }

@@ -24,6 +24,24 @@ export default function AdminStatus() {
     setSelectedDetails(null);
   };
 
+  const getRiskLabel = (risk) => {
+    switch (risk) {
+      case "0":
+        return 'Low';
+      case "1":
+        return 'Moderate';
+      case "2":
+        return 'High';
+      default:
+        return 'Unknown';
+    }
+  };
+
+  const riskBodyTemplate = (rowData) => {
+    const riskLabel = getRiskLabel(rowData.risk);
+    return <span>{riskLabel}</span>;
+  };
+
   useEffect(() => {
         adminstatus(status)
         .then((response)=>{
@@ -54,8 +72,8 @@ export default function AdminStatus() {
                 <DataTable removableSort paginator rows={10} value={statusList} onRowClick={handleRowClick}>
                     <Column field="application_id" alignHeader={'center'} sortable header="Application ID" hidden></Column>
                     <Column field="first_name" alignHeader={'center'} sortable header="Name"></Column>
-                    <Column field="entry_date" alignHeader={'center'} sortable header="Entry Date"></Column>
                     <Column field="doctor_name" alignHeader={'center'} sortable header="Doctor"></Column>
+                    <Column field="risk" alignHeader={'center'} sortable header="Risk" body={riskBodyTemplate}></Column>
                     <Column field="status" alignHeader={'center'} sortable header="Status"></Column>
                 </DataTable>
 
@@ -67,6 +85,7 @@ export default function AdminStatus() {
                             <p>Status: {selectedDetails.status}</p>
                             <p>Description: {selectedDetails.description}</p>
                             <p>History: {selectedDetails.history}</p>
+                            <p>Risk: {riskBodyTemplate(selectedDetails)}</p>
                             {selectedDetails.reason !== null && (<p>Reason: {selectedDetails.reason}</p>)}
                             <Button label="Close" className='reject' onClick={handleCloseCard} style={{marginLeft: "20px", width: "30%" ,marginTop: "20px"}} text/>
                             <Button label="Reapply" className='approve' onClick={handleCloseCard} style={{marginLeft: "80px"}} text/>

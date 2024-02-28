@@ -21,6 +21,24 @@ export const Viewpatient = () => {
       console.error("error in fetching data",error)
     })
   })
+  const getRiskLabel = (risk) => {
+    switch (risk) {
+      case "0":
+        return 'Low';
+      case "1":
+        return 'Moderate';
+      case "2":
+        return 'High';
+      default:
+        return 'Unknown';
+    }
+  };
+
+  const riskBodyTemplate = (rowData) => {
+    const riskLabel = getRiskLabel(rowData.risk);
+    return <span>{riskLabel}</span>;
+  };
+
   return (
     <DoctorNav>
       <div className="status">
@@ -30,8 +48,8 @@ export const Viewpatient = () => {
           <DataTable removableSort paginator rows={10} stripedRows  value={patientList} onRowClick={handleRowClick}>
               <Column field="patient_id" alignHeader={'center'} sortable header="id" ></Column>
               <Column field="first_name" alignHeader={'center'} sortable header="FirstName"></Column>
-              <Column field="last_name" alignHeader={'center'} sortable header="LastName"></Column>
               <Column field="age" alignHeader={'center'} sortable header="Age"></Column>
+              <Column field="risk" alignHeader={'center'} sortable header="Risk" body={riskBodyTemplate}></Column>
           </DataTable>}
       </div>
     </DoctorNav>

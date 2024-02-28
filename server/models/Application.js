@@ -92,8 +92,7 @@ const Application = sequelize.define('Application', {
     },
     risk: {
         type: DataTypes.STRING(10),
-        allowNull: false,
-        defaultValue: 'low'
+        allowNull: false
     }
 }, {
     timestamps: false
