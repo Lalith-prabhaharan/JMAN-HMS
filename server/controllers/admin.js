@@ -5,10 +5,6 @@ const Patient = require('../models/Patient');
 const {Op} = require('sequelize');
 const bcrypt = require('bcryptjs');
 
-
-
-
-
 // get all doctors
 const getAllDeptDoctors = async (req, res) => {
     const doctor = await Doctor.findAll({
@@ -40,7 +36,9 @@ const getDeptDoctors = async (req, res) => {
 
 // get all the application status
 const getPatients = async(req, res) => {
-    const applicant = await Application.findAll({});
+    const applicant = await Application.findAll({order: [
+        ['risk', 'DESC']
+    ]});
 
     if (applicant.length === 0) {
         return res.status(200).json({ msg: 'No patients' })
@@ -52,7 +50,10 @@ const getPatients = async(req, res) => {
 // get the status of all patient
 const getAllPatientStatus = async (req, res) => {
     const allPatient = await Patient.findAll({
-        attributes: ['patient_id', 'first_name', 'last_name', 'status', 'risk']
+        attributes: ['patient_id', 'first_name', 'last_name', 'status', 'risk'],
+        order: [
+            ['risk', 'DESC']
+        ]
     });
 
     if (allPatient.length === 0) {

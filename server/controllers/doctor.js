@@ -5,14 +5,15 @@ const Patient = require('../models/Patient');
 const { Sequelize } = require('sequelize');
 
 
-
-
 // Get all Handling Patients
 const getAllPatients = async(req, res) => {
     const {userId} = req.user;
     const patient = await Patient.findAll({
-        attributes: ['patient_id', 'first_name', 'last_name', 'age'],
-        where: { doc_id: userId, status: "active" }
+        attributes: ['patient_id', 'first_name', 'last_name', 'age', 'risk'], 
+        where: { doc_id: userId, status: "active"},
+        order: [
+            ['risk', 'DESC']
+        ]
     });
 
     if (patient.length === 0) {
@@ -99,11 +100,14 @@ const getAllPendingPatients = async(req, res) => {
             'application_id', [
                 Sequelize.fn('concat', Sequelize.col('first_name'), ' ', Sequelize.col('last_name')),
                 'name'
-            ], 'age','phone', 'blood_group', 'diseases_description', 'history'],
+            ], 'age','phone', 'blood_group', 'diseases_description', 'history', 'risk'],
         where: {
             status: 'pending',
             doc_id: userId
-        }
+        },
+        order: [
+            ['risk', 'DESC']
+        ]
     })
 
     if (applicant.length === 0) {
@@ -147,6 +151,24 @@ const getPendingPatient = async(req, res) => {
 }
 
 
+const updateRisk = async(req, res) => {
+    const {id} = req.params;
+    const {risk} = req.body;
+    const {userId} = req.user;
+    if(!risk) {
+        return res.status(500).json({ msg: "Bad request" });
+    }
+    const patient = await Patient.update({risk: risk}, {
+        where: {patient_id: id, doc_id: userId}
+    })
+
+    if (patient[0] != 1) {
+        return res.status(404).json({ msg: "No such patient available" });
+    }
+    return res.status(200).json({ msg: "Success" });
+}
+
+
 // discharge a patient
 const dischargePatient = async (req, res) => {
     const {userId} = req.user;
@@ -182,5 +204,6 @@ module.exports = {
     getAllPendingPatients,
     approvePatient,
     rejectPatient,
+    updateRisk,
     dischargePatient
 }

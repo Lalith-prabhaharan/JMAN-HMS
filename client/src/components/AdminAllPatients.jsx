@@ -21,6 +21,24 @@ export default function AdminAllPatient() {
         fetchData();
     }, [approvedList])
 
+    const getRiskLabel = (risk) => {
+        switch (risk) {
+          case "0":
+            return 'Low';
+          case "1":
+            return 'Moderate';
+          case "2":
+            return 'High';
+          default:
+            return 'Unknown';
+        }
+      };
+    
+      const riskBodyTemplate = (rowData) => {
+        const riskLabel = getRiskLabel(rowData.risk);
+        return <span>{riskLabel}</span>;
+      };
+
   return (
         <Navbar>
           <div className='status'>
@@ -29,6 +47,7 @@ export default function AdminAllPatient() {
                     <DataTable removableSort paginator rows={10} value={approvedList}>
                         <Column field="patient_id" alignHeader={'center'} sortable header="Patient ID"></Column>
                         <Column field="first_name" alignHeader={'center'} sortable header="Name"></Column>
+                        <Column field="risk" alignHeader={'center'} body={riskBodyTemplate} sortable header="Risk"></Column>
                         <Column field="status" alignHeader={'center'} sortable header="Status"></Column>
                     </DataTable>
             </div>
