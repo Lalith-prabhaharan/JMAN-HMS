@@ -3,11 +3,11 @@ const router = express.Router();
 const {
     getAllPatients,
     getPatient,
-    postSuggestions,
     getAllPendingPatients,
     getPendingPatient,
     approvePatient,
-    rejectPatient
+    rejectPatient,
+    dischargePatient
 } = require('../controllers/doctor');
 
 
@@ -17,8 +17,6 @@ router.route('/handling').get(getAllPatients);
 
 // Get a particular Handling Patient
 router.route('/handling/:id').get(getPatient);
-
-router.route('/suggestion/:id').post(postSuggestions);
 
 // Get all pending applicants
 router.route('/pending').get(getAllPendingPatients);
@@ -31,6 +29,9 @@ router.route('/approve/:id').put(approvePatient);
 
 // Reject Patient
 router.route('/reject/:id').patch(rejectPatient);
+
+// Discharge Patient
+router.route('/discharge/:id').patch(dischargePatient);
 
 
 

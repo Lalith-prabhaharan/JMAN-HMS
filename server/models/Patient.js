@@ -1,6 +1,9 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const {sequelize} = require('../db/connect');
 const Doctor = require('./Doctor'); 
+
+
+
 const Patient = sequelize.define('Patient', {
     patient_id: {
         type: DataTypes.INTEGER,
@@ -84,10 +87,15 @@ const Patient = sequelize.define('Patient', {
     },
     risk: {
         type: DataTypes.STRING(10),
-        allowNull: false
+        allowNull: false,
+        defaultValue: 'low'
     }
 }, {
     timestamps: false
 });
+
+
+
+
 
 module.exports = Patient;

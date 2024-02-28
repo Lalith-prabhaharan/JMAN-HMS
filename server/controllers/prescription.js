@@ -16,10 +16,10 @@ const uploadprescription = async (req, res) => {
     })
 
     if (patient.length !== 1) {
-        return res.status(400).json({ msg: "Invalid Patient" });
+        return res.status(404).json({ msg: "Invalid Patient" });
     }
     if (patient[0].dataValues.doc_id !== doc_id) {
-        return res.status(400).json({ msg: "Invalid Doctor" });
+        return res.status(404).json({ msg: "Invalid Doctor" });
     }
 
     let date = new Date();
@@ -45,7 +45,7 @@ const uploadprescription = async (req, res) => {
 const getprescription = async (req, res) => {
     const patient_id = req.params.id;
     const prescription = await Prescription.findAll({
-        where: { patient_id: patient_id }
+        where: { patient_id: Number(patient_id) }
     });
     if (prescription.length === 0) {
         return res.status(200).json({ msg: "No prescription available" })
@@ -69,7 +69,7 @@ const uploadreport = async (req, res) => {
     } = req.body;
 
     if (!req.files) {
-        return res.status(400).send("No files are received.");
+        return res.status(404).send("No files are received.");
     }
 
     const patient = await Patient.findAll({
@@ -77,17 +77,17 @@ const uploadreport = async (req, res) => {
     })
 
     if (patient.length !== 1) {
-        return res.status(400).json({ msg: "Invalid Patient" });
+        return res.status(404).json({ msg: "Invalid Patient" });
     }
     if (patient[0].dataValues.doc_id !== doc_id) {
-        return res.status(400).json({ msg: "Invalid Doctor" });
+        return res.status(404).json({ msg: "Invalid Doctor" });
     }
 
     const timestamp = Date.now();
     const file_name = `${timestamp}-${req.files.file.name}`;
 
     const report = await Report.create({
-        patient_id: patient_id,
+        patient_id: Number(patient_id),
         doc_id: doc_id,
         time_stamp: timestamp,
         file_name: file_name
@@ -126,7 +126,7 @@ const downloadreport = async (req, res) => {
     const { report_id } = req.body;
 
     const report = await Report.findAll({
-        where: { report_id: report_id }
+        where: { report_id: Number(report_id) }
     })
 
     const containerName = process.env.AZURE_CONTAINER_NAME;
@@ -159,7 +159,7 @@ const getreports = async(req, res) => {
         where: { patient_id: Number(patient_id) }
     });
     if (patient.length === 0) {
-        return res.status(200).json({ msg: 'Invalid Patient Id' });
+        return res.status(404).json({ msg: 'Invalid Patient Id' });
     }
 
     const report = await Report.findAll({
