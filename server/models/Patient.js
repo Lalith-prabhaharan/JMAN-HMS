@@ -81,6 +81,10 @@ const Patient = sequelize.define('Patient', {
     status: {
         type: DataTypes.STRING(10),
         allowNull: false
+    },
+    risk: {
+        type: DataTypes.STRING(10),
+        allowNull: false
     }
 }, {
     timestamps: false

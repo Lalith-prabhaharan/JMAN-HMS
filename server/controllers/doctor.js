@@ -2,21 +2,18 @@ const statusCode = require('http-status-codes');
 const Doctor = require('../models/Doctor');
 const Application = require('../models/Application');
 const Patient = require('../models/Patient');
-const Report = require('../models/Report');
 const { Sequelize } = require('sequelize');
-const azureStorage = require('azure-storage');
-let { username } = require('os').userInfo();
-const path = require('path');
-const { log } = require('console');
-
 
 
 // Get all Handling Patients
 const getAllPatients = async(req, res) => {
     const {userId} = req.user;
     const patient = await Patient.findAll({
-        attributes: ['patient_id', 'first_name', 'last_name', 'age'],
-        where: { doc_id: userId }
+        attributes: ['patient_id', 'first_name', 'last_name', 'age', 'risk'], 
+        where: { doc_id: userId },
+        order: [
+            ['risk', 'DESC']
+        ]
     });
 
     if (patient.length === 0) {
@@ -105,11 +102,14 @@ const getAllPendingPatients = async(req, res) => {
             'application_id', [
                 Sequelize.fn('concat', Sequelize.col('first_name'), ' ', Sequelize.col('last_name')),
                 'name'
-            ], 'age','phone', 'blood_group', 'diseases_description', 'history'],
+            ], 'age','phone', 'blood_group', 'diseases_description', 'history', 'risk'],
         where: {
             status: 'pending',
             doc_id: userId
-        }
+        },
+        order: [
+            ['risk', 'DESC']
+        ]
     })
 
     if (applicant.length === 0) {
@@ -153,46 +153,15 @@ const getPendingPatient = async(req, res) => {
 }
 
 
-const postSuggestions = (req, res) => {
-    res.status(statusCode.OK).json('Post suggestions for patients');
-}
-
-
-// Download patient report
-const downloadreport = async (req, res) => {
-    const { report_id } = req.body;
-
-    const report = await Report.findAll({
-        where: { report_id: report_id }
-    })
-
-    const containerName = process.env.AZURE_CONTAINER_NAME;
-    const blobService = azureStorage.createBlobService(
-        process.env.AZURE_STORAGE_CONNECTION_STRING
-    );
-
-    const sourcefile = report[0].dataValues.file_name;
-    const destinationfilepath = path.join("C:/Users", username, "Downloads", sourcefile);
-
-    blobService.getBlobToLocalFile(
-        containerName,
-        sourcefile,
-        destinationfilepath,
-        (err) => {
-            if (err) {
-                return res.status(500).send({ message: "Error Occured" });
-            }
-
-            res.status(200).send({ message: 'Success' });
-        }
-    );
-};
-
 const updateRisk = async(req, res) => {
     const {id} = req.params;
     const {risk} = req.body;
-    const patient = Patient.update({risk: risk}, {
-        where: {patient_id: id}
+    const {userId} = req.user;
+    if(!risk) {
+        return res.status(500).json({ msg: "Bad request" });
+    }
+    const patient = await Patient.update({risk: risk}, {
+        where: {patient_id: id, doc_id: userId}
     })
 
     if (patient[0] != 1) {
@@ -202,15 +171,12 @@ const updateRisk = async(req, res) => {
 }
 
 
-
-
 module.exports = {
     getAllPatients,
     getPatient,
     getPendingPatient,
     getAllPendingPatients,
     approvePatient,
-    postSuggestions,
     rejectPatient,
-    downloadreport
+    updateRisk
 }
