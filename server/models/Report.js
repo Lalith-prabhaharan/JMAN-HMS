@@ -3,6 +3,8 @@ const {sequelize} = require('../db/connect');
 const Patient = require('./Patient');
 const Doctor = require('./Doctor');
 
+
+
 const Report = sequelize.define('Report', {
     report_id: {
         type: DataTypes.INTEGER,
@@ -37,5 +39,9 @@ const Report = sequelize.define('Report', {
 }, {
     timestamps: false,
 });
+
+
+
+
 
 module.exports = Report;

@@ -12,7 +12,7 @@ const getAllPatients = async(req, res) => {
     const {userId} = req.user;
     const patient = await Patient.findAll({
         attributes: ['patient_id', 'first_name', 'last_name', 'age'],
-        where: { doc_id: userId }
+        where: { doc_id: userId, status: "active" }
     });
 
     if (patient.length === 0) {
@@ -26,9 +26,9 @@ const getAllPatients = async(req, res) => {
 // Get a particular Handling Patient
 const getPatient = async (req, res) => {
     const {userId} = req.user;
-    const patient_id = req.params.id;
+    const patient_id = Number(req.params.id);
     const patient = await Patient.findAll({
-        where: {doc_id: userId, patient_id: patient_id}
+        where: {doc_id: userId, patient_id: patient_id, status: "active"}
     });
     
     if(patient.length === 0) {
@@ -42,13 +42,13 @@ const getPatient = async (req, res) => {
 // Approve Patient
 const approvePatient = async(req, res) => {
     const {userId} = req.user;
-    const patient_id = req.params.id;
+    const patient_id = Number(req.params.id);
     const patient = await Application.update({
         status: 'approved'
     },
     {
         where: {
-            application_id: patient_id,
+            application_id: Number(patient_id),
             doc_id: userId,
             status: 'pending'
         },
@@ -70,7 +70,7 @@ const approvePatient = async(req, res) => {
 const rejectPatient = async(req, res) => {
     const {userId} = req.user;
     const {reason} = req.body;
-    const patient_id = req.params.id;
+    const patient_id = Number(req.params.id);
     const patient = await Application.update({
         status: 'Rejected',
         reason: reason
@@ -94,8 +94,6 @@ const rejectPatient = async(req, res) => {
 // Get all pending Applicants
 const getAllPendingPatients = async(req, res) => {
     const {userId} = req.user;
-    // Query to fetch all the pending patients
-
     const applicant = await Application.findAll({
         attributes: [
             'application_id', [
@@ -120,7 +118,7 @@ const getAllPendingPatients = async(req, res) => {
 // Get a particular Applicant details
 const getPendingPatient = async(req, res) => {
     const {userId} = req.user;
-    const application_id = req.params.id;
+    const application_id = Number(req.params.id);
 
     const applicant = await Application.findAll({
         attributes: [[
@@ -148,13 +146,30 @@ const getPendingPatient = async(req, res) => {
     return res.status(200).json(applicant[0]);
 }
 
-// upload medication of patient
-const postSuggestions = (req, res) => {
-    res.status(statusCode.OK).json('Post suggestions for patients');
+
+// discharge a patient
+const dischargePatient = async (req, res) => {
+    const {userId} = req.user;
+    const patient_id = Number(req.params.id);
+    const patient = await Patient.update({
+        status: 'discharge'
+    },
+    {
+        where: {
+            patient_id: patient_id,
+            doc_id: userId,
+            status: 'active'
+        },
+
+        returning: true,
+    });
+    
+    if(patient.length === 0) {
+        return res.status(404).json({msg: 'No such patient availabe'});
+    }
+
+    return res.status(200).json(patient[0]);
 }
-
-
-
 
 
 
@@ -166,6 +181,6 @@ module.exports = {
     getPendingPatient,
     getAllPendingPatients,
     approvePatient,
-    postSuggestions,
-    rejectPatient
+    rejectPatient,
+    dischargePatient
 }

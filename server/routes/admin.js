@@ -38,7 +38,7 @@ router.post('/patient/application', createValidator, postPatientForm);
 // post the doctor form for new doctor
 router.route('/doctor/add').post(postDoctorForm)
 
-// get specific status for the patient
+// get application based on specific value
 router.route('/patient/application/status/:status').get(getSpecificStatus);
 
 // post email for doctor 

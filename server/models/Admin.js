@@ -1,6 +1,8 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const {sequelize} = require('../db/connect');
 
+
+
 const Admin = sequelize.define('Admin', {
     user: {
         type: DataTypes.STRING,
@@ -13,5 +15,7 @@ const Admin = sequelize.define('Admin', {
 }, {
     timestamps: false
 });
+
+
 
 module.exports = Admin;

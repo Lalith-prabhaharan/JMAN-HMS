@@ -1,7 +1,10 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const {sequelize} = require('../db/connect');
 const Doctor = require('./Doctor');
-const Patient = require('./Patient'); 
+const Patient = require('./Patient');
+
+
+
 const Prescription = sequelize.define('Prescription', {
     p_id: {
         type: DataTypes.INTEGER,
@@ -36,5 +39,9 @@ const Prescription = sequelize.define('Prescription', {
 }, {
     timestamps: false
 });
+
+
+
+
 
 module.exports = Prescription;
