@@ -7,8 +7,7 @@ const {
     getAllPendingPatients,
     getPendingPatient,
     approvePatient,
-    rejectPatient,
-    downloadreport
+    rejectPatient
 } = require('../controllers/doctor');
 
 
@@ -33,8 +32,7 @@ router.route('/approve/:id').put(approvePatient);
 // Reject Patient
 router.route('/reject/:id').patch(rejectPatient);
 
-// Download patient report
-router.route('/report/download').post(downloadreport);
+
 
 
 

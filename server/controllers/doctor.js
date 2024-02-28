@@ -2,12 +2,8 @@ const statusCode = require('http-status-codes');
 const Doctor = require('../models/Doctor');
 const Application = require('../models/Application');
 const Patient = require('../models/Patient');
-const Report = require('../models/Report');
 const { Sequelize } = require('sequelize');
-const azureStorage = require('azure-storage');
-let { username } = require('os').userInfo();
-const path = require('path');
-const { log } = require('console');
+
 
 
 
@@ -152,41 +148,13 @@ const getPendingPatient = async(req, res) => {
     return res.status(200).json(applicant[0]);
 }
 
-
+// upload medication of patient
 const postSuggestions = (req, res) => {
     res.status(statusCode.OK).json('Post suggestions for patients');
 }
 
 
-// Download patient report
-const downloadreport = async (req, res) => {
-    const { report_id } = req.body;
 
-    const report = await Report.findAll({
-        where: { report_id: report_id }
-    })
-
-    const containerName = process.env.AZURE_CONTAINER_NAME;
-    const blobService = azureStorage.createBlobService(
-        process.env.AZURE_STORAGE_CONNECTION_STRING
-    );
-
-    const sourcefile = report[0].dataValues.file_name;
-    const destinationfilepath = path.join("C:/Users", username, "Downloads", sourcefile);
-
-    blobService.getBlobToLocalFile(
-        containerName,
-        sourcefile,
-        destinationfilepath,
-        (err) => {
-            if (err) {
-                return res.status(500).send({ message: "Error Occured" });
-            }
-
-            res.status(200).send({ message: 'Success' });
-        }
-    );
-};
 
 
 
@@ -199,6 +167,5 @@ module.exports = {
     getAllPendingPatients,
     approvePatient,
     postSuggestions,
-    rejectPatient,
-    downloadreport
+    rejectPatient
 }
