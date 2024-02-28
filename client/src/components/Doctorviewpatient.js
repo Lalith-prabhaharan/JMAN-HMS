@@ -15,6 +15,7 @@ export default function Doctorviewpatient() {
     const {data}=loc.state;
     const [handlingDetails,setHandlingDetails]=useState([]);
     const [prescriptionData,setPrescriptionData]=useState([]);
+    const [risk,setRisk]=useState("")
     useEffect(() => {
         axiosInstance.get(`http://localhost:5000/api/v1/doctor/handling/${data}`).then((res)=>{
             setHandlingDetails(res.data)
@@ -25,10 +26,27 @@ export default function Doctorviewpatient() {
             const resdata=res.data
             if(res.data.length>0){
                 const sortedData = resdata.sort((a, b) => new Date(b.time_stamp) - new Date(a.time_stamp));
-                console.log(sortedData)
                 setPrescriptionData(sortedData)
             }
-        })
+        }).catch((err)=>console.log(err))
+
+        const getRiskLabel = () => {
+            console.log(handlingDetails.risk)
+            if(handlingDetails.risk=="0") {
+                setRisk('Low');
+            }
+            else if(handlingDetails.risk=="1") {
+                setRisk('Moderate');
+            }
+            else if(handlingDetails.risk=="3") {
+                setRisk('High');
+            }
+            else {
+                setRisk('Unknown');
+            }
+          };
+          if(handlingDetails)
+          getRiskLabel();
     },[handlingDetails])
 
     const [activeTab, setActiveTab] = useState('personalInfo');
@@ -80,6 +98,7 @@ export default function Doctorviewpatient() {
                 <div className='form-containerdocview' id='left-col'>
                     <form>
                         <fieldset>
+                            <h2>Personal Info</h2>
                             <div className="form-row">
                                 <label for="name" className="form-label">Name:</label>
                                 <input type="text" id="name" name="name" className="form-input" value={handlingDetails.first_name+" "+handlingDetails.last_name } required />
@@ -87,6 +106,10 @@ export default function Doctorviewpatient() {
                             <div className="form-row">
                                 <label for="age" className="form-label">Age:</label>
                                 <input type="number" id="age" name="age" className="form-input" value={handlingDetails.age} required />
+                            </div>
+                            <div className="form-row">
+                                <label for="gender" className="form-label">Gender:</label>
+                                <input type="text" id="gender" name="gender" className="form-input" value={handlingDetails.gender} required />
                             </div>
                             <div className="form-row">
                                 <label for="dob" className="form-label">Phone No:</label>
@@ -103,6 +126,10 @@ export default function Doctorviewpatient() {
                             <div className="form-row">
                                 <label for="medicalHistory" className="form-label">Medical History:</label>
                                 <textarea id="medicalHistory" name="medicalHistory" className="form-input" rows="4"  value={handlingDetails.history}  ></textarea>
+                            </div>
+                            <div className="form-row">
+                                <label for="risk" className="form-label">Risk:</label>
+                                <input id="risk" name="risk" className="form-input"  value={risk}  ></input>
                             </div>
                         </fieldset>
                     </form>
@@ -127,20 +154,13 @@ export default function Doctorviewpatient() {
 
                     <div id="suggestions-card">
                         <h2>Suggestions and Medications</h2>
-                        <ScrollPanel style={{ width: '100%', height: '200px' }}>
+                        <ScrollPanel style={{ width: '100%', height: '400px' }}>
                             {prescriptionData.map((prescription)=>(
                                 <div key={prescription.p_id} className="suggestion-item">
                                     <h5>{prescription.time_stamp}</h5>
                                     {prescription.medication}
                                 </div>
                             ))}
-                            {/* <div className="suggestion-item">Suggestion 2</div>
-                            <div className="suggestion-item">Suggestion 3</div>
-                            <div className="suggestion-item">Suggestion 4</div>
-                            <div className="suggestion-item">Suggestion 5</div>
-                            <div className="suggestion-item">Suggestion 6</div>
-                            <div className="suggestion-item">Suggestion 7</div>
-                            <div className="suggestion-item">Suggestion 8</div> */}
                         </ScrollPanel>
                     </div>
                 </div>
