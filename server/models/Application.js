@@ -1,6 +1,9 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const {sequelize} = require('../db/connect');
 const Doctor = require('./Doctor'); 
+
+
+
 const Application = sequelize.define('Application', {
     application_id: {
         type: DataTypes.INTEGER,
@@ -83,13 +86,21 @@ const Application = sequelize.define('Application', {
         allowNull: true,
         defaultValue: 'pending'
     },
-    
     reason: {
         type: DataTypes.STRING(500),
         defaultValue:null
+    },
+    risk: {
+        type: DataTypes.STRING(10),
+        allowNull: false,
+        defaultValue: 'low'
     }
 }, {
     timestamps: false
 });
+
+
+
+
 
 module.exports = Application;

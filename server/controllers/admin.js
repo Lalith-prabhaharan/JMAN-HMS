@@ -2,12 +2,10 @@ require('dotenv').config();
 const Doctor = require('../models/Doctor');
 const Application = require('../models/Application');
 const Patient = require('../models/Patient');
-const Report = require('../models/Report');
 const {Op} = require('sequelize');
 const bcrypt = require('bcryptjs');
-const path = require('path');
-const azureStorage = require('azure-storage');
-const intoStream = require('into-stream');
+
+
 
 
 
@@ -34,7 +32,7 @@ const getDeptDoctors = async (req, res) => {
     });
 
     if (doctor.length === 0) {
-        return res.status(404).json({ msg: 'No doctor in the specified department' })
+        return res.status(200).json({ msg: 'No doctor in the specified department' })
     }
     res.status(200).json(doctor);
 };
@@ -45,7 +43,7 @@ const getPatients = async(req, res) => {
     const applicant = await Application.findAll({});
 
     if (applicant.length === 0) {
-        return res.status(404).json({ msg: 'No patients' })
+        return res.status(200).json({ msg: 'No patients' })
     }
     res.status(200).json(applicant);
 };
@@ -54,11 +52,11 @@ const getPatients = async(req, res) => {
 // get the status of all patient
 const getAllPatientStatus = async (req, res) => {
     const allPatient = await Patient.findAll({
-        attributes: ['patient_id', 'first_name', 'last_name', 'status']
+        attributes: ['patient_id', 'first_name', 'last_name', 'status', 'risk']
     });
 
     if (allPatient.length === 0) {
-        return res.status(404).json({ msg: 'No Patients' });
+        return res.status(200).json({ msg: 'No Patients' });
     }
     res.status(200).json(allPatient);
 };
@@ -103,7 +101,7 @@ const postPatientForm = async (req, res) => {
     })
 
     if (doctor.length !== 1) {
-        return res.status(400).json({ msg: "Invalid Doctor" });
+        return res.status(404).json({ msg: "Invalid Doctor" });
     }
     const entry_date = new Date();
     const applicant = await Application.create({
@@ -132,74 +130,7 @@ const postPatientForm = async (req, res) => {
 }
 
 
-// upload the patient report
-const uploadreport = async (req, res) => {
-    const {
-        patient_id,
-        doc_id
-    } = req.body;
-
-    if (!req.files) {
-        return res.status(400).send("No files are received.");
-    }
-
-    const patient = await Patient.findAll({
-        where: { patient_id: Number(patient_id) }
-    })
-
-    if (patient.length !== 1) {
-        return res.status(400).json({ msg: "Invalid Patient" });
-    }
-    if (patient[0].dataValues.doc_id !== doc_id){
-        return res.status(400).json({ msg: "Invalid Doctor" });
-    }
-
-    const timestamp = Date.now();
-    const file_name = `${timestamp}-${req.files.file.name}`;
-
-    const report = await Report.create({
-        patient_id: patient_id,
-        doc_id: doc_id,
-        time_stamp: timestamp,
-        file_name: file_name
-    });
-
-    if (!report) {
-        return res.status(500).json({ msg: 'Failed To insert' });
-    }
-
-    const containerName = process.env.AZURE_CONTAINER_NAME;
-    const blobService = azureStorage.createBlobService(
-        process.env.AZURE_STORAGE_CONNECTION_STRING
-    );
-    const stream = intoStream(req.files.file.data);
-    const streamLength = req.files.file.data.length;
-
-    blobService.createBlockBlobFromStream(
-        containerName,
-        file_name,
-        stream,
-        streamLength,
-        (err) => {
-            if (err) {
-                return res.status(500).send({ message: "Error Occured" });
-            }
-        }
-    );
-
-
-    res.status(200).json({ message: 'Success' });
-}
-
-
-// test interface to upload report
-const dirname = path.resolve("../server");
-const choosereport = (req, res) => {
-    res.sendFile(path.join(dirname, "index.html"));
-};
-
-
-
+// get application based on specific value
 const getSpecificStatus = async(req,res)=>{
     const status=req.params.status;
     const patient=await Application.findAll({
@@ -256,6 +187,9 @@ const postDoctorForm=async(req,res)=>{
 }
 
 
+
+
+
 module.exports = {
     getAllDeptDoctors,
     getDeptDoctors,
@@ -264,7 +198,5 @@ module.exports = {
     getPatientDetails,
     postPatientForm,
     getSpecificStatus,
-    postDoctorForm,
-    uploadreport,
-    choosereport
+    postDoctorForm
 }
