@@ -3,16 +3,11 @@ require('express-async-errors');
 const cors=require('cors');
 const express = require('express');
 const app = express();
-
-const {sequelize} = require('./db/connect');
-
-// error handler
-const notFoundMiddleware = require('./middleware/not-found');
-const errorHandlerMiddleware = require('./middleware/error-handler');
+const fileUpload = require('express-fileupload');
 
 
-app.use(express.json());
 // extra package
+const {sequelize} = require('./db/connect');
 const auth = require('./routes/auth');
 const admin = require('./routes/admin');
 const doctor = require('./routes/doctor');
@@ -21,17 +16,15 @@ const authDoc = require('./middleware/authDoctor');
 const authAdmin = require('./middleware/authAdmin');
 
 
+// error handler
+const notFoundMiddleware = require('./middleware/not-found');
+const errorHandlerMiddleware = require('./middleware/error-handler');
 
 
 
-// extra things for file upload on azure ////////
-
-const filestore = require('./routes/filehandle');
-const fileUpload = require('express-fileupload');
-
+app.use(express.json());
 app.use( fileUpload({createParentPath: true})  );
 
-//////////////////////////////////////////////////
 
 
 
@@ -44,10 +37,6 @@ app.use('/api/v1/admin', admin);
 app.use('/api/v1/doctor', authDoc, doctor);
 app.use('/api/v1/prescription', prescription);
 
-
-////////////// test /////////////////////////////////
-app.use("/filetest", filestore);
-/////////////////////////////////////////////////////
 
 
 
