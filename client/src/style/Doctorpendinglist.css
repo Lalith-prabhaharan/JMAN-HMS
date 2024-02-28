@@ -164,6 +164,25 @@
     border-radius: 20px; 
 }
 
+.action {
+    display: flex;
+    margin-left: 15%;
+    margin-right: 15%;
+}
+
+.action .pi-eye {
+    flex: 1;
+}
+
+.action .pi-check {
+    flex: 1;
+}
+
+.action .pi-trash {
+    flex: 1;
+    color: red;
+}
+
 .close {
     background-color: rgb(255, 46, 46);
     color: white;

@@ -188,6 +188,18 @@ const downloadreport = async (req, res) => {
     );
 };
 
+const updateRisk = async(req, res) => {
+    const {id} = req.params;
+    const {risk} = req.body;
+    const patient = Patient.update({risk: risk}, {
+        where: {patient_id: id}
+    })
+
+    if (patient[0] != 1) {
+        return res.status(404).json({ msg: "No such patient available" });
+    }
+    return res.status(200).json({ msg: "Success" });
+}
 
 
 

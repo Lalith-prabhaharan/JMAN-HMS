@@ -19,6 +19,9 @@ router.route('/handling').get(getAllPatients);
 // Get a particular Handling Patient
 router.route('/handling/:id').get(getPatient);
 
+//Update a Handling Patient risk
+router.route('/handling/risk/:id').patch();
+
 router.route('/suggestion/:id').post(postSuggestions);
 
 // Get all pending applicants

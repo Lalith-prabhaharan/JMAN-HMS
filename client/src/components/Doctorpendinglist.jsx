@@ -94,10 +94,10 @@ export default function Doctorpendinglist() {
 
     const viewButton=(pending)=>{
         return(
-            <div>
-            <i className="pi pi-eye" style={{ fontSize: '1rem',marginBottom:'2%' }} onClick={() => handleView(pending)}></i><br></br>
-            <Button className='approve'  style={{ marginBottom:'2%' }}  onClick={() => {setAppID(pending.application_id); handleApprove(appId)}}>Approve</Button> <br></br>
-            <Button className='reject' onClick={() => {setAppID(pending.application_id); setReasonCard(true)}}>Reject</Button>
+            <div className='action'> 
+                <i className="pi pi-eye" style={{ fontSize: '1rem',marginBottom:'2%' }} onClick={() => handleView(pending)}></i><br></br>
+                <i className='pi pi-check'  style={{  fontSize: '1rem', marginBottom:'2%' }}  onClick={() => {setAppID(pending.application_id); handleApprove(appId)}} /> <br></br>
+                <i className='pi pi-trash' style={{  fontSize: '1rem', marginBottom:'2%' }} onClick={() => {setAppID(pending.application_id); setReasonCard(true)}} />
             </div>
         ) 
     }
@@ -114,12 +114,10 @@ export default function Doctorpendinglist() {
                 <h1 className='heading'>Pending Patients List</h1>
                     {
                         pendingList.length > 0 &&
-                        <DataTable removableSort paginator rows={10} value={pendingList}>
+                        <DataTable removableSort paginator rows={10} value={pendingList} className='pending'>
                         <Column field="application_id" alignHeader={'center'} sortable header="Application ID" hidden></Column>
-                        <Column field="name" alignHeader={'center'} sortable header="Name"></Column>
-                        <Column alignHeader={'center'}  body={viewButton}  header="View"></Column>
-                        {/* <Column alignHeader={'center'}  body={approveButton}  header="Approve"></Column>
-                        <Column alignHeader={'center'}  body={rejectButton}  header="Reject"></Column> */}
+                        <Column field="name" alignHeader={'center'} style={{paddingRight: "70px" }} sortable header="Name"></Column>
+                        <Column alignHeader={'center'}  body={viewButton} style={{paddingRight: "70px" }}  header="Actions"></Column>
                     </DataTable>
                     }
 
