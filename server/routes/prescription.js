@@ -20,10 +20,10 @@ router.route('/uploadprescription').post(uploadprescription);
 router.route('/report/upload').get(choosereport).post(uploadreport);
 
 // Download patient report
-router.route('/report/download').post(downloadreport);
+router.route('/report/download').get(downloadreport);
 
 // get report details of a particular patient
-router.route('/patient/report').post(getreports);
+router.route('/patient/report').get(getreports);
 
 
 

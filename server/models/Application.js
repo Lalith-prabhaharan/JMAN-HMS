@@ -1,6 +1,9 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const {sequelize} = require('../db/connect');
 const Doctor = require('./Doctor'); 
+
+
+
 const Application = sequelize.define('Application', {
     application_id: {
         type: DataTypes.INTEGER,
@@ -94,5 +97,9 @@ const Application = sequelize.define('Application', {
 }, {
     timestamps: false
 });
+
+
+
+
 
 module.exports = Application;

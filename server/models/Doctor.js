@@ -1,6 +1,8 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const {sequelize} = require('../db/connect');
 
+
+
 const Doctor = sequelize.define('Doctor', {
     doc_id: {
         type: DataTypes.STRING(10),
@@ -52,5 +54,9 @@ const Doctor = sequelize.define('Doctor', {
 }, {
     timestamps: false,
 });
+
+
+
+
 
 module.exports = Doctor;

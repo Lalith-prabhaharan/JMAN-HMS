@@ -28,7 +28,7 @@ const getDeptDoctors = async (req, res) => {
     });
 
     if (doctor.length === 0) {
-        return res.status(404).json({ msg: 'No doctor in the specified department' })
+        return res.status(200).json({ msg: 'No doctor in the specified department' })
     }
     res.status(200).json(doctor);
 };
@@ -41,7 +41,7 @@ const getPatients = async(req, res) => {
     ]});
 
     if (applicant.length === 0) {
-        return res.status(404).json({ msg: 'No patients' })
+        return res.status(200).json({ msg: 'No patients' })
     }
     res.status(200).json(applicant);
 };
@@ -57,7 +57,7 @@ const getAllPatientStatus = async (req, res) => {
     });
 
     if (allPatient.length === 0) {
-        return res.status(404).json({ msg: 'No Patients' });
+        return res.status(200).json({ msg: 'No Patients' });
     }
     res.status(200).json(allPatient);
 };
@@ -102,7 +102,7 @@ const postPatientForm = async (req, res) => {
     })
 
     if (doctor.length !== 1) {
-        return res.status(400).json({ msg: "Invalid Doctor" });
+        return res.status(404).json({ msg: "Invalid Doctor" });
     }
     const entry_date = new Date();
     const applicant = await Application.create({
@@ -131,7 +131,7 @@ const postPatientForm = async (req, res) => {
 }
 
 
-
+// get application based on specific value
 const getSpecificStatus = async(req,res)=>{
     const status=req.params.status;
     const patient=await Application.findAll({
