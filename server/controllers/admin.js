@@ -93,7 +93,8 @@ const postPatientForm = async (req, res) => {
         history,
         dept,
         doctor_name,
-        doctor_id
+        doctor_id,
+        risk
     } = req.body;
 
 
@@ -121,7 +122,8 @@ const postPatientForm = async (req, res) => {
         history: history,
         department: dept,
         doctor_name: doctor_name,
-        doc_id: doctor_id
+        doc_id: doctor_id,
+        risk:risk
     });
 
     if (!applicant) {
