@@ -101,12 +101,24 @@ export default function Doctorpendinglist() {
             </div>
         ) 
     }
-    const approveButton=(pending)=>{
-        return <Button className='approve' onClick={() => {setAppID(pending.application_id); handleApprove(appId)}}>Approve</Button>
-    }
-    const rejectButton=(pending)=>{
-        return <Button className='reject' onClick={() => {setAppID(pending.application_id); setReasonCard(true)}}>Reject</Button>
-    }
+
+    const getRiskLabel = (risk) => {
+        switch (risk) {
+          case "0":
+            return 'Low';
+          case "1":
+            return 'Moderate';
+          case "2":
+            return 'High';
+          default:
+            return 'Unknown';
+        }
+      };
+    
+      const riskBodyTemplate = (rowData) => {
+        const riskLabel = getRiskLabel(rowData.risk);
+        return <span>{riskLabel}</span>;
+      };
 
     return (
         <DoctorNav>
@@ -115,9 +127,10 @@ export default function Doctorpendinglist() {
                     {
                         pendingList.length > 0 &&
                         <DataTable removableSort paginator rows={10} value={pendingList} className='pending'>
-                        <Column field="application_id" alignHeader={'center'} sortable header="Application ID" hidden></Column>
-                        <Column field="name" alignHeader={'center'} style={{paddingRight: "70px" }} sortable header="Name"></Column>
-                        <Column alignHeader={'center'}  body={viewButton} style={{paddingRight: "70px" }}  header="Actions"></Column>
+                        <Column  field="application_id" alignHeader={'center'} sortable header="Application ID" hidden></Column>
+                        <Column  field="name" alignHeader={'center'} style={{width: "20%"}} sortable header="Name"></Column>
+                        <Column  field="risk" alignHeader={'center'} style={{width: "20%"}}body={riskBodyTemplate} sortable header="Risk"></Column>
+                        <Column  alignHeader={'center'} body={viewButton} headerStyle={{color: "white"}} style={{width: "20%"}}  header="Actions"></Column>
                     </DataTable>
                     }
 
@@ -129,6 +142,7 @@ export default function Doctorpendinglist() {
                             <p>Blood Group: {selectedDetails.blood_group}</p>
                             <p>Description: {selectedDetails.diseases_description}</p>
                             <p>History: {selectedDetails.history}</p>
+                            <p>Risk: {riskBodyTemplate(selectedDetails)}</p>
                             <Button label="Close" className='close' onClick={handleCloseCard} text
                             />
                         </Card>
