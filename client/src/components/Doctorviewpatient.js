@@ -71,33 +71,49 @@ export default function Doctorviewpatient() {
                 Prescription
             </div>
         </div>
-        <div>
+        <div className='fullbody'>
             {activeTab === 'personalInfo' && (
                 <div className='form-containerdocview' id='left-col'>
                     <form>
                         <fieldset>
                             <div className="form-row">
-                                <label for="name" className="form-label">Name:</label>
+                                <label for="name" className="form-label">Name</label>
                                 <input type="text" id="name" name="name" className="form-input" value={handlingDetails.first_name+" "+handlingDetails.last_name } required />
                             </div>
                             <div className="form-row">
-                                <label for="age" className="form-label">Age:</label>
+                                <label for="age" className="form-label">Age</label>
                                 <input type="number" id="age" name="age" className="form-input" value={handlingDetails.age} required />
-                            </div>
+                                    </div>
+                                    
+                                    <div className="form-row">
+                                        <label htmlFor="gender" className="form-label">Gender</label>
+                                        <div className="gender-options">
+                                            <input type="radio" id="male" name="gender" value="male" className="form-radio" required />
+                                            <label htmlFor="male" className="radio-label">Male</label>
+
+                                            <input type="radio" id="female" name="gender" value="female" className="form-radio" required />
+                                            <label htmlFor="female" className="radio-label">Female</label>
+
+                                            <input type="radio" id="others" name="gender" value="others" className="form-radio" required />
+                                            <label htmlFor="others" className="radio-label">Others</label>
+                                        </div>
+                                    </div>
+
+
                             <div className="form-row">
-                                <label for="dob" className="form-label">Phone No:</label>
+                                <label for="dob" className="form-label">Phone No</label>
                                 <input type="text" id="phoneno" name="phoneno" className="form-input" value={handlingDetails.phone} required />
                             </div>
                             <div className="form-row">
-                                <label for="bloodGroup" className="form-label">Blood Group:</label>
+                                <label for="bloodGroup" className="form-label">Blood Group</label>
                                 <input type="text" id="bloodGroup" name="bloodGroup" className="form-input"  value={handlingDetails.blood_group} required />
                             </div>
                             <div className="form-row">
-                                <label for="description" className="form-label">Description:</label>
+                                <label for="description" className="form-label">Description</label>
                                 <textarea id="description" name="description" className="form-input" rows="4"  value={handlingDetails.diseases_description}></textarea>
                             </div>
                             <div className="form-row">
-                                <label for="medicalHistory" className="form-label">Medical History:</label>
+                                <label for="medicalHistory" className="form-label">Medical History</label>
                                 <textarea id="medicalHistory" name="medicalHistory" className="form-input" rows="4"  value={handlingDetails.history}  ></textarea>
                             </div>
                         </fieldset>
@@ -107,7 +123,11 @@ export default function Doctorviewpatient() {
                         <div className="card-body">
                             <a href="report1.pdf" className="report-link" download>Download Report 1</a>
                             <a href="report2.pdf" className="report-link" download>Download Report 2</a>
-                            <a href="report3.pdf" className="report-link" download>Download Report 3</a>
+                                    <a href="report3.pdf" className="report-link" download>Download Report 3</a>
+                                    <a href="report3.pdf" className="report-link" download>Download Report 4</a>
+                                <a href="report3.pdf" className="report-link" download>Download Report 5</a>
+                                <a href="report3.pdf" className="report-link" download>Download Report 6</a>
+                            
                         </div>
                     </div>
                 </div>
@@ -115,7 +135,7 @@ export default function Doctorviewpatient() {
             {activeTab === 'prescription' && (
                 <div className='right-col'>
                     <div className='btndoctor'>
-                        <textarea className="text-box" placeholder="add new suggestion/medication" value={medication} onChange={(e)=>setMedication(e.target.value)}></textarea>
+                        <textarea className="text-box" placeholder="Add New Suggestion/Medication" value={medication} onChange={(e)=>setMedication(e.target.value)}></textarea>
                         <div className='btnViewdoc'>
                             <button id='btn1doc' onClick={addSuggestion}>Add</button>
                         </div>
@@ -123,7 +143,7 @@ export default function Doctorviewpatient() {
 
                     <div id="suggestions-card">
                         <h2>Suggestions and Medications</h2>
-                        <ScrollPanel style={{ width: '100%', height: '200px' }}>
+                        <ScrollPanel style={{ width: '100%', height: '285px' }}>
                             {prescriptionData.map((prescription)=>(
                                 <div key={prescription.p_id} className="suggestion-item">{prescription.medication}</div>
                             ))}
