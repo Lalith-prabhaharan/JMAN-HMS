@@ -22,8 +22,12 @@ export default function Doctorviewpatient() {
         .catch((err)=>console.log(err))
 
         axiosInstance.get(`http://localhost:5000/api/v1/prescription/getDetails/${data}`).then((res)=>{
-            if(res.data.length>0)
-            setPrescriptionData(res.data)
+            const resdata=res.data
+            if(res.data.length>0){
+                const sortedData = resdata.sort((a, b) => new Date(b.time_stamp) - new Date(a.time_stamp));
+                console.log(sortedData)
+                setPrescriptionData(sortedData)
+            }
         })
     },[handlingDetails])
 
@@ -125,7 +129,10 @@ export default function Doctorviewpatient() {
                         <h2>Suggestions and Medications</h2>
                         <ScrollPanel style={{ width: '100%', height: '200px' }}>
                             {prescriptionData.map((prescription)=>(
-                                <div key={prescription.p_id} className="suggestion-item">{prescription.medication}</div>
+                                <div key={prescription.p_id} className="suggestion-item">
+                                    <h5>{prescription.time_stamp}</h5>
+                                    {prescription.medication}
+                                </div>
                             ))}
                             {/* <div className="suggestion-item">Suggestion 2</div>
                             <div className="suggestion-item">Suggestion 3</div>

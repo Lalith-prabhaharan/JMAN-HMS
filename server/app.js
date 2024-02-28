@@ -26,10 +26,10 @@ const authAdmin = require('./middleware/authAdmin');
 
 // extra things for file upload on azure ////////
 
-const filestore = require('./routes/filehandle');
-const fileUpload = require('express-fileupload');
+// const filestore = require('./routes/filehandle');
+// const fileUpload = require('express-fileupload');
 
-app.use( fileUpload({createParentPath: true})  );
+// app.use( fileUpload({createParentPath: true})  );
 
 //////////////////////////////////////////////////
 
@@ -46,7 +46,7 @@ app.use('/api/v1/prescription', prescription);
 
 
 ////////////// test /////////////////////////////////
-app.use("/filetest", filestore);
+// app.use("/filetest", filestore);
 /////////////////////////////////////////////////////
 
 
