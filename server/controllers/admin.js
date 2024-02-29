@@ -100,7 +100,7 @@ const postPatientForm = async (req, res) => {
 
     const doctor = await Doctor.findAll({
         where: { doc_id: doctor_id },
-    })
+    });
 
     if (doctor.length !== 1) {
         return res.status(404).json({ msg: "Invalid Doctor" });
@@ -190,6 +190,80 @@ const postDoctorForm=async(req,res)=>{
 }
 
 
+// get application based on specific value
+const updatePatientForm = async(req,res)=>{
+    const {
+        application_id,
+        firstname,
+        lastname,
+        age,
+        dob,
+        gender,
+        phone,
+        email,
+        address,
+        blood,
+        weight,
+        description,
+        history,
+        dept,
+        doctor_name,
+        doctor_id,
+        risk
+    } = req.body;
+
+    const avail = await Application.findAll({
+        where: { applicant_id: application_id }
+    });
+    if (avail[0].dataValues.status !== "pending") {
+        return res.status(404).json({ msg: "Invalid Application_id" });
+    }
+
+    const doctor = await Doctor.findAll({
+        where: { doc_id: doctor_id },
+    });
+
+    if (doctor.length !== 1) {
+        return res.status(404).json({ msg: "Invalid Doctor" });
+    }
+    const entry_date = new Date();
+    const status = "pending";
+    const reason = null;
+    const applicant = await Application.update  ({
+        entry_date: entry_date,
+        first_name: firstname,
+        last_name: lastname,
+        age: age,
+        dob: dob,
+        gender: gender,
+        phone: phone,
+        email: email,
+        address: address,
+        weight: weight,
+        blood_group: blood,
+        diseases_description: description,
+        history: history,
+        department: dept,
+        doctor_name: doctor_name,
+        doc_id: doctor_id,
+        status: status,
+        reason: reason,
+        risk: risk
+    },
+    {
+        where: {
+            applicant_id: application_id
+        },
+
+        returning: true,
+    });
+
+    if (!applicant) {
+        return res.status(500).json({ msg: 'Failed To insert' });
+    }
+    res.status(200).json({ msg: 'Success' });
+}
+
 
 
 
@@ -201,5 +275,6 @@ module.exports = {
     getPatientDetails,
     postPatientForm,
     getSpecificStatus,
-    postDoctorForm
+    postDoctorForm,
+    updatePatientForm
 }
