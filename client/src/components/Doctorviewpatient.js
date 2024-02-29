@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState} from 'react';
 import { DoctorNav } from './DoctorNav';
 import '../style/Doctorviewpatient.css';
 import axios from 'axios';
@@ -7,12 +7,15 @@ import { ScrollPanel } from 'primereact/scrollpanel';
 import axiosInstance from '../interceptor/axios-config';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { ConfirmPopup, confirmPopup } from 'primereact/confirmpopup';
+import { Button } from 'primereact/button';
+
 
 
 export default function Doctorviewpatient() {
     const navigate=useNavigate()
     const loc=useLocation();
-    const {data}=loc.state;
+    const {data}=loc.state || {};
     const [handlingDetails,setHandlingDetails]=useState([]);
     const [prescriptionData,setPrescriptionData]=useState([]);
     const [risk,setRisk]=useState("")
@@ -62,7 +65,28 @@ export default function Doctorviewpatient() {
             doc_id:handlingDetails.doc_id,
             suggestion:medication
         })
-        navigate('\viewpatient')
+        navigate('/viewpatient')
+    }
+
+    const discharge=(event)=>{
+        event.preventDefault();
+        confirmPopup({
+            target: event.currentTarget,
+            message: 'Are you sure you want to proceed?',
+            icon: 'pi pi-exclamation-triangle',
+            defaultFocus: 'accept',
+            accept
+        });
+    }
+    
+    const accept=()=>{
+        axiosInstance.patch(`http://localhost:5000/api/v1/doctor/discharge/${data}`)
+        .then(res=>{
+            console.log(res)
+            toast.success('Patient Discharged');
+            navigate('/mypatients')
+        })
+        .catch(err=>console.log(err))
     }
 
     return (
@@ -135,7 +159,11 @@ export default function Doctorviewpatient() {
                             </div>
                             </div>
                         </fieldset>
-                        <button id='btn1doc' style={{marginTop:"2%"}} >Discharge</button>
+                            <ConfirmPopup />
+                            <div>
+                            <Button id='btn1doc'  style={{marginTop:"2%"}} onClick={discharge} icon="pi pi-check" >Discharge</Button>
+                            </div>
+                        {/* <button id='btn1doc' style={{marginTop:"2%"}} onClick={discharge} >Discharge</button> */}
                     </form>
             <div className="card">
                 <h2>Report Details</h2>
