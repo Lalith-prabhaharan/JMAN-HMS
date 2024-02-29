@@ -6,6 +6,7 @@ import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Card } from 'primereact/card';
 import { Button } from 'primereact/button';
+import { useNavigate } from 'react-router-dom';
 
 export default function AdminStatus() {
   const[statusList,setStatusList]=useState([])
@@ -23,6 +24,14 @@ export default function AdminStatus() {
   const handleCloseCard = () => {
     setSelectedDetails(null);
   };
+ 
+  const navigate = useNavigate();
+  const handleReapply = (e, patient) => {
+    patient.riskCode = getRiskLabel(patient.risk);
+    e.preventDefault();
+    navigate('/addpatient', {state: {data: patient}});
+    localStorage.setItem('activetab','addpatient')
+  }
 
   const getRiskLabel = (risk) => {
     switch (risk) {
@@ -48,7 +57,6 @@ export default function AdminStatus() {
             if(response.length===0){console.log("No data found")}
             else{
                 setStatusList(response.data)
-                console.log(statusList)
             }
         })
         .catch(error=>{
@@ -79,7 +87,11 @@ export default function AdminStatus() {
 
                 {selectedDetails && (
                     <div className="custom-card-overlay">
-                        <Card className="custom-card" title={`Name: ${selectedDetails.first_name} ${selectedDetails.last_name}`}>
+                        <Card className="custom-card">
+                            <div className='patient-status'>
+                                <h3>{`${selectedDetails.first_name} ${selectedDetails.last_name}`} </h3>
+                                <i className="pi pi-times" onClick={handleCloseCard}></i>
+                            </div>
                             <p>Entry Date: {selectedDetails.entry_date}</p>
                             <p>Appointed Doctor: {selectedDetails.doctor_name}</p>
                             <p>Status: {selectedDetails.status}</p>
@@ -87,8 +99,7 @@ export default function AdminStatus() {
                             <p>History: {selectedDetails.history}</p>
                             <p>Risk: {riskBodyTemplate(selectedDetails)}</p>
                             {selectedDetails.reason !== null && (<p>Reason: {selectedDetails.reason}</p>)}
-                            <Button label="Close" className='reject' onClick={handleCloseCard} style={{marginLeft: "20px", width: "30%" ,marginTop: "20px"}} text/>
-                            <Button label="Reapply" className='approve' onClick={handleCloseCard} style={{marginLeft: "80px"}} text/>
+                            {selectedDetails.status !== 'approved' &&<Button label="Reapply" className='approve' onClick={(e) => {handleReapply(e, selectedDetails)}} style={{marginLeft: "35%"}} text/>}
                         </Card>
                     </div>  
                 )} 

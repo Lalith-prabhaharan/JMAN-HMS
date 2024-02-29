@@ -7,38 +7,54 @@ import { Dropdown } from 'primereact/dropdown';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Calendar } from 'primereact/calendar';
+import { useLocation } from 'react-router-dom';
+
 export const Addpatient = () => {
+
+  const location = useLocation();
+  const data = location.state ? location.state.data : null;
 
   const navigate=useNavigate()
 
-  const [firstname,setFirstname]=useState("")
-  const [lastname,setLastname]=useState("")
-  const [age,setAge]=useState("")
-  const [dob,setDob]=useState("")
-  const [contact,setContact]=useState("")
-  const [email,setEmail]=useState("")
-  const [address,setAddress]=useState("")
-  const [weight,setWeight]=useState("")
-  const [disease,setDisease]=useState("")
-  const [history,setHistory]=useState("")
-  const [bloodgroup,setBloodgroup]=useState("")
+  const [firstname,setFirstname]=useState(data!= null ? data.first_name : "")
+  const [lastname,setLastname]=useState(data!= null ? data.last_name : "")
+  const [age,setAge]=useState(data!= null ? data.age: "")
+  const [dob,setDob]=useState(data!= null ? new Date(data.dob) : "")
+  const [contact,setContact]=useState(data!= null ? data.phone : "")
+  const [email,setEmail]=useState(data != null ? data.email: "")
+  const [address,setAddress]=useState(data != null ? data.address: "")
+  const [weight,setWeight]=useState(data != null ? data.weight:"")
+  const [disease,setDisease]=useState(data != null ? data.diseases_description:"")
+  const [history,setHistory]=useState(data != null ? data.history:"")
+  const [bloodgroup,setBloodgroup]=useState(data != null ? data.blood_group:"")
   const [doctor,setDoctor]=useState("")
   const[selectedRisk,setRisk]=useState("")
   const[riskCode,setRiskCode]=useState("")
-  const [docid,setDocid]=useState("")
+  const [docid,setDocid]=useState(data != null ? data.doc_id : "")
 
-  const [selectedOption, setSelectedOption] = useState('');
-  const [selectedDepartment, setSelectedDepartment] = useState('');
+  const [selectedOption, setSelectedOption] = useState(data != null ? data.gender :'');
+  const [selectedDepartment, setSelectedDepartment] = useState(data != null ? data.department.toLowerCase(): '');
 
   const departments = ['cardiology','dermatology','pediatrics','gynecology','neurology','urology','orthopedics','radiology'
   ,'oncology','general'];
 
   const bloodgroups=['A+','A-','O+','O-','AB+','AB-','B+','B-']
 
-  const risk=[{name:"Low",code:"0"},{name:"moderate",code:"1"},{name:"high", code:"2"}]
+  const risk=[{name:"Low",code:"0"},{name:"Moderate",code:"1"},{name:"High", code:"2"}]
   
   const handleDepartmentChange=(event)=>{
-    const dep=event.target.value;
+    const dep=event.target.value; 
+    if(data != null) {
+      data.department = dep; 
+    }
+    getdeptdoctors(dep)
+    .then((response)=>{
+      if(response.length==0)console.log("No data found")
+      else setDoctorList(response.data)
+    })
+    .catch(error => {
+      console.error('Error fetching doctor data:', error);
+    });
     setSelectedDepartment(dep)
   }
 
@@ -76,27 +92,16 @@ export const Addpatient = () => {
   const [flag,setFlag]=useState(true)
 
   useEffect(()=>{
-    if(selectedDepartment){
-    getdeptdoctors(selectedDepartment)
-    .then((response)=>{
-
-      if(response.length==0)console.log("No data found")
-      else{
-        setDoctorList(response.data)
-      }
-
-    })
-    .catch(error => {
-      console.error('Error fetching doctor data:', error);
-    });
-  }
 
   });
 
+  const reapply = (e) => {
+    e.preventDefault();
+    console.log(firstname,lastname,dob,selectedDepartment,doctor.doc_id,bloodgroup,selectedOption,riskCode)
+  }
   
   const submit=(e)=>{
     // e.preventDefault();
-
     console.log(firstname,lastname,dob,selectedDepartment,doctor.doc_id,bloodgroup,selectedOption,riskCode)
     const addPatient=async()=>{
       const response=adminadd({
@@ -120,13 +125,29 @@ export const Addpatient = () => {
 
     }
     addPatient();
-    navigate('/addpatient')
+    navigate('/addpatient', {state : null})
     
   }
 
   const[currentStep,setCurrentStep]=useState(1)
 
   const nextStep = () => {
+    if(data != null) {
+      getdeptdoctors(data.department)
+      .then((response)=>{
+        if(response.length==0)console.log("No data found")
+        else setDoctorList(response.data)
+      })
+      .catch(error => {
+        console.error('Error fetching doctor data:', error);
+     });
+     const selectedRiskObject = risk.find(item => item.code === data.risk);
+      if (selectedRiskObject) {
+        setRisk(selectedRiskObject);
+        setRiskCode(selectedRiskObject.code);
+      }
+    }
+    
     setCurrentStep((prevStep) => prevStep + 1);
   };
 
@@ -154,8 +175,8 @@ export const Addpatient = () => {
             
             <label>Date of Birth<span className="required">*</span>:</label>
             {/* <input type="date" value={dob} className="addhotelinp" onChange={(e)=>setDob(e.target.value)} required /> */}
-            <div className="card flex justify-content-center">
-                <Calendar  className="addhotelinp" value={dob} onChange={(e) => setDob(e.value)} />
+            <div className="flex justify-content-center">
+                <Calendar className="addhotelinp" value={dob} onChange={(e) => setDob(e.value)}/>
             </div>
           </div>
           <div className='form-right'>
@@ -205,7 +226,7 @@ export const Addpatient = () => {
         </div>
         <div className='form-right'>
         <label>Department<span className="required">*</span>:</label>
-          <div className="card flex justify-content-center">
+          <div className="flex justify-content-center">
           <Dropdown value={selectedDepartment} onChange={handleDepartmentChange} options={departments} optionLabel="" 
               placeholder="Select the Department" className="w-full md:w-14rem" />    
           </div>  
@@ -219,19 +240,20 @@ export const Addpatient = () => {
                 ))
               )}
           </select>   */}
-          <div className="card flex justify-content-center">
+          <div className="flex justify-content-center">
           <Dropdown value={doctor} onChange={handleDoctorChange} options={doctorList} optionLabel="first_name" 
               placeholder="Select the Doctor" className="w-full md:w-14rem" />    
           </div> 
 
           <label>Patient Risk<span className="required">*</span>:</label>
-          <div className="card flex justify-content-center">
+          <div className="flex justify-content-center">
           <Dropdown value={selectedRisk} onChange={handleRiskChange} options={risk} optionLabel="name" 
               placeholder="Patient Risk" className="w-full md:w-14rem" />    
           </div>
 
         <button className="button-1" onClick={prevStep}>Previous</button>
-        <button className="button-1" onClick={submit}>Submit</button>
+        {data == null && <button className="button-1" onClick={submit}>Submit</button>}
+        {data != null && <button className="button-1" onClick={reapply}>Reapply</button>}
         </div>
       </form>
     </div>

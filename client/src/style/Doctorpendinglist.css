@@ -259,6 +259,25 @@ view:hover {
     color: white;
 }
 
+.pi-times {
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.patient-status {
+    display: flex;
+    align-items: center;
+    /* margin-bottom: -20%; */
+}
+
+.patient-status h3 {
+    flex: 1;
+}
+
+.patient-status .pi-times {
+    flex: 0;
+} 
+
 @media screen and (max-width: 768px) {
     .dropdown {
         width:fit-content;
