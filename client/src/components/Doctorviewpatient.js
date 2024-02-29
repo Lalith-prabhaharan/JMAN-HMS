@@ -15,6 +15,7 @@ export default function Doctorviewpatient() {
     const {data}=loc.state;
     const [handlingDetails,setHandlingDetails]=useState([]);
     const [prescriptionData,setPrescriptionData]=useState([]);
+    const [risk,setRisk]=useState("")
     useEffect(() => {
         axiosInstance.get(`http://localhost:5000/api/v1/doctor/handling/${data}`).then((res)=>{
             setHandlingDetails(res.data)
@@ -22,9 +23,29 @@ export default function Doctorviewpatient() {
         .catch((err)=>console.log(err))
 
         axiosInstance.get(`http://localhost:5000/api/v1/prescription/getDetails/${data}`).then((res)=>{
-            if(res.data.length>0)
-            setPrescriptionData(res.data)
-        })
+            const resdata=res.data
+            if(res.data.length>0){
+                const sortedData = resdata.sort((a, b) => new Date(b.time_stamp) - new Date(a.time_stamp));
+                setPrescriptionData(sortedData)
+            }
+        }).catch((err)=>console.log(err))
+
+        const getRiskLabel = () => {
+            if(handlingDetails.risk=="0") {
+                setRisk('Low');
+            }
+            else if(handlingDetails.risk=="1") {
+                setRisk('Moderate');
+            }
+            else if(handlingDetails.risk=="3") {
+                setRisk('High');
+            }
+            else {
+                setRisk('Unknown');
+            }
+          };
+          if(handlingDetails)
+          getRiskLabel();
     },[handlingDetails])
 
     const [activeTab, setActiveTab] = useState('personalInfo');
@@ -75,62 +96,58 @@ export default function Doctorviewpatient() {
             {activeTab === 'personalInfo' && (
                 <div className='form-containerdocview' id='left-col'>
                     <form>
+                            <h2>Personal Info</h2>
                         <fieldset>
+                            <div className='left-view'>
                             <div className="form-row">
                                 <label for="name" className="form-label">Name</label>
-                                <input type="text" id="name" name="name" className="form-input" value={handlingDetails.first_name+" "+handlingDetails.last_name } required />
+                                <input type="text" id="name" name="name" className="form-input"  readOnly={true} value={handlingDetails.first_name+" "+handlingDetails.last_name } required />
                             </div>
                             <div className="form-row">
                                 <label for="age" className="form-label">Age</label>
-                                <input type="number" id="age" name="age" className="form-input" value={handlingDetails.age} required />
+                                <input type="number" id="age" name="age" className="form-input" readOnly={true} value={handlingDetails.age} required />
                                     </div>
                                     
-                                    <div className="form-row">
-                                        <label htmlFor="gender" className="form-label">Gender</label>
-                                        <div className="gender-options">
-                                            <input type="radio" id="male" name="gender" value="male" className="form-radio" required />
-                                            <label htmlFor="male" className="radio-label">Male</label>
-
-                                            <input type="radio" id="female" name="gender" value="female" className="form-radio" required />
-                                            <label htmlFor="female" className="radio-label">Female</label>
-
-                                            <input type="radio" id="others" name="gender" value="others" className="form-radio" required />
-                                            <label htmlFor="others" className="radio-label">Others</label>
-                                        </div>
-                                    </div>
-
 
                             <div className="form-row">
+                                <label for="gender" className="form-label">Gender</label>
+                                <input type="text" id="gender" name="gender" className="form-input" readOnly={true} value={handlingDetails.gender} required />
+                            </div>
+                            <div className="form-row">
                                 <label for="dob" className="form-label">Phone No</label>
-                                <input type="text" id="phoneno" name="phoneno" className="form-input" value={handlingDetails.phone} required />
+                                <input type="text" id="phoneno" name="phoneno" className="form-input" readOnly={true} value={handlingDetails.phone} required />
                             </div>
                             <div className="form-row">
                                 <label for="bloodGroup" className="form-label">Blood Group</label>
-                                <input type="text" id="bloodGroup" name="bloodGroup" className="form-input"  value={handlingDetails.blood_group} required />
+                                <input type="text" id="bloodGroup" name="bloodGroup" className="form-input"  readOnly={true} value={handlingDetails.blood_group} required />
                             </div>
+                            </div>
+                            <div className='right-view'>
                             <div className="form-row">
                                 <label for="description" className="form-label">Description</label>
-                                <textarea id="description" name="description" className="form-input" rows="4"  value={handlingDetails.diseases_description}></textarea>
+                                <textarea id="description" name="description" className="form-input"  readOnly={true} rows="4"  value={handlingDetails.diseases_description}></textarea>
                             </div>
                             <div className="form-row">
                                 <label for="medicalHistory" className="form-label">Medical History</label>
-                                <textarea id="medicalHistory" name="medicalHistory" className="form-input" rows="4"  value={handlingDetails.history}  ></textarea>
+                                <textarea id="medicalHistory" name="medicalHistory" className="form-input" readOnly={true}  rows="4"  value={handlingDetails.history}  ></textarea>
+                            </div>
+                            <div className="form-row">
+                                <label for="risk" className="form-label">Risk:</label>
+                                <input id="risk" name="risk" className="form-input"   readOnly={true} value={risk}  ></input>
+                            </div>
                             </div>
                         </fieldset>
+                        <button id='btn1doc' style={{marginTop:"2%"}} >Discharge</button>
                     </form>
-                    <div className="card">
-                        <h2>Report Details</h2>
-                        <div className="card-body">
-                            <a href="report1.pdf" className="report-link" download>Download Report 1</a>
-                            <a href="report2.pdf" className="report-link" download>Download Report 2</a>
-                                    <a href="report3.pdf" className="report-link" download>Download Report 3</a>
-                                    <a href="report3.pdf" className="report-link" download>Download Report 4</a>
-                                <a href="report3.pdf" className="report-link" download>Download Report 5</a>
-                                <a href="report3.pdf" className="report-link" download>Download Report 6</a>
-                            
-                        </div>
-                    </div>
+            <div className="card">
+                <h2>Report Details</h2>
+                <div className="card-body">
+                    <a href="report1.pdf" className="report-link" download>Download Report 1</a>
+                    <a href="report2.pdf" className="report-link" download>Download Report 2</a>
+                    <a href="report3.pdf" className="report-link" download>Download Report 3</a>
                 </div>
+            </div>
+        </div>
             )}
             {activeTab === 'prescription' && (
                 <div className='right-col'>
@@ -143,17 +160,13 @@ export default function Doctorviewpatient() {
 
                     <div id="suggestions-card">
                         <h2>Suggestions and Medications</h2>
-                        <ScrollPanel style={{ width: '100%', height: '285px' }}>
+                        <ScrollPanel style={{ width: '100%', height: '283px' }}>
                             {prescriptionData.map((prescription)=>(
-                                <div key={prescription.p_id} className="suggestion-item">{prescription.medication}</div>
+                                <div key={prescription.p_id} className="suggestion-item">
+                                    <h5>{prescription.time_stamp}</h5>
+                                    {prescription.medication}
+                                </div>
                             ))}
-                            {/* <div className="suggestion-item">Suggestion 2</div>
-                            <div className="suggestion-item">Suggestion 3</div>
-                            <div className="suggestion-item">Suggestion 4</div>
-                            <div className="suggestion-item">Suggestion 5</div>
-                            <div className="suggestion-item">Suggestion 6</div>
-                            <div className="suggestion-item">Suggestion 7</div>
-                            <div className="suggestion-item">Suggestion 8</div> */}
                         </ScrollPanel>
                     </div>
                 </div>
