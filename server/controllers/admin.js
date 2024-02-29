@@ -213,9 +213,10 @@ const updatePatientForm = async(req,res)=>{
     } = req.body;
 
     const avail = await Application.findAll({
-        where: { applicant_id: application_id }
+        where: { application_id: application_id }
     });
-    if (avail[0].dataValues.status !== "pending") {
+    
+    if (avail[0].dataValues.status != "Rejected") {
         return res.status(404).json({ msg: "Invalid Application_id" });
     }
 
@@ -252,7 +253,7 @@ const updatePatientForm = async(req,res)=>{
     },
     {
         where: {
-            applicant_id: application_id
+            application_id: application_id
         },
 
         returning: true,
