@@ -43,7 +43,8 @@ export const Viewpatient = () => {
     <DoctorNav>
       <div className="status">
           <h1 className='heading'>Handling Patients</h1>
-          {patientList.length > 0 &&
+          {
+          patientList.length > 0 &&
           <DataTable removableSort paginator rows={10} stripedRows  value={patientList} onRowClick={handleRowClick}>
               <Column field="patient_id" alignHeader={'center'} sortable header="id" ></Column>
               <Column field="first_name" alignHeader={'center'} sortable header="FirstName"></Column>
