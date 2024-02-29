@@ -31,7 +31,6 @@ export default function Doctorviewpatient() {
         }).catch((err)=>console.log(err))
 
         const getRiskLabel = () => {
-            console.log(handlingDetails.risk)
             if(handlingDetails.risk=="0") {
                 setRisk('Low');
             }
@@ -97,8 +96,9 @@ export default function Doctorviewpatient() {
             {activeTab === 'personalInfo' && (
                 <div className='form-containerdocview' id='left-col'>
                     <form>
-                        <fieldset>
                             <h2>Personal Info</h2>
+                        <fieldset>
+                            <div className='left-view'>
                             <div className="form-row">
                                 <label for="name" className="form-label">Name:</label>
                                 <input type="text" id="name" name="name" className="form-input" value={handlingDetails.first_name+" "+handlingDetails.last_name } required />
@@ -119,6 +119,8 @@ export default function Doctorviewpatient() {
                                 <label for="bloodGroup" className="form-label">Blood Group:</label>
                                 <input type="text" id="bloodGroup" name="bloodGroup" className="form-input"  value={handlingDetails.blood_group} required />
                             </div>
+                            </div>
+                            <div className='right-view'>
                             <div className="form-row">
                                 <label for="description" className="form-label">Description:</label>
                                 <textarea id="description" name="description" className="form-input" rows="4"  value={handlingDetails.diseases_description}></textarea>
@@ -131,17 +133,19 @@ export default function Doctorviewpatient() {
                                 <label for="risk" className="form-label">Risk:</label>
                                 <input id="risk" name="risk" className="form-input"  value={risk}  ></input>
                             </div>
+                            </div>
                         </fieldset>
+                        <button id='btn1doc' style={{marginTop:"2%"}} >Discharge</button>
                     </form>
-                    <div className="card">
-                        <h2>Report Details</h2>
-                        <div className="card-body">
-                            <a href="report1.pdf" className="report-link" download>Download Report 1</a>
-                            <a href="report2.pdf" className="report-link" download>Download Report 2</a>
-                            <a href="report3.pdf" className="report-link" download>Download Report 3</a>
-                        </div>
-                    </div>
+            <div className="card">
+                <h2>Report Details</h2>
+                <div className="card-body">
+                    <a href="report1.pdf" className="report-link" download>Download Report 1</a>
+                    <a href="report2.pdf" className="report-link" download>Download Report 2</a>
+                    <a href="report3.pdf" className="report-link" download>Download Report 3</a>
                 </div>
+            </div>
+        </div>
             )}
             {activeTab === 'prescription' && (
                 <div className='right-col'>

@@ -1,3 +1,13 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #333;
+    
+}
+
 @media screen and (max-width: 600px) {
     body {
         font-size: 14px;
@@ -5,29 +15,27 @@
 }
 
 
-.card,
-.details {
+.docviewpatient.card,
+.docviewpatient .details {
     flex: 1;
 }
 
-.form-containerdocview,
-.right-col {
+.docviewpatient .form-containerdocview,
+.docviewpatient .right-col {
     padding-left: 50px;
     padding-right: 50px;
     padding-top: 80px;
-    width:1200px;
+    width: 1500px;
     margin: 0px auto;
     display: flex;
     gap: 20px;
     align-items: center;
-    margin-top: -3%;
-    margin-bottom: 3%;
 }
 
 @media (max-width:1500px) {
 
-    .form-containerdocview,
-    .right-col {
+    .docviewpatient .form-containerdocview,
+    .docviewpatient .right-col {
         width: auto;
         padding-top: 100px;
     }
@@ -35,89 +43,85 @@
 
 @media (max-width:840px) {
 
-    .form-containerdocview,
-    .right-col {
+    .docviewpatient .form-containerdocview,
+    .docviewpatient.right-col {
         display: grid;
         padding: 20px;
-    }
-    fieldset{
-        width: 100%;
     }
 }
 
 @media (max-width: 650px) {
-    .docviewcontainer {
+    .docviewpatient .docviewcontainer {
         flex-direction: column;
         width: auto;
     }
 
-    .left-col,
-    .right-col {
+    .docviewpatient .left-col,
+    .docviewpatient .right-col {
         flex: none;
         width: 100%;
     }
 
-    .right-col {
+    .docviewpatient .right-col {
         width: auto;
     }
 }
 
 @media (max-width: 600px) {
 
-    .left-col,
-    .right-col {
+    .docviewpatient .left-col,
+    .docviewpatient .right-col {
         flex: none;
         width: 100%;
     }
 
-    .form-containerdocview,
-    .right-col {
+    .docviewpatient .form-containerdocview,
+    .docviewpatient .right-col {
         width: auto;
     }
 }
 
 @media (max-width:500px) {
 
-    .form-containerdocview,
-    .right-col {
+    .docviewpatient .form-containerdocview,
+    .docviewpatient .right-col {
         width: auto;
     }
 
-    .card {
+    .docviewpatient .card {
         width: auto;
     }
 }
 
 @media (max-width:400px) {
-    .card {
+    .docviewpatient .card {
         width: auto;
     }
 }
 
-.card {
+.docviewpatient .card {
     background-color: #bfc5bf;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 20px;
     overflow: hidden;
-    max-width: 400px;
+    max-width: 800px;
     height: 379px;
-    margin-left: 20%;
     padding: 20px;
 }
 
-.card-header {
+.docviewpatient .card-header {
     background-color: #bfc5bf;
     color: black;
     padding: 10px;
     text-align: center;
 }
 
-.card-body {
+.docviewpatient .card-body {
     text-align: left;
 
 }
 
-.report-link {
+.docviewpatient .report-link {
     display: block;
     margin-bottom: 8px;
     color: #333;
@@ -127,11 +131,11 @@
     border-radius: 4px;
 }
 
-.report-link:hover {
+.docviewpatient v.report-link:hover {
     background-color: #ccc;
 }
 
-label {
+.docviewpatient label {
     font-size: 18px;
 }
 
@@ -142,27 +146,27 @@ label {
     flex: 1;
 }
 
-.form-container {
+.docviewpatient .form-container {
     justify-content: center;
     display: flex;
     padding: 40px;
 }
 
-.card h2 {
+.docviewpatient .card h2 {
     margin: 10px auto;
 
 }
 
-fieldset {
+.docviewpatient fieldset {
     border-width: 0px;
     padding: 25px;
     background-color: #bfc5bf;
     border-radius: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 150%;
+    display:flex;
 }
 
-#btn1doc {
+.docviewpatient #btn1doc {
     background-color: #00866E;
     color: white;
     padding: 15px;
@@ -179,7 +183,7 @@ fieldset {
     align-items: flex-end;
 }
 
-.inputboxDoc {
+.docviewpatient .inputboxDoc {
     border-radius: 5px;
     border-width: 0px;
     margin-left: 10px;
@@ -196,7 +200,7 @@ fieldset {
 
 }
 
-#suggestions-card {
+.docviewpatient  #suggestions-card {
     background-color: #bfc5bf;
     border-radius: 20px;
     padding: 20px;
@@ -204,28 +208,28 @@ fieldset {
     flex: 1;
 }
 
-.fullbody {
+.docviewpatient .fullbody {
     min-height: 100vh;
     height: auto;
 }
 
-#suggestions-card h2 {
+.docviewpatient #suggestions-card h2 {
     margin: 10px auto;
 }
 
-.slider-container {
+.docviewpatient .slider-container {
     width: 100%;
     overflow: hidden;
     margin-top: 20px;
 }
 
-.suggestion-list {
+.docviewpatient  .suggestion-list {
     max-height: 200px;
     overflow-y: auto;
     padding: 10px;
 }
 
-.suggestion-item {
+.docviewpatient .suggestion-item {
     margin-bottom: 8px;
     padding: 8px;
     border-radius: 4px;
@@ -234,23 +238,23 @@ fieldset {
     transition: background-color 0.3s;
 }
 
-.suggestion-item:hover {
+.docviewpatient .suggestion-item:hover {
     background-color: #e0e0e0;
 }
 
-.form-row {
+.docviewpatient .form-row {
     margin-bottom: 5px;
     display: flex;
 }
 
-.form-label {
+.docviewpatient .form-label {
     display: inline-block;
     width: 30%;
     text-align: left;
     line-height: 30px;
 }
 
-.form-input {
+.docviewpatient .form-input {
     width: 65%;
     box-sizing: border-box;
     padding: 5px;
@@ -258,7 +262,7 @@ fieldset {
     border-radius: 4px;
 }
 
-.sidetabs {
+.docviewpatient .sidetabs {
     display: flex;
     flex-direction: row;
     width: 240px;
