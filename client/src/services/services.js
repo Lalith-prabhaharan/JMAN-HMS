@@ -40,3 +40,7 @@ export const approvePatients= (id)=> {
 export const rejectPatients= (id, reason)=> {
     return axiosInstance.patch(`${url}/doctor/reject/${id}`, {reason});
 }
+
+export const reapplyPatient = (patientDetails) => {
+    return axiosInstance.patch(`${url}/admin/patient/application`,patientDetails);
+}

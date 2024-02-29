@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useState } from 'react';
 import '../style/addpatient.css'
 import { Navbar } from './navbar';
-import { adminadd, getdeptdoctors } from '../services/services';
+import { adminadd, getdeptdoctors, reapplyPatient } from '../services/services';
 import { Dropdown } from 'primereact/dropdown';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -31,6 +31,7 @@ export const Addpatient = () => {
   const[selectedRisk,setRisk]=useState("")
   const[riskCode,setRiskCode]=useState("")
   const [docid,setDocid]=useState(data != null ? data.doc_id : "")
+  const [id, setId] = useState(data != null ? data.application_id: "");
 
   const [selectedOption, setSelectedOption] = useState(data != null ? data.gender :'');
   const [selectedDepartment, setSelectedDepartment] = useState(data != null ? data.department.toLowerCase(): '');
@@ -92,12 +93,41 @@ export const Addpatient = () => {
   const [flag,setFlag]=useState(true)
 
   useEffect(()=>{
+    
+  })
 
-  });
+  const toastSuccess = () => 
+  {
+    toast.success('Request Sent to Doctor');
+  }
 
-  const reapply = (e) => {
-    e.preventDefault();
-    console.log(firstname,lastname,dob,selectedDepartment,doctor.doc_id,bloodgroup,selectedOption,riskCode)
+  const reapply = async (e) => {
+    const updatePatient=async()=>{
+      const response=reapplyPatient({
+        application_id: id,
+        firstname:firstname, 
+        lastname:lastname, 
+        age:age, 
+        dob:dob, 
+        gender:selectedOption, 
+        phone:contact, 
+        email:email,
+        address:address, 
+        blood:bloodgroup,
+        weight:weight,
+        description:disease,
+        history:history,
+        dept:selectedDepartment,
+        doctor_name:doctor.first_name,
+        doctor_id:doctor.doc_id,
+        risk:riskCode
+      })
+    }
+    updatePatient(); 
+    toastSuccess();
+    navigate('/viewstatus', {state: null});
+    localStorage.setItem('activetab','viewstatus')
+    
   }
   
   const submit=(e)=>{
@@ -124,7 +154,9 @@ export const Addpatient = () => {
       })
 
     }
+
     addPatient();
+    toastSuccess();
     navigate('/addpatient', {state : null})
     
   }
@@ -133,7 +165,7 @@ export const Addpatient = () => {
 
   const nextStep = () => {
     if(data != null) {
-      getdeptdoctors(data.department)
+      getdeptdoctors(selectedDepartment)
       .then((response)=>{
         if(response.length==0)console.log("No data found")
         else setDoctorList(response.data)
