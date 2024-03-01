@@ -49,13 +49,22 @@ const getPatients = async(req, res) => {
 
 // get the status of all patient
 const getAllPatientStatus = async (req, res) => {
-    const allPatient = await Patient.findAll({
-        attributes: ['patient_id', 'first_name', 'last_name', 'status', 'risk'],
-        order: [
-            ['risk', 'DESC']
-        ]
-    });
-
+    const status = req.params.status;
+    var allPatient;
+    if (status === "all"){
+        allPatient = await Patient.findAll({
+            attributes: ['patient_id', 'first_name', 'last_name', 'status', 'risk'],
+            order: [ ['risk', 'DESC'] ]
+        });
+    }
+    else{
+        allPatient = await Patient.findAll({
+            attributes: ['patient_id', 'first_name', 'last_name', 'status', 'risk'],
+            where: { status: status },
+            order: [ ['risk', 'DESC'] ]
+        });
+    }
+    
     if (allPatient.length === 0) {
         return res.status(200).json({ msg: 'No Patients' });
     }
