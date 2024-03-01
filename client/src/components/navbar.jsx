@@ -32,7 +32,7 @@ export const Navbar = ({ children }) => {
     <div>
     <nav className="navbar">
       <div className="logo">HEALTH CARE</div>
-      <div className={`nav-links ${showNav ? 'show' : ''}`}>
+      <div className={`nav-links ${showNav ? 'show' : ''}`} style={{paddingTop:"10px"}}>
         <a
           href="/allpatients"
           style={{ color: localStorage.getItem("activetab") === 'allpatients' ? activeColor : inactiveColor }}

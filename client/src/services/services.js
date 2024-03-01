@@ -25,9 +25,12 @@ export const doctorhandling=()=>{
     return axiosInstance.get(`${url}/doctor/handling`);
 }
 
-export const approvedpatients=()=>{
-    return axiosInstance.get(`${url}/admin/patient/status`);
+export const approvedpatients=(status)=>{
+    return axiosInstance.get(`${url}/admin/patientStatus/${status}`);
 }
+// export const approvedpatients=()=>{
+//     return axiosInstance.get(`${url}/admin/patient/statuss`);
+// }
 
 export const adddoctor=(doctordetails)=>{
     return axiosInstance.post(`${url}/admin/doctor/add`,doctordetails)
