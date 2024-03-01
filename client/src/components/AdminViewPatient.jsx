@@ -1,6 +1,7 @@
+
 import React, { useEffect, useState } from 'react';
 import { DoctorNav } from './DoctorNav';
-import '../style/Doctorviewpatient.css';
+import '../style/AdminViewPatient.css';
 import axios from 'axios';
 import "primereact/resources/themes/lara-light-cyan/theme.css";
 import { ScrollPanel } from 'primereact/scrollpanel';
@@ -9,7 +10,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 
-export default function Doctorviewpatient() {
+export default function AdminViewPatient() {
     const navigate = useNavigate()
     const loc = useLocation();
     const { data } = loc.state;
@@ -65,9 +66,25 @@ export default function Doctorviewpatient() {
         navigate('\viewpatient')
     }
 
+    // For add files
+    const [uploadedFiles, setUploadedFiles] = useState([]);
+
+    const handleFileUpload = (event) => {
+        const files = Array.from(event.target.files);
+        setUploadedFiles((prevFiles) => [...prevFiles, ...files]);
+    };
+
+    const renderUploadedFiles = () => {
+        return uploadedFiles.map((file, index) => (
+            <div key={index} className="uploaded-file">
+                <span>{file.name}</span>
+            </div>
+        ));
+    };
+
     return (
         <DoctorNav>
-            <div className='docviewpatient'>
+            <div className='adminviewpatient'>
                 <div className='sidetabs'>
                     <div
                         onClick={() => handleTabChange('personalInfo')}
@@ -78,7 +95,7 @@ export default function Doctorviewpatient() {
                             color: activeTab === 'personalInfo' ? '#3498db' : '#333',
                         }}
                     >
-                        Personal Info
+                        Patient Info
                     </div>
                     <div
                         onClick={() => handleTabChange('prescription')}
@@ -96,7 +113,7 @@ export default function Doctorviewpatient() {
                     {activeTab === 'personalInfo' && (
                         <div className='form-containerdocview' id='left-col'>
                             <form>
-                                <h2>Personal Info</h2>
+                                <h2>Patient Info</h2>
                                 <fieldset>
                                     <div className='left-view'>
                                         <div className="form-row">
@@ -142,7 +159,7 @@ export default function Doctorviewpatient() {
                                         </div>
                                     </div>
                                 </fieldset>
-                                <button id='btn1doc' style={{ marginTop: "2%" }} >Discharge</button>
+                                <button id='btn1doc' style={{ marginTop: "2%" }} >Release</button>
                             </form>
                             <div className="card">
                                 <h2>Report Details</h2>
@@ -151,21 +168,27 @@ export default function Doctorviewpatient() {
                                     <a href="report2.pdf" className="report-link" download>Download Report 2</a>
                                     <a href="report3.pdf" className="report-link" download>Download Report 3</a>
                                 </div>
+                                <div className="upload-section">
+                                    <label htmlFor="file-upload" className="custom-file-upload">
+                                        Upload Files
+                                    </label>
+                                    <input
+                                        type="file"
+                                        id="file-upload"
+                                        accept=".pdf"
+                                        multiple
+                                        onChange={handleFileUpload}
+                                    />
+                                    <button className="upload-button">Upload</button>
+                                </div>
                             </div>
                         </div>
                     )}
                     {activeTab === 'prescription' && (
                         <div className='right-col'>
-                            <div className='btndoctor'>
-                                <textarea className="text-box" placeholder="Add New Suggestion/Medication" value={medication} onChange={(e) => setMedication(e.target.value)}></textarea>
-                                <div className='btnViewdoc'>
-                                    <button id='btn1doc' onClick={addSuggestion}>Add</button>
-                                </div>
-                            </div>
-
                             <div id="suggestions-card">
-                                <h2>Suggestions and Medications</h2>
-                                <ScrollPanel style={{ width: '100%', height: '283px' }}>
+                                <h2>Previous Suggestions and Medications</h2>
+                                <ScrollPanel style={{ width: '100%', height: '383px' }}>
                                     {prescriptionData.map((prescription) => (
                                         <div key={prescription.p_id} className="suggestion-item">
                                             <h5>{prescription.time_stamp}</h5>

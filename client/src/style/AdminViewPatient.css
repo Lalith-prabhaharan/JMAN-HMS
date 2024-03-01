@@ -1,3 +1,4 @@
+
 body {
     margin: 0;
     padding: 0;
@@ -15,13 +16,12 @@ body {
 }
 
 
-.docviewpatient.card,
-.docviewpatient .details {
+.adminviewpatient.card,
+.adminviewpatient .details {
     flex: 1;
 }
 
-.docviewpatient .form-containerdocview,
-.docviewpatient .right-col {
+.adminviewpatient .form-containerdocview{
     padding-left: 30px;
     padding-right: 30px;
     padding-top: 50px;
@@ -32,11 +32,22 @@ body {
     align-items: center;
 }
 
+.adminviewpatient .right-col {
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 20px;
+    width: 1200px;
+    margin: 0px auto;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
 
 @media (max-width:1500px) {
 
-    .docviewpatient .form-containerdocview,
-    .docviewpatient .right-col {
+    .adminviewpatient .form-containerdocview,
+    .adminviewpatient .right-col {
         width: auto;
         padding-top: 100px;
     }
@@ -44,8 +55,8 @@ body {
 
 @media (max-width:1024px) {
 
-    .docviewpatient .form-containerdocview,
-    .docviewpatient.right-col {
+    .adminviewpatient .form-containerdocview,
+    .adminviewpatient.right-col {
         display: grid;
         padding: 30px;
     }
@@ -57,8 +68,8 @@ body {
         width: auto;
     }
 
-   .docviewpatient .left-col,
-   .docviewpatient .right-col {
+   .adminviewpatient .left-col,
+   .adminviewpatient .right-col {
         flex: none;
         display: grid;
         width: 100%;
@@ -69,7 +80,7 @@ body {
     }
 }
 @media(max-width:1024px){
-.docviewpatient .right-col {
+.adminviewpatient .right-col {
     flex: none;
     display: grid;
     width: 100%;
@@ -79,51 +90,51 @@ body {
 }
 }
 @media (max-width:600px) {
-.docviewpatient .left-view,
-.docviewpatient .right-view{
+.adminviewpatient .left-view,
+.adminviewpatient .right-view{
     flex: none;
     display: grid;
 }
 }
-.docviewpatient .left-view,
-    .docviewpatient .right-view {
+.adminviewpatient .left-view,
+    .adminviewpatient .right-view {
         flex: 1;
         width: 100%;
     }
 @media (max-width: 300px) {
 
-    .docviewpatient .left-view,
-    .docviewpatient .right-view {
+    .adminviewpatient .left-view,
+    .adminviewpatient .right-view {
         display: grid;
         flex: none;
         width: auto;
     }
 
-    .docviewpatient .form-containerdocview,
-    .docviewpatient .right-col {
+    .adminviewpatient .form-containerdocview,
+    .adminviewpatient .right-col {
         width: auto;
     }
 }
 
 @media (max-width:500px) {
 
-    .docviewpatient .form-containerdocview,
-    .docviewpatient .right-col {
+    .adminviewpatient .form-containerdocview,
+    .adminviewpatient .right-col {
         width: auto;
     }
 
-    .docviewpatient .card {
+    .adminviewpatient .card {
         width: auto;
     }
 }
 
 @media (max-width:400px) {
-    .docviewpatient .card {
+    .adminviewpatient .card {
         width: auto;
     }
 }
 
-.docviewpatient .card{
+.adminviewpatient .card{
     flex: 1;
     background-color: #c3ffd7d2;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -140,7 +151,7 @@ body {
     text-align: center;
 }
 
-.docviewpatient .card-body {
+.adminviewpatient .card-body {
     text-align: left;
 
 }
@@ -155,15 +166,17 @@ body {
     border-radius: 4px;
 }
 
-.docviewpatient v.report-link:hover {
+.adminviewpatient v.report-link:hover {
     background-color: #ccc;
 }
 
-label {
+.adminviewpatient label {
     font-size: 18px;
+    margin-left: 0px;
+    font-weight: bold;
 }
 
-.docviewpatient .btndoctor {
+.adminviewpatient .btndoctor {
     background-color:#c3ffd7d2;
     border-radius: 20px;
     padding: 20px;
@@ -177,12 +190,12 @@ label {
     padding: 40px;
 }
 
-.docviewpatient .card h2 {
+.adminviewpatient .card h2 {
     margin: 0px auto;
 
 }
 
-.docviewpatient fieldset {
+.adminviewpatient fieldset {
     border-width: 0px;
     padding: 25px;
     background-color: #c3ffd7d2;
@@ -225,20 +238,19 @@ label {
 
 }
 
-.docviewpatient  #suggestions-card {
+.adminviewpatient  #suggestions-card {
     background-color: #c3ffd7d2;
     border-radius: 20px;
     padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    flex: 1;
 }
 
-.docviewpatient .fullbody {
+.adminviewpatient .fullbody {
     min-height: 100vh;
     height: auto;
 }
 
-.docviewpatient #suggestions-card h2 {
+.adminviewpatient #suggestions-card h2 {
     margin: 10px auto;
 }
 
@@ -252,7 +264,7 @@ label {
     margin-top: 20px;
 }
 
-.docviewpatient  .suggestion-list {
+.adminviewpatient  .suggestion-list {
     max-height: 200px;
     overflow-y: auto;
     padding: 10px;
@@ -300,9 +312,9 @@ label {
     background: #f4f4f4;
 }
 
-.docviewpatient form {
+.adminviewpatient form {
     flex: 2;
 }
-.docviewpatient h2{
+.adminviewpatient h2{
     margin: 0%;
 }
