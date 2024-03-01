@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState} from 'react';
 import { DoctorNav } from './DoctorNav';
 import '../style/Doctorviewpatient.css';
 import axios from 'axios';
@@ -7,15 +7,26 @@ import { ScrollPanel } from 'primereact/scrollpanel';
 import axiosInstance from '../interceptor/axios-config';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { ConfirmPopup, confirmPopup } from 'primereact/confirmpopup';
+import { Button } from 'primereact/button';
+import { Card } from 'primereact/card';
+import { Dropdown } from 'primereact/dropdown';
+
 
 
 export default function Doctorviewpatient() {
     const navigate=useNavigate()
     const loc=useLocation();
-    const {data}=loc.state;
+    const {data}=loc.state || {};
     const [handlingDetails,setHandlingDetails]=useState([]);
     const [prescriptionData,setPrescriptionData]=useState([]);
     const [risk,setRisk]=useState("")
+    const [changedRisk,setChangedRisk]=useState("")
+    const [changeRiskFactor,setRiskFactor]=useState(false);
+    const risks=[{label:"Low",value:"0"},
+                   {label:"Moderate",value:"1"},
+                   {label:"High", value:"2"}]
+
     useEffect(() => {
         axiosInstance.get(`http://localhost:5000/api/v1/doctor/handling/${data}`).then((res)=>{
             setHandlingDetails(res.data)
@@ -37,7 +48,7 @@ export default function Doctorviewpatient() {
             else if(handlingDetails.risk=="1") {
                 setRisk('Moderate');
             }
-            else if(handlingDetails.risk=="3") {
+            else if(handlingDetails.risk=="2") {
                 setRisk('High');
             }
             else {
@@ -62,7 +73,49 @@ export default function Doctorviewpatient() {
             doc_id:handlingDetails.doc_id,
             suggestion:medication
         })
-        navigate('\viewpatient')
+        navigate('/viewpatient')
+    }
+
+    const discharge=(event)=>{
+        event.preventDefault();
+        confirmPopup({
+            target: event.currentTarget,
+            message: 'Are you sure you want to proceed?',
+            icon: 'pi pi-exclamation-triangle',
+            defaultFocus: 'accept',
+            accept
+        });
+    }
+    
+    const accept=()=>{
+        axiosInstance.patch(`http://localhost:5000/api/v1/doctor/discharge/${data}`)
+        .then(res=>{
+            console.log(res)
+            toast.success('Patient Discharged');
+            navigate('/mypatients')
+        })
+        .catch(err=>console.log(err))
+    }
+
+    const handleRiskChange=()=>{
+        axiosInstance.patch(`http://localhost:5000/api/v1/doctor//handling/risk/${data}`,{
+            risk:changedRisk
+        })
+        .then(res=>{
+            console.log(res)
+            toast.success('Risk Changed')
+            setRiskFactor(false)
+        })
+        .catch(err=>console.log(err))
+    }
+
+    const changeRisk=(e)=>{
+        e.preventDefault();
+        setRiskFactor(true)
+        
+    }
+    const handleCloseCard=()=>{
+        setRiskFactor(false);
     }
 
     return (
@@ -101,23 +154,23 @@ export default function Doctorviewpatient() {
                             <div className='left-view'>
                             <div className="form-row">
                                 <label for="name" className="form-label">Name:</label>
-                                <input type="text" id="name" name="name" className="form-input" value={handlingDetails.first_name+" "+handlingDetails.last_name } required />
+                                <input type="text" id="name" name="name" className="form-input" value={handlingDetails.first_name+" "+handlingDetails.last_name } />
                             </div>
                             <div className="form-row">
                                 <label for="age" className="form-label">Age:</label>
-                                <input type="number" id="age" name="age" className="form-input" value={handlingDetails.age} required />
+                                <input type="number" id="age" name="age" className="form-input" value={handlingDetails.age} />
                             </div>
                             <div className="form-row">
                                 <label for="gender" className="form-label">Gender:</label>
-                                <input type="text" id="gender" name="gender" className="form-input" value={handlingDetails.gender} required />
+                                <input type="text" id="gender" name="gender" className="form-input" value={handlingDetails.gender} />
                             </div>
                             <div className="form-row">
                                 <label for="dob" className="form-label">Phone No:</label>
-                                <input type="text" id="phoneno" name="phoneno" className="form-input" value={handlingDetails.phone} required />
+                                <input type="text" id="phoneno" name="phoneno" className="form-input" value={handlingDetails.phone} />
                             </div>
                             <div className="form-row">
                                 <label for="bloodGroup" className="form-label">Blood Group:</label>
-                                <input type="text" id="bloodGroup" name="bloodGroup" className="form-input"  value={handlingDetails.blood_group} required />
+                                <input type="text" id="bloodGroup" name="bloodGroup" className="form-input"  value={handlingDetails.blood_group}  />
                             </div>
                             </div>
                             <div className='right-view'>
@@ -135,8 +188,25 @@ export default function Doctorviewpatient() {
                             </div>
                             </div>
                         </fieldset>
-                        <button id='btn1doc' style={{marginTop:"2%"}} >Discharge</button>
+                            <ConfirmPopup />
+                            <div>
+                            <Button id='btn1doc'  style={{marginTop:"2%",marginBottom:"2%"}} onClick={discharge} icon="pi pi-check">Discharge</Button>
+                            <Button id='btn1doc'  style={{marginLeft:"2%",marginBottom:"2%"}} onClick={changeRisk} >Change Risk</Button>
+                            </div>
+                        {/* <button id='btn1doc' style={{marginTop:"2%"}} onClick={discharge} >Discharge</button> */}
                     </form>
+                    {changeRiskFactor && (
+                        <div className="custom-card-overlay">
+                            <Card className="custom-card" title="Change Risk Factor"> 
+                                <div className="flex justify-content-center">
+                                    <Dropdown value={changedRisk} onChange={(e) => setChangedRisk(e.value)}
+                                    options={risks} optionLabel='label' optionValue='value' placeholder='select Risk'/>
+                                </div>
+                            <button style={{marginBottom:"2%"}} label="Submit" id='btn1doc' onClick={handleRiskChange}>Submit</button> 
+                            <button style={{marginLeft:"2%"}} id='btn1doc' onClick={handleCloseCard}>Close</button>
+                            </Card>
+                        </div>
+                    )}
             <div className="card">
                 <h2>Report Details</h2>
                 <div className="card-body">

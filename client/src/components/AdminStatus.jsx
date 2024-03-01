@@ -99,7 +99,7 @@ export default function AdminStatus() {
                             <p>History: {selectedDetails.history}</p>
                             <p>Risk: {riskBodyTemplate(selectedDetails)}</p>
                             {selectedDetails.reason !== null && (<p>Reason: {selectedDetails.reason}</p>)}
-                            {selectedDetails.status !== 'approved' &&<Button label="Reapply" className='approve' onClick={(e) => {handleReapply(e, selectedDetails)}} style={{marginLeft: "35%"}} text/>}
+                            {selectedDetails.status === 'Rejected' &&<Button label="Reapply" className='approve' onClick={(e) => {handleReapply(e, selectedDetails)}} style={{marginLeft: "35%"}} text/>}
                         </Card>
                     </div>  
                 )} 
