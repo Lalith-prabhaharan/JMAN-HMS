@@ -25,9 +25,12 @@ export const doctorhandling=()=>{
     return axiosInstance.get(`${url}/doctor/handling`);
 }
 
-export const approvedpatients=()=>{
-    return axiosInstance.get(`${url}/admin/patient/status`);
+export const approvedpatients=(status)=>{
+    return axiosInstance.get(`${url}/admin/patientStatus/${status}`);
 }
+// export const approvedpatients=()=>{
+//     return axiosInstance.get(`${url}/admin/patient/statuss`);
+// }
 
 export const adddoctor=(doctordetails)=>{
     return axiosInstance.post(`${url}/admin/doctor/add`,doctordetails)
@@ -39,4 +42,8 @@ export const approvePatients= (id)=> {
 
 export const rejectPatients= (id, reason)=> {
     return axiosInstance.patch(`${url}/doctor/reject/${id}`, {reason});
+}
+
+export const reapplyPatient = (patientDetails) => {
+    return axiosInstance.patch(`${url}/admin/patient/application`,patientDetails);
 }
