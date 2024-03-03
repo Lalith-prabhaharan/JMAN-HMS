@@ -1,12 +1,12 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const {sequelize} = require('../db/connect');
-const Doctor = require('./Doctor');
 const Patient = require('./Patient');
+const Doctor = require('./Doctor');
 
 
 
-const Prescription = sequelize.define('Prescription', {
-    p_id: {
+const Report = sequelize.define('Report', {
+    report_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
@@ -32,16 +32,16 @@ const Prescription = sequelize.define('Prescription', {
         type: DataTypes.STRING(50),
         allowNull: false
     },
-    medication: {
-        type: DataTypes.STRING(2000),
+    file_name: {
+        type: DataTypes.STRING(200),
         allowNull: false
     }
 }, {
-    timestamps: false
+    timestamps: false,
 });
 
 
 
 
 
-module.exports = Prescription;
+module.exports = Report;

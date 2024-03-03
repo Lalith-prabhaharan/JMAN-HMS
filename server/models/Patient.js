@@ -1,6 +1,9 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const {sequelize} = require('../db/connect');
 const Doctor = require('./Doctor'); 
+
+
+
 const Patient = sequelize.define('Patient', {
     patient_id: {
         type: DataTypes.INTEGER,
@@ -34,13 +37,13 @@ const Patient = sequelize.define('Patient', {
     },
     phone: {
         type: DataTypes.STRING(10),
-        allowNull: false,
-        unique: true
+        allowNull: false
+        // unique: true
     },
     email: {
         type: DataTypes.STRING(100),
-        allowNull: false,
-        unique: true
+        allowNull: false
+        // unique: true
     },
     address: {
         type: DataTypes.STRING(500),
@@ -81,9 +84,17 @@ const Patient = sequelize.define('Patient', {
     status: {
         type: DataTypes.STRING(10),
         allowNull: false
+    },
+    risk: {
+        type: DataTypes.STRING(10),
+        allowNull: false
     }
 }, {
     timestamps: false
 });
+
+
+
+
 
 module.exports = Patient;

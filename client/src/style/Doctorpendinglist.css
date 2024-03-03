@@ -7,8 +7,9 @@
 }
 
 .status th, td {
-    padding: 8px;
-    text-align: center;
+    padding: 5px;
+    /* text-align: center; */
+    margin: 0%;
 }
 #search-bar {
     width: 70%;
@@ -46,8 +47,9 @@
 
 .status tr {
     border-bottom: 1px solid #ddd;
-    transition: background-color 0.1s, color 0.1s;
+    transition: color 0.1s;
     cursor: pointer;
+    color: black;
 }
 
 .status tr:last-child {
@@ -67,6 +69,19 @@
     color: white;
 }
 
+.status tr:hover .pi-trash, .status tr:hover .pi-check, .status tr:hover .pi-eye{
+    color: white;
+}
+
+.p-datatable .p-sortable-column .p-sortable-column-icon {
+    color: white;
+}
+
+.p-datatable .p-sortable-column .p-column-title {
+    color: white;
+    padding-left: 10px;  
+}
+
 /* h2{
     text-align: center;
     color: white;
@@ -75,10 +90,12 @@
 .dropdown {
     background-color: #00866E;
     color: white;
-    width: 15%;
+    width: fit-content;
     border-radius: 5%;
     cursor: pointer;
     transition: all 0.1s;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 .dropdown:hover {
@@ -96,6 +113,7 @@
     display: flex;
     justify-content: center;
     margin-top: 3%; 
+    background-color: #f1f1f18a;
   }
   
 .p-paginator .p-paginator-pages {
@@ -110,6 +128,7 @@
     color: #00866E;
     cursor: pointer;
     transition: background-color 0.1s, color 0.1s;
+    font-size: small;
 }
 
 .p-paginator .p-paginator-page:hover {
@@ -149,11 +168,34 @@
     border-radius: 20px; 
 }
 
+.action {
+    display: flex;
+    margin-left: 15%;
+    margin-right: 15%;
+}
+
+.action .pi-eye {
+    flex: 1;
+    transition: color 0.1s;
+}
+
+.action .pi-check {
+    flex: 1;
+    color: #00866E;
+    transition: color 0.1s;
+}
+
+.action .pi-trash {
+    flex: 1;
+    color: red;
+    transition: color 0.1s;
+}
+
 .close {
     background-color: rgb(255, 46, 46);
     color: white;
     border-width: 0;
-    width: 30%;
+    width: fit-content;
     height: 30px;
     border-radius: 20px;
     font-size: 0.9rem;
@@ -164,4 +206,103 @@
 
 .close:hover {
     box-shadow: 0 12px 16px 0 rgba(255, 46, 46, 0.24)
+}
+
+.approve {
+    background-color: rgb(0, 133, 108);
+    color: white;
+    border-width: 0;
+    width: fit-content;
+    height: 30px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 550;
+    transition: backgroud-color 0.1s, color 0.1s;
+}
+
+.approve:hover {
+    background-color: white;
+    color: rgb(0, 133, 108);
+}
+
+.reject {
+    background-color: rgb(255, 46, 46);
+    color: white;
+    border-width: 0;
+    width: fit-content;
+    height: 30px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 550;
+    transition: backgroud-color 0.1s, color 0.1s;
+}
+
+.reject:hover {
+    background-color: white;
+    color: rgb(255, 46, 46);
+}
+
+.page-heading {
+      text-align: center;
+      color: #00866E;
+      display: inline;
+      margin-left: 23%;
+      vertical-align:"middle"; 
+}
+
+.view {
+    text-decoration: none;
+    color: black;
+}
+
+view:hover {
+    color: white;
+}
+
+.pi-times {
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.patient-status {
+    display: flex;
+    align-items: center;
+    /* margin-bottom: -20%; */
+}
+
+.patient-status h3 {
+    flex: 1;
+}
+
+.patient-status .pi-times {
+    flex: 0;
+} 
+
+@media screen and (max-width: 768px) {
+    .dropdown {
+        width:fit-content;
+    }
+    .page-heading {
+        margin-left: 50px;
+        margin-top: 100px;
+    }
+
+    .action .pi-eye {
+        padding-right: 10px;
+        padding-left: 10px;
+    }
+    
+    .action .pi-check {
+        padding-right: 10px;
+        padding-left: 10px;
+    }
+    
+    .action .pi-trash {
+        padding-right: 10px;
+        padding-left: 10px;
+    }
+    .action {
+        margin-left: 5%;
+        margin-right: 5%;
+    }
 }

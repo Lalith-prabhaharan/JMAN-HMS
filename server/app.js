@@ -3,21 +3,31 @@ require('express-async-errors');
 const cors=require('cors');
 const express = require('express');
 const app = express();
+const fileUpload = require('express-fileupload');
 
+
+// extra package
 const {sequelize} = require('./db/connect');
-const Doctor = require('./models/Doctor');
-const Admin = require('./models/Admin');
+const auth = require('./routes/auth');
+const admin = require('./routes/admin');
+const doctor = require('./routes/doctor');
+const prescription = require('./routes/prescription');
+const authDoc = require('./middleware/authDoctor');
+const authAdmin = require('./middleware/authAdmin');
+
+
 // error handler
 const notFoundMiddleware = require('./middleware/not-found');
 const errorHandlerMiddleware = require('./middleware/error-handler');
 
+
+
 app.use(express.json());
-// extra packages
-const auth = require('./routes/auth');
-const admin = require('./routes/admin');
-const doctor = require('./routes/doctor');
-const authDoc = require('./middleware/authDoctor');
-const authAdmin = require('./middleware/authAdmin');
+app.use( fileUpload({createParentPath: true})  );
+
+
+
+
 
 //routes
 app.use(cors());
@@ -25,12 +35,19 @@ app.options("*",cors());
 app.use('/api/v1/auth', auth);
 app.use('/api/v1/admin', admin);
 app.use('/api/v1/doctor', authDoc, doctor);
+app.use('/api/v1/prescription', prescription);
+
+
+
 
 //error handler
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
 
-const port = 5000;
+
+const port = process.env.PORT || 7001;
+
+
 
 const start = async() => {
     try {

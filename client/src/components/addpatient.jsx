@@ -2,96 +2,98 @@ import React, { useEffect } from 'react'
 import { useState } from 'react';
 import '../style/addpatient.css'
 import { Navbar } from './navbar';
-import { adminadd, getdeptdoctors } from '../services/services';
-import { RadioButton } from 'primereact/radiobutton';
+import { adminadd, getdeptdoctors, reapplyPatient } from '../services/services';
 import { Dropdown } from 'primereact/dropdown';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Calendar } from 'primereact/calendar';
+import { useLocation } from 'react-router-dom';
+
 export const Addpatient = () => {
 
-  const navigate=useNavigate()
-  const [selectedOption, setSelectedOption] = useState('Male');
+  const location = useLocation();
+  const data = location.state ? location.state.data : null;
+
+  const navigate=useNavigate();
+
+  const [firstname,setFirstname]=useState(data!= null ? data.first_name : "");
+  const [lastname,setLastname]=useState(data!= null ? data.last_name : "");
+  const [age,setAge]=useState(data!= null ? data.age: "");
+  const [dob,setDob]=useState(data!= null ? new Date(data.dob) : "");
+  const [contact,setContact]=useState(data!= null ? data.phone : "");
+  const [email,setEmail]=useState(data != null ? data.email: "");
+  const [address,setAddress]=useState(data != null ? data.address: "");
+  const [weight,setWeight]=useState(data != null ? data.weight:"");
+  const [disease,setDisease]=useState(data != null ? data.diseases_description:"");
+  const [history,setHistory]=useState(data != null ? data.history:"");
+  const [bloodgroup,setBloodgroup]=useState(data != null ? data.blood_group:"");
+  const [doctor,setDoctor]=useState("");
+  const [selectedRisk,setRisk]=useState("");
+  const [riskCode,setRiskCode]=useState("");
+  const [docid,setDocid]=useState(data != null ? data.doc_id : "");
+  const [id, setId] = useState(data != null ? data.application_id: "");
+  const [selectedOption, setSelectedOption] = useState(data != null ? data.gender : "");
+  const [selectedDepartment, setSelectedDepartment] = useState(data != null ? data.department.toLowerCase(): '');
+
+  const departments = ['cardiology','dermatology','pediatrics','gynecology','neurology','urology','orthopedics','radiology','oncology','general'];
+  const bloodgroups=['A+','A-','O+','O-','AB+','AB-','B+','B-']
+  const risk=[{name:"Low",code:"0"},{name:"Moderate",code:"1"},{name:"High", code:"2"}]
+  
+  const handleDepartmentChange=(event)=>{
+      const dep=event.target.value; 
+      if(data != null) {
+        data.department = dep; 
+      }
+      getdeptdoctors(dep)
+      .then((response)=>{
+        if(response.length===0){} // console.log("No data found")
+        else setDoctorList(response.data)
+      })
+      .catch(error => {
+        console.error('Error fetching doctor data:', error);
+      });
+      setSelectedDepartment(dep);
+  };
 
   const handleOptionChange = (event) => {
-    setSelectedOption(event.target.value);
+      setSelectedOption(event.target.value);
   };
 
   const handleBloodgroup=(event)=>{
-    setBloodgroup(event.target.value)
+      setBloodgroup(event.target.value);
   }
   
-
-  const [selectedDepartment, setSelectedDepartment] = useState('');
-
-  const departments = ['cardiology','dermatology','pediatrics','gynecology','neurology','urology','orthopedics','radiology'
-  ,'oncology','general'];
-
-  const bloodgroups=['A+','A-','O+','O-','AB+','AB-','B+','B-']
-  
-
-  const handleDepartmentChange=(event)=>{
-    const dep=event.target.value;
-    setSelectedDepartment(dep)
+  const handleRiskChange=(event)=>{
+      setRisk(event.target.value);
+      setRiskCode(event.target.value.code);
   }
   
   const handleDoctorChange=(event)=>{
-    if(selectedDepartment===''){
-      toast.warn("Select the Department");
-    }
-    else{
       const doc=event.target.value;
-      setDoctor(doc)
+      setDoctor(doc);
       
       const selectedDoctorObject = doctorList.find((doctor) => doctor.first_name === doc);
-      console.log(selectedDoctorObject)
+      // console.log(selectedDoctorObject);
       
       if (selectedDoctorObject) {
         const selectedDoctorId = selectedDoctorObject.doc_id;
         setDocid(selectedDoctorId);
       }
-    } 
   }
-  const [doctorList,setDoctorList]=useState([" "])
-  const [flag,setFlag]=useState(true)
+  const [doctorList,setDoctorList]=useState([" "]);
 
   useEffect(()=>{
-    if(selectedDepartment){
-    getdeptdoctors(selectedDepartment)
-    .then((response)=>{
+    
+  })
 
-      if(response.length==0)console.log("No data found")
-      else{
-        setDoctorList(response.data)
-      }
-
-    })
-    .catch(error => {
-      console.error('Error fetching doctor data:', error);
-    });
+  const toastSuccess = () => {
+    toast.success('Request Sent to Doctor');
   }
 
-  });
-
-  const [firstname,setFirstname]=useState("")
-  const [lastname,setLastname]=useState("")
-  const [age,setAge]=useState("")
-  const [dob,setDob]=useState("")
-  const [contact,setContact]=useState("")
-  const [email,setEmail]=useState("")
-  const [address,setAddress]=useState("")
-  const [weight,setWeight]=useState("")
-  const [disease,setDisease]=useState("")
-  const [history,setHistory]=useState("")
-  const [bloodgroup,setBloodgroup]=useState("")
-  const [doctor,setDoctor]=useState("")
-  const [docid,setDocid]=useState("")
-
-  const submit=(e)=>{
-    e.preventDefault();
-
-    const addPatient=async()=>{
-      const response=adminadd({
+  const reapply = async (e) => {
+    const updatePatient=async()=>{
+      const response=reapplyPatient({
+        application_id: id,
         firstname:firstname, 
         lastname:lastname, 
         age:age, 
@@ -105,238 +107,290 @@ export const Addpatient = () => {
         description:disease,
         history:history,
         dept:selectedDepartment,
-        doctor_name:doctor,
-        doctor_id:docid
+        doctor_name:doctor.first_name,
+        doctor_id:doctor.doc_id,
+        risk:riskCode
       })
-
     }
-    console.log(firstname,lastname,dob,doctor,docid,selectedDepartment,bloodgroup,selectedOption)
-    addPatient();
-    navigate('/addpatient')
-    
+    updatePatient(); 
+    toastSuccess();
+    navigate('/viewstatus', {state: null});
+    localStorage.setItem('activetab','viewstatus')
+  }
+  
+  const submit=(e)=>{
+    if(validateForm2()){
+      // console.log(firstname,lastname,dob,selectedDepartment,doctor.doc_id,bloodgroup,selectedOption,riskCode);
+      const addPatient=async()=>{
+        const response=adminadd({
+          firstname:firstname, 
+          lastname:lastname, 
+          age:age, 
+          dob:dob, 
+          gender:selectedOption, 
+          phone:contact, 
+          email:email,
+          address:address, 
+          blood:bloodgroup,
+          weight:weight,
+          description:disease,
+          history:history,
+          dept:selectedDepartment,
+          doctor_name:doctor.first_name,
+          doctor_id:doctor.doc_id,
+          risk:riskCode
+        })
+      }
+      addPatient();
+      toastSuccess();
+      navigate('/viewstatus', {state : null});
+    }
   }
 
-  
   const[currentStep,setCurrentStep]=useState(1)
 
+  function clearErrors() {
+    let errors = document.getElementsByClassName('formerror');
+    for (let item of errors) {
+      item.innerHTML = "";
+    }
+  }
+
+  function seterror(id, errormsg) {
+      let element = document.getElementById(id);
+      element.innerHTML = errormsg;
+  }
+
+  const validateForm1 = () => {
+    let returnval = true;
+    clearErrors();
+    
+    if(firstname === ""){
+      seterror("fname", "Enter First Name!");
+      returnval = false;
+    }
+    if(age === ""){
+      seterror("fage", "Enter Age!");
+      returnval = false;
+    }
+    if(dob === ""){
+      seterror("fdob", "Enter DOB!");
+      returnval = false;
+    }
+    if(selectedOption === ""){
+      seterror("fgender", "Select Gender!");
+      returnval = false;
+    }
+    if(contact === ""){
+      seterror("fph", "Enter Contact Details!");
+      returnval = false;
+    }
+    if(email === ""){
+      seterror("femail", "Enter Email!");
+      returnval = false;
+    }
+    if(!email.match(
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-z\-0-9]+\.)+[a-z]{2,}))$/
+    )){
+      seterror("femail", "Enter Valid Email!");
+      setEmail("");
+      returnval = false;
+    }
+    if(address === ""){
+      seterror("fadd", "Enter Address!");
+      returnval = false;
+    }
+
+    let x = firstname.trim();
+    if (x.length === 0) {
+      seterror("fname", "Provide a valid name!");
+      returnval = false;
+    }
+
+    if (age <0 || age>150){
+      seterror("fage", "must be between 0 to 150!");
+      returnval = false;
+    }
+
+    if (contact < 1000000000 || contact > 9999999999){
+      seterror("fph", "Mobile number must be in 10 digits!");
+      setContact("");
+      returnval = false;
+    }
+    
+    x = address.trim();
+    if (x.length === 0) {
+      seterror("fadd", "Provide valid Address!");
+      setAddress("");
+      returnval = false;
+    }
+
+    return returnval;
+  }
+  
+  const validateForm2 = () => {
+    let returnval = true;
+    clearErrors();
+    
+    if(weight === ""){
+      seterror("fweight", "Enter Weight!");
+      returnval = false;
+    }
+    if(bloodgroup === ""){
+      seterror("fbgrp", "Select Blood Group!");
+      returnval = false;
+    }
+    if(disease === ""){
+      seterror("fdisease", "Enter Disease Description!");
+      returnval = false;
+    }
+    if(history === ""){
+      seterror("fhistory", "Enter Medical History!");
+      returnval = false;
+    }
+    if(selectedDepartment === ""){
+      seterror("fdept", "Select Department!");
+      returnval = false;
+    }
+    if(doctor === ""){
+      seterror("fdoctor", "Select Doctor!");
+      returnval = false;
+    }
+    if(selectedRisk === ""){
+      seterror("frisk", "Select Risk!");
+      returnval = false;
+    }
+    if (weight<0 || weight>600){
+      seterror("fweight", "must be between 0 to 600!");
+      setWeight("");
+      returnval = false;
+    }
+    let x = disease.trim();
+    if (x.length === 0) {
+      seterror("fdisease", "Enter Disease Description!");
+      setFirstname("");
+      returnval = false;
+    }
+    x = history.trim();
+    if (x.length === 0) {
+      seterror("fhistory", "Enter Valid data!");
+      setHistory("");
+      returnval = false;
+    }
+
+    return returnval;
+  }
+  
   const nextStep = () => {
-    setCurrentStep((prevStep) => prevStep + 1);
+    if(validateForm1()){
+      if(data !== null) {
+        getdeptdoctors(selectedDepartment)
+        .then((response)=>{
+          if(response.length===0){} // console.log("No data found")
+          else setDoctorList(response.data)
+        })
+        .catch(error => {
+          console.error('Error fetching doctor data:', error);
+        });
+      const selectedRiskObject = risk.find(item => item.code === data.risk);
+        if (selectedRiskObject) {
+          setRisk(selectedRiskObject);
+          setRiskCode(selectedRiskObject.code);
+        }
+      }
+      
+      setCurrentStep((prevStep) => prevStep + 1);
+    }
   };
+
 
   const prevStep = () => {
     setCurrentStep((prevStep) => prevStep - 1);
   };
 
   return (
-    <Navbar>
-    {/* <div className='addform'>
-      <form onSubmit={submit}>
-        <h1 className='addhead'>ADD PATIENT</h1>
-        
-        <fieldset>
-          
-          <legend><span class="number"></span> Enter the Patient Details</legend>
-          
-          <label>First Name:</label>
-          <input type="text" className="addhotelinp" onChange={(e)=>setFirstname(e.target.value)} required />
-          
-          <label>Last Name:</label>
-          <input type="text" className="addhotelinp" onChange={(e)=>setLastname(e.target.value)} />
-          
-          <label>Age:</label>
-          <input type="text" className="addhotelinp"  onChange={(e)=>setAge(e.target.value)}/>
-          
-          <label>Date of Birth:</label>
-          <input type="date" className="addhotelinp" onChange={(e)=>setDob(e.target.value)}  />
-          
-            <label>Gender:</label>
-            <label>
-            <input type="radio"  value="M" checked={selectedOption === 'M'}
-            onChange={handleOptionChange}  ></input>
-            Male
-            <input type="radio"  value="F" checked={selectedOption === 'F'}
-            onChange={handleOptionChange}></input>
-            Female
-            <input type="radio"  value="N"  checked={selectedOption === 'N'}
-            onChange={handleOptionChange}></input>
-            Prefer Not to Say
-            </label>
-            
-            <label >Contact:</label>
-            <input type="tel" className="addhotelinp" onChange={(e)=>setContact(e.target.value)} />
-            
-            <label >Email:</label>
-            <input type="email" className="addhotelinp" onChange={(e)=>setEmail(e.target.value)}  />
-            
-            <label >Address:</label>
-            <textarea className="addhotelinp" onChange={(e)=>setAddress(e.target.value)}> </textarea>
-          
-          <label >Weight:</label>
-          <input type="text" className="addhotelinp" onChange={(e)=>setWeight(e.target.value)} />
-          
-          <label for="job">Blood Group:</label>
-          <select value={bloodgroup} onChange={handleBloodgroup} >
-              <option value=""></option>
-              <option value="A+">A+</option>
-              <option value="A-">A-</option>
-              <option value="B+">B+</option>
-              <option value="B-">B-</option>
-              <option value="AB+">AB+</option>
-              <option value="AB-">AB-</option>
-              <option value="O+">O+</option>
-              <option value="O-">O-</option>
-          </select>
-          
-          <label >Diseases Description:</label>
-          <textarea className="addhotelinp" onChange={(e)=>setDisease(e.target.value)}> </textarea>
-          
-          <label >Medical History:</label>
-          <textarea className="addhotelinp" onChange={(e)=>setHistory(e.target.value)}> </textarea>
-          
-          <label>Department:</label>
-          <select value={selectedDepartment} onChange={handleDepartmentChange}>
-              
-              <option value="">Select the Department</option>
-              {
-                departments.map((department)=>(
-                  <option value={department}>{department}</option>
-                ))
-              }
-          </select>          
-          
-          <label>Doctor:</label>
-          <select value={doctor} onChange={handleDoctorChange}>
-              <option value="">Select the Doctor</option>
-              {doctorList.length!=0 && flag &&(
-                doctorList.map((doctor)=>(
-                  <option key={doctor.doc_id} value={doctor.first_name} >{doctor.first_name}</option>
-                  
-                ))
-              )}
-          </select>          
-        </fieldset>
-          
-        <button class="button-1" role="button">Add Patient</button>
-      </form>
-    </div> */}
-    <div>
-      {currentStep===1 &&
-        (
-          <div className='addpatient'>
-          <h1 className='heading'>Enter Personal Details</h1>
-        <form className='addform'>
-          <div className='form-left'>
-            <label>First Name<span className="required">*</span>:</label>
-            <input type="text" value={firstname} className="addhotelinp" onChange={(e)=>setFirstname(e.target.value)} required />
-            
-            <label>Last Name:</label>
-            <input type="text" value={lastname} className="addhotelinp" onChange={(e)=>setLastname(e.target.value)} />
-            
-            <label>Age<span className="required">*</span>:</label>
-            <input type="text" value={age} className="addhotelinp"  onChange={(e)=>setAge(e.target.value)} required/>
-            
-            <label>Date of Birth<span className="required">*</span>:</label>
-            {/* <input type="date" value={dob} className="addhotelinp" onChange={(e)=>setDob(e.target.value)} required /> */}
-            <div className="card flex justify-content-center">
-                <Calendar value={dob} onChange={(e) => setDob(e.value)} />
-            </div>
-          </div>
-          <div className='form-right'>
-            <label>Gender<span className="required">*</span>:</label>
-            <span>
-            <input type="radio"  value="M" checked={selectedOption === 'M'}
-            onChange={handleOptionChange}  ></input>
-            Male
-            <input type="radio"  value="F" checked={selectedOption === 'F'}
-            onChange={handleOptionChange}></input>
-            Female
-            <input type="radio"  value="N"  checked={selectedOption === 'N'}
-            onChange={handleOptionChange}></input>
-            Prefer Not to Say
-            </span>       
-            <label >Contact<span className="required">*</span>:</label>
-            <input type="tel" value={contact} className="addhotelinp" onChange={(e)=>setContact(e.target.value)} required/>
-            
-            <label >Email<span className="required">*</span>:</label>
-            <input type="email" value={email} className="addhotelinp" onChange={(e)=>setEmail(e.target.value)} required />
-            
-            <label >Address<span className="required">*</span>:</label>
-            <textarea className="addhotelinp" value={address} onChange={(e)=>setAddress(e.target.value)} required> </textarea>
-          <button className="button-1" onClick={nextStep}>Next</button>
-          </div>
-        </form>
-      </div>
-        )
-      }
-      {currentStep===2 && (
-        <div className='addpatient'>
-        <h1 className='heading'>Enter Medical Details</h1>
-      <form className='addform'>
-        <div className='form-left'>
-          <label >Weight<span className="required">*</span>:</label>
-          <input type="text" className="addhotelinp" value={weight} onChange={(e)=>setWeight(e.target.value)} />
-          
-          <label for="job">Blood Group<span className="required">*</span>:</label>
-          {/* <select value={bloodgroup} onChange={handleBloodgroup} required >
-              <option value="">Select Blood Group</option>
-              <option value="A+">A+</option>
-              <option value="A-">A-</option>
-              <option value="B+">B+</option>
-              <option value="B-">B-</option>
-              <option value="AB+">AB+</option>
-              <option value="AB-">AB-</option>
-              <option value="O+">O+</option>
-              <option value="O-">O-</option>
-          </select> */}
-          <Dropdown value={bloodgroup} onChange={handleBloodgroup} options={bloodgroups} optionLabel="" 
-              placeholder="Select the Blood Group" className="w-full md:w-14rem" /> 
-          
-          <label >Diseases Description<span className="required">*</span>:</label>
-          <textarea className="addhotelinp" value={disease} onChange={(e)=>setDisease(e.target.value)} required> </textarea>
-          
-          <label >Medical History<span className="required">*</span>:</label>
-          <textarea className="addhotelinp" value={history} onChange={(e)=>setHistory(e.target.value)} required> </textarea>
-        </div>
-        <div className='form-right'>
-        <label>Department<span className="required">*</span>:</label>
-          {/* <select value={selectedDepartment}  onChange={handleDepartmentChange} required>
-              
-              <option value="">Select the Department</option>
-              {
-                departments.map((department)=>(
-                  <option value={department}>{department}</option>
-                ))
-              }
-          </select>              */}
+      <Navbar>
+        <div>
+          { currentStep===1 && 
+            (
+              <div className='addpatient'>
+                <h1 className='heading'>Enter Personal Details</h1>
+                <form className='addform'>
+                  <div className='form-left' style={{paddingLeft: '80px'}}>
+                    <label style={{display: 'inline-block'}}><b>First Name:</b></label><b className="required">*<span id="fname" className="formerror"></span></b><br/>
+                    <input type="text" value={firstname} className="addhotelinp" onChange={(e)=>setFirstname(e.target.value)} required />
+                    
+                    <label><b>Last Name:</b></label>
+                    <input type="text" value={lastname} className="addhotelinp" onChange={(e)=>setLastname(e.target.value)}/><br/>
+                    
+                    <label style={{display: 'inline-block'}}><b>Age:</b></label><b className="required">*<span id="fage" className="formerror"></span></b><br/>
+                    <input type="number" value={age} className="addhotelinp" min="0" max="150"  onChange={(e)=>setAge(e.target.value)} required/><br/>
+                    
+                    <label style={{display: 'inline-block'}}><b>Date of Birth:</b></label><b className="required">*<span id="fdob" className="formerror"></span></b><br/>
+                    <Calendar className="addhotelinp" style={{width: '80%'}} value={dob} onChange={(e) => setDob(e.value)} required/>
+                  </div>
 
-          <div className="card flex justify-content-center">
-          <Dropdown value={selectedDepartment} onChange={handleDepartmentChange} options={departments} optionLabel="" 
-              placeholder="Select the Department" className="w-full md:w-14rem" />    
-          </div>  
-          
-          <label>Doctor<span className="required">*</span>:</label>
-          {/* <select value={doctor} onChange={handleDoctorChange} required>
-              <option value="">Select the Doctor</option>
-              {doctorList.length!=0 && flag &&(
-                doctorList.map((doctor)=>(
-                  <option key={doctor.doc_id} value={doctor.first_name} >{doctor.first_name}</option>
+                  <div className='form-right' style={{paddingLeft: '80px'}}>
+                    <label style={{display: 'inline-block'}}><b>Gender:</b></label><b className="required">*<span id="fgender" className="formerror"></span></b><br/>  
+                    <label style={{display: 'inline-block'}}><input type="radio"  value="M" checked={selectedOption === 'M'} onChange={handleOptionChange} required></input>Male</label>
+                    <label style={{display: 'inline-block'}}><input type="radio"  value="F" checked={selectedOption === 'F'} onChange={handleOptionChange} required></input>Female</label>
+                    <label style={{display: 'inline-block'}}><input type="radio"  value="N"  checked={selectedOption === 'N'} onChange={handleOptionChange} required></input>Prefer Not to Say</label><br/>  
                   
-                ))
-              )}
-          </select>   */}
-          <div className="card flex justify-content-center">
-          <Dropdown value={doctor} onChange={handleDoctorChange} options={doctorList} optionLabel="first_name" 
-              placeholder="Select the Doctor" className="w-full md:w-14rem" />    
-          </div> 
+                    <label style={{display: 'inline-block'}}><b>Contact:</b></label><b className="required">*<span id="fph" className="formerror"></span></b><br/>  
+                    <input type="number" id="fphval" value={contact} className="addhotelinp" onChange={(e)=>setContact(e.target.value)} required/><br/>
+                    
+                    <label style={{display: 'inline-block'}}><b>Email:</b></label><b className="required">*<span id="femail" className="formerror"></span></b><br/>  
+                    <input type="email" value={email} className="addhotelinp" onChange={(e)=>setEmail(e.target.value)} required /><br/>
+                    
+                    <label style={{display: 'inline-block'}}><b>Address:</b></label><b className="required">*<span id="fadd" className="formerror"></span></b><br/>  
+                    <textarea className="addhotelinp" value={address} onChange={(e)=>setAddress(e.target.value)} required> </textarea><br/>
+                    
+                    <button className="button-1" id="nextButton" style={{fontSize: "20px"}} onClick={nextStep}><b>Next</b></button>
+                  </div>
+                </form>
+              </div>
+            )
+          }
 
-        <button className="button-1" onClick={prevStep}>Previous</button>
-        <button className="button-1" onClick={submit}>Submit</button>
+
+          { currentStep===2 && 
+            (
+              <div className='addpatient'>
+                <h1 className='heading'>Enter Medical Details</h1>
+                <form className='addform'>
+                  <div className='form-left' style={{paddingLeft: '80px'}}>
+                    <label style={{display: 'inline-block'}}><b>Weight:</b></label><b className="required">*<span id="fweight" className="formerror"></span></b><br/>
+                    <input type="number" className="addhotelinp" min="0" max="600" value={weight} onChange={(e)=>setWeight(e.target.value)} />
+                    
+                    <label style={{display: 'inline-block'}}><b>Blood Group:</b></label><b className="required">*<span id="fbgrp" className="formerror"></span></b><br/>  
+                    <Dropdown value={bloodgroup} style={{width: '80%'}} onChange={handleBloodgroup} options={bloodgroups} optionLabel="" placeholder="Select the Blood Group" className="w-full md:w-14rem" required/> 
+                    
+                    <label style={{display: 'inline-block'}}><b>Diseases Description:</b></label><b className="required">*<span id="fdisease" className="formerror"></span></b><br/>  
+                    <textarea className="addhotelinp" value={disease} onChange={(e)=>setDisease(e.target.value)} required> </textarea>
+                    
+                    <label style={{display: 'inline-block'}}><b>Medical History:</b></label><b className="required">*<span id="fhistory" className="formerror"></span></b><br/>  
+                    <textarea className="addhotelinp" value={history} onChange={(e)=>setHistory(e.target.value)} required> </textarea>
+                  </div>
+
+                  <div className='form-right' style={{paddingLeft: '80px'}}>
+                    <label style={{display: 'inline-block'}}><b>Department:</b></label><b className="required">*<span id="fdept" className="formerror"></span></b><br/>  
+                    <Dropdown style={{width: '80%'}} value={selectedDepartment} onChange={handleDepartmentChange} options={departments} optionLabel="" placeholder="Select the Department" className="w-full md:w-14rem" required/><br/>
+                    
+                    <label style={{display: 'inline-block'}}><b>Doctor:</b></label><b className="required">*<span id="fdoctor" className="formerror"></span></b><br/>  
+                    <Dropdown style={{width: '80%'}} value={doctor} onChange={handleDoctorChange} options={doctorList} optionLabel="first_name" placeholder="Select the Doctor" className="w-full md:w-14rem" required/>    
+
+                    <label style={{display: 'inline-block'}}><b>Patient Risk:</b></label><b className="required">*<span id="frisk" className="formerror"></span></b><br/>  
+                    <Dropdown style={{width: '80%'}} value={selectedRisk} onChange={handleRiskChange} options={risk} optionLabel="name" placeholder="Patient Risk" className="w-full md:w-14rem" required/>    
+
+                    <button style={{width: '39%', fontSize: "20px"}} className="button-1" onClick={prevStep}><b>Previous</b></button>
+                    {data == null && <button style={{width: '39%', fontSize: "20px"}} className="button-1" onClick={submit}><b>Submit</b></button>}
+                    {data != null && <button style={{width: '39%', fontSize: "20px"}} className="button-1" onClick={reapply}><b>Reapply</b></button>}
+                  </div>
+                </form>
+              </div>
+            )
+          }
         </div>
-      </form>
-    </div>
-      )
-      }
-    </div>
-    </Navbar>
+      </Navbar>
   )
 };

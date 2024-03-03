@@ -32,27 +32,27 @@ export const Navbar = ({ children }) => {
     <div>
     <nav className="navbar">
       <div className="logo">HEALTH CARE</div>
-      <div className={`nav-links ${showNav ? 'show' : ''}`}>
+      <div className={`nav-links ${showNav ? 'show' : ''}`} style={{paddingTop:"10px"}}>
         <a
           href="/allpatients"
           style={{ color: localStorage.getItem("activetab") === 'allpatients' ? activeColor : inactiveColor }}
           onClick={() => handleTabClick('allpatients')}
         >
-          All Patients
+          <b>All Patients</b>
         </a>
         <a
           href="/addpatient"
           style={{ color: localStorage.getItem("activetab") === 'addpatient' ? activeColor : inactiveColor }}
           onClick={() => handleTabClick('addpatient')}
         >
-          Add Patients
+          <b>Add Patients</b>
         </a>
         <a
           href="/viewstatus"
           style={{ color: localStorage.getItem("activetab") === 'viewstatus' ? activeColor : inactiveColor }}
           onClick={() => handleTabClick('viewstatus')}
         >
-          View Status
+          <b>View Status</b>
         </a>
         <div className="navdropdown">
           <div className="navdropdown-toggle"
@@ -62,17 +62,17 @@ export const Navbar = ({ children }) => {
                 marginLeft:"20px"
               }}
              >
-                Doctor
+                <b>Doctor</b>
           </div>
           {showDropdown && (
               <div className="navdropdown-content">
-                <a href="/doctordetails"  onClick={() => handleTabClick('doctordetails')}>View Doctors</a>
-                <a href="/adddoctor" onClick={() => handleTabClick('doctordetails')}>Add Doctor</a>
+                <a href="/doctordetails"  onClick={() => handleTabClick('doctordetails')}><b>View Doctors</b></a>
+                <a href="/adddoctor" onClick={() => handleTabClick('doctordetails')}><b>Add Doctor</b></a>
               </div>
             )}
         </div>
         <a onClick={logout}>
-          Logout
+          <b>Logout</b>
         </a>
       </div>
       <button className="menu-icon" onClick={toggleNav}>
