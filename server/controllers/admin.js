@@ -84,7 +84,6 @@ const getPatientDetails = async (req, res) => {
     res.status(200).json(patient);
 };
 
-
 // post the application form for new patient
 const postPatientForm = async (req, res) => {
     const {
@@ -119,20 +118,20 @@ const postPatientForm = async (req, res) => {
         entry_date: entry_date,
         first_name: firstname,
         last_name: lastname,
-        age: age,
+        age: Number(age),
         dob: dob,
         gender: gender,
         phone: phone,
         email: email,
         address: address,
-        weight: weight,
+        weight: Number(weight),
         blood_group: blood,
         diseases_description: description,
         history: history,
         department: dept,
         doctor_name: doctor_name,
         doc_id: doctor_id,
-        risk:risk
+        risk: risk
     });
 
     if (!applicant) {

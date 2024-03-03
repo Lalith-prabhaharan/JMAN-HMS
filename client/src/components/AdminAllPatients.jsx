@@ -32,8 +32,6 @@ export default function AdminAllPatient() {
           return 'Moderate';
         case "2":
           return 'High';
-        default:
-          return 'Unknown';
       }
   };
 

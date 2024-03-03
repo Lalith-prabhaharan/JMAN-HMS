@@ -37,13 +37,13 @@ const Patient = sequelize.define('Patient', {
     },
     phone: {
         type: DataTypes.STRING(10),
-        allowNull: false,
-        unique: true
+        allowNull: false
+        // unique: true
     },
     email: {
         type: DataTypes.STRING(100),
-        allowNull: false,
-        unique: true
+        allowNull: false
+        // unique: true
     },
     address: {
         type: DataTypes.STRING(500),

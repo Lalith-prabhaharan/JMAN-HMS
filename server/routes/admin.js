@@ -28,7 +28,7 @@ router.route('/doctor/:dept').get(getDeptDoctors);
 router.route('/patient/application/status').get(getPatients);
 
 // get the status of all patient
-// router.route('/patient/statuss').get(getAllPatientStatus);
+// router.route('/patient/status').get(getAllPatientStatus);
 router.route('/patientStatus/:status').get(getAllPatientStatus);
 
 // get the details of a patient
