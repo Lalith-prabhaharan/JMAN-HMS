@@ -6,8 +6,10 @@ import { useEffect } from 'react';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { approvedpatients } from '../services/services';
+import { useNavigate } from 'react-router-dom';
 
 export default function AdminAllPatient() { 
+  const navigate=useNavigate()
   const [status, setStatus] = useState("active");
   const [approvedList,setApprovedList]=useState([[]]);
 
@@ -40,6 +42,10 @@ export default function AdminAllPatient() {
       return <span>{riskLabel}</span>;
   };
 
+  const handleRowClick=(e)=>{
+    navigate("/adminviewpatient",{state:{data:e.data.patient_id}})
+  }
+
   return (
       <Navbar>
         <div className='status'>
@@ -53,7 +59,7 @@ export default function AdminAllPatient() {
           </div>
 
           {/* <h2 style={{textAlign:"center",color:"#00866E", verticalAlign:"middle", margin:"0px 0px"}}>All Patients</h2> */}
-          <DataTable removableSort paginator rows={10} value={approvedList}>
+          <DataTable removableSort paginator rows={10} value={approvedList} onRowClick={handleRowClick}>
             <Column field="patient_id" alignHeader={'center'} sortable header="Patient ID"></Column>
             <Column field="first_name" alignHeader={'center'} sortable header="Name"></Column>
             <Column field="risk" alignHeader={'center'} body={riskBodyTemplate} sortable header="Risk"></Column>

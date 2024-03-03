@@ -123,7 +123,7 @@ const uploadreport = async (req, res) => {
 
 // Download patient report
 const downloadreport = async (req, res) => {
-    const { report_id } = req.body;
+    const  report_id  = req.params.id;
 
     const report = await Report.findAll({
         where: { report_id: Number(report_id) }
@@ -154,9 +154,9 @@ const downloadreport = async (req, res) => {
 
 // get report details of a particular patient
 const getreports = async(req, res) => {
-    const {patient_id} = req.body;
+    const patient_id = req.params.id;
     const patient = await Patient.findAll({
-        where: { patient_id: Number(patient_id) }
+        where: { patient_id: patient_id }
     });
     if (patient.length === 0) {
         return res.status(404).json({ msg: 'Invalid Patient Id' });

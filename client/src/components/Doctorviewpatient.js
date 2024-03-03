@@ -228,6 +228,7 @@ export default function Doctorviewpatient() {
 
                     <div id="suggestions-card">
                         <h2>Suggestions and Medications</h2>
+                    { prescriptionData.length>0 ?
                         <ScrollPanel style={{ width: '100%', height: '400px' }}>
                             {prescriptionData.map((prescription)=>(
                                 <div key={prescription.p_id} className="suggestion-item">
@@ -235,7 +236,8 @@ export default function Doctorviewpatient() {
                                     {prescription.medication}
                                 </div>
                             ))}
-                        </ScrollPanel>
+                        </ScrollPanel>:<p>No prescription provided for the patient !!</p>
+                        }
                     </div>
                 </div>
             )}
