@@ -8,7 +8,8 @@ const {
     getPatientDetails,
     postPatientForm,
     getSpecificStatus,
-    postDoctorForm
+    postDoctorForm,
+    updatePatientForm
 } = require('../controllers/admin');
 
 
@@ -27,7 +28,8 @@ router.route('/doctor/:dept').get(getDeptDoctors);
 router.route('/patient/application/status').get(getPatients);
 
 // get the status of all patient
-router.route('/patient/status').get(getAllPatientStatus);
+// router.route('/patient/statuss').get(getAllPatientStatus);
+router.route('/patientStatus/:status').get(getAllPatientStatus);
 
 // get the details of a patient
 router.route('/patient/status/:id').get(getPatientDetails);
@@ -43,6 +45,10 @@ router.route('/patient/application/status/:status').get(getSpecificStatus);
 
 // post email for doctor 
 router.route('/add/doctor').post(email_post);
+
+// put application form for resubmit
+router.patch('/patient/application', createValidator, updatePatientForm);
+
 
 
 
