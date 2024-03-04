@@ -108,21 +108,11 @@ body {
     }
 }
 
-@media (max-width: 300px) {
-
-    .docviewpatient .left-view,
-    .docviewpatient .right-view {
-        display: grid;
-        flex: none;
-        width: auto;
-    }
-
-    .docviewpatient .form-containerdocview,
-    .docviewpatient .right-col {
-        width: auto;
+@media (max-width : 768px){
+    .docviewpatient fieldset{
+        flex-direction: column;
     }
 }
-
 .docviewpatient .card{
     flex: 1.3;
     background-color: #bfc5bf;
