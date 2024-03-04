@@ -112,8 +112,9 @@
 .p-paginator {
     display: flex;
     justify-content: center;
-    margin-top: 3%; 
+    margin-top: 2%; 
     background-color: #f1f1f18a;
+    margin-right: 2%;
   }
   
 .p-paginator .p-paginator-pages {
@@ -243,11 +244,11 @@
 }
 
 .page-heading {
-      text-align: center;
-      color: #00866E;
-      display: inline;
-      margin-left: 23%;
-      vertical-align:"middle"; 
+    color: #00866E;
+    display: inline;
+    text-align: center;
+      margin-left: 27%;
+      vertical-align: middle; 
 }
 
 .view {
@@ -267,7 +268,6 @@ view:hover {
 .patient-status {
     display: flex;
     align-items: center;
-    /* margin-bottom: -20%; */
 }
 
 .patient-status h3 {
@@ -278,13 +278,13 @@ view:hover {
     flex: 0;
 } 
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 805px) {
     .dropdown {
         width:fit-content;
     }
     .page-heading {
-        margin-left: 50px;
-        margin-top: 100px;
+        font-size: 30px;
+        margin-left: 20%;
     }
 
     .action .pi-eye {
@@ -304,5 +304,11 @@ view:hover {
     .action {
         margin-left: 5%;
         margin-right: 5%;
+    }
+
+    .p-paginator .p-paginator-first, .p-paginator .p-paginator-prev, .p-paginator .p-paginator-next, .p-paginator .p-paginator-last 
+    {
+        margin-left: -10px;
+        margin-right: -10px;
     }
 }

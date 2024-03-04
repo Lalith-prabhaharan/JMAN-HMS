@@ -6,29 +6,29 @@
     outline: 2px;
     padding: 15px;
     width: 80%;
-    background-color: #bfc5bf;
+    background-color: white;
     color: #111212;
     box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
     transition-duration: 4ms ease;
     border-radius: 5px;
 }
+
 label{
     font-size: 18px;
-    font-weight: 200;
     margin-left: 10px;
-    color: #111212;
 }
+
 .p-float-label{
     margin-bottom:10%;
-
 }
+
 .add-doctor{
     display: flex;
-    align-items:center;
+    align-items:start;
     justify-content: center;
 }
 
-.left-det , .right-det{
+.left-det ,.right-det{
     flex:0.3;
 }
 
@@ -39,11 +39,6 @@ label{
 }
 
 
-.p-password{
-    
-    margin-top: 10px;
-    width: 100%;
-}
 
 .p-password-panel{
     background-color: #f0eeee;
@@ -51,7 +46,7 @@ label{
 }
 
 .p-password-show-icon,.p-password-hide-icon{
-    right: 25%;
+    right: 5%;
 }
 
 .p-password-meter{
@@ -64,17 +59,52 @@ label{
     color: #999;
 }
 
-@media (max-width:768px){
+.p-dropdown {
+    margin: 0px 0px;
+}
+
+
+.right-det {
+    display: flex;
+    flex-direction: column;
+}   
+
+.right-det .p-calendar, .right-det .p-dropdown, .right-det .p-inputtext, .right-det .p-password {
+    flex: 1;
+    margin: 2.9% 0%;
+    width: 80%;
+}
+
+.right-det .p-dropdown-trigger {
+    height: 51px;
+    margin-top: 3%;
+    background-color: white;
+}
+
+.right-det .p-dropdown {
+    background: none;
+    box-shadow: none;
+}
+
+.right-det .p-calendar {
+    margin-top: -2%;
+} 
+
+
+@media (max-width:805px){
     .add-doctor{
         flex-direction: column;
     }
-
+    
     .p-inputtext{
         margin-top: 2%;
         width:100%;
     }
-    .left-det,.right-det{
-        margin-left: 3%;
+    .left-det, .right-det{
+        margin-left: 10%;
         width:80%
+    }
+    .right-det{
+        width: 100%;
     }
 }

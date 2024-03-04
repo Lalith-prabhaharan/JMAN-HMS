@@ -30,7 +30,15 @@ export const approvedpatients=(status)=>{
 }
 
 export const searchPatients = (status, search) => {
-    return axiosInstance.get(`${url}/search/${search}/${status}`);
+    return axiosInstance.get(`${url}/admin/patient/${search}/${status}`);
+}
+
+export const searchApplications = (status, search) => {
+    return axiosInstance.get(`${url}/admin/application/${search}/${status}`);
+}
+
+export const searchDoctors = (dept, search) => {
+    return axiosInstance.get(`${url}/admin/doctor/${search}/${dept}`);
 }
 
 export const adddoctor=(doctordetails)=>{

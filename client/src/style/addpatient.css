@@ -39,20 +39,11 @@
   }
 
 
-   /* .addpatient{
-    background-color: darkseagreen;
-    height: 100%;
-    width: 100%;
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-   } */
 
    .addform{
     /* background-color: antiquewhite; */
     width:80%;
-    height: 80%;
+    height: 520px;
     margin:10px auto;
     border-radius: 15px;
     display: flex;
@@ -60,9 +51,12 @@
 
    .heading {
     text-align: center;
-    color:#00866E
+    color:#00866E;
   }
 
+  .form-left {
+    padding-left: 100px;
+  }
   
 .form-left,
 .form-right {
@@ -124,7 +118,11 @@
     background-color: #eff3ef;
     color: #151616;
     box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
-    margin-bottom: 30px;
+  }
+
+  .p-calendar {
+    padding: 0%;
+    background-color: #eff3ef;
   }
 
   .p-dropdown-items-wrapper{
@@ -136,17 +134,6 @@
     padding: 6px;
   }
 
-  .p-calendar{
-    border: none;
-    font-size: 16px;
-    height: auto;
-    padding: 10px;
-    width: 84%;
-    background-color: #eff3ef;
-    color: #151616;
-    box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
-    margin-bottom: 30px;
-  }
 
   .p-datepicker{
     background-color: #eef1f0;
@@ -162,7 +149,7 @@
   }
 
 
-@media (max-width: 768px) {
+@media (max-width: 805px) {
   .addform {
     flex-direction: column; /* Change to column layout for mobile view */
   }
@@ -171,5 +158,10 @@
     height: 100%;
   } */
 }
-  
+
+.formerror {
+  color: rgb(255, 78, 78);
+  font-size: small;
+  padding-left: 10px;
+}  
   
