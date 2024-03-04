@@ -66,10 +66,11 @@ export const Adddoctor = () => {
         }
         sendMail()
     }
+    
 
   return (
     <Navbar>
-        <h2 style={{marginTop:"20px",textAlign:"center"}}>Add Doctor</h2>
+        <h2 className='heading' style={{marginTop: "20px"}}>Add Doctor</h2>
         <div className="add-doctor">
             <div className='left-det'>
             <span className="p-float-label" >
@@ -88,30 +89,30 @@ export const Adddoctor = () => {
                 <InputText id="username" value={docdetails.docemail} onChange={handleChange} name='docemail' />
                 <label htmlFor="username">Email</label>
             </span>
-            <span style={{marginTop:"3%"}} className="p-float-label" >
+            <span className="p-float-label" >
                 <InputText id="username" value={docdetails.doccontact} onChange={handleChange} name='doccontact' />
                 <label htmlFor="username">Contact</label>
             </span>
             </div>
             <div className='right-det'>
-            <div  className="card flex justify-content-center" >
-                <Calendar value={docdetails.docdob} onChange={handleChange} name='docdob' placeholder='select DOB' />
+            <div  className="right-input">
+                <Calendar value={docdetails.docdob} onChange={handleChange} name='docdob' placeholder='Select DOB'/>
             </div>
-            <div style={{marginLeft:"3%"}} className="card flex justify-content-center">
-            <Password value={docdetails.docpass} onChange={handleChange} header={header} footer={footer} placeholder='Enter Password'  name='docpass' toggleMask/>    
+            <div className="right-input">
+                <Password value={docdetails.docpass} onChange={handleChange} header={header} footer={footer} placeholder='Enter Password'  name='docpass' toggleMask/>    
             </div>
-            <div  className="card flex justify-content-center">
+            <div  className="right-input">
                 <Dropdown value={docdetails.docgender} onChange={handleChange} options={gender} optionLabel="label"  name='docgender'
-                    placeholder="Select Gender" className="w-full md:w-14rem" />    
+                    placeholder="Select Gender" />    
             </div>
-            {/* <div className="card flex justify-content-center"> */}
+            <div className="right-input">
                 <Dropdown value={docdetails.docdept} onChange={handleChange} options={departments} optionLabel=""  name='docdept'
-                    placeholder="Select the Department" className="w-full md:w-14rem" />    
-            {/* </div> */}
-            <span className="p-float-label" >
+                    placeholder="Select the Department" />    
+            </div>
+            <div className="right-input p-float-label" style={{marginTop: "12px"}}>
                 <InputText id="username" value={docdetails.docexp} onChange={handleChange} name='docexp' />
-                <label htmlFor="username">Year of Experience</label>
-            </span>
+                <label htmlFor="Experience">Year of Experience</label>
+            </div>
             </div>
         </div>
         <div className='btn-center'>

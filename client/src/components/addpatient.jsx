@@ -8,6 +8,8 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Calendar } from 'primereact/calendar';
 import { useLocation } from 'react-router-dom';
+import { RadioButton } from 'primereact/radiobutton';
+
 
 export const Addpatient = () => {
 
@@ -97,8 +99,8 @@ export const Addpatient = () => {
   }
 
   const reapply = async (e) => {
-    const updatePatient=async()=>{
-      const response=reapplyPatient({
+    const updatePatient = async()=>{
+      const response = await reapplyPatient({
         application_id: id,
         firstname:firstname, 
         lastname:lastname, 
@@ -118,18 +120,23 @@ export const Addpatient = () => {
         risk:riskCode
       })
     }
-    updatePatient(); 
-    toastSuccess();
-    navigate('/viewstatus', {state: null});
-    localStorage.setItem('activetab','viewstatus')
+
+    await updatePatient().then((response) => {       
+      if (response.msg === 'Success') {
+        toastSuccess();
+        navigate('/viewstatus');
+      } 
+    }).catch(() => {
+      toast.error("Enter all required inputs");
+    }); 
     
   }
   
-  const submit=(e)=>{
+  const submit= async (e)=>{
     // e.preventDefault();
     console.log(firstname,lastname,dob,selectedDepartment,doctor.doc_id,bloodgroup,selectedOption,riskCode)
     const addPatient=async()=>{
-      const response=adminadd({
+      const response= await adminadd({
         firstname:firstname, 
         lastname:lastname, 
         age:age, 
@@ -150,9 +157,14 @@ export const Addpatient = () => {
 
     }
 
-    addPatient();
-    toastSuccess();
-    navigate('/addpatient', {state : null})
+    await addPatient().then((response) => {
+      if (response.msg === 'success') {
+        toastSuccess();
+        navigate('/addpatient', {state : null})
+      }
+    }).catch(() => {
+      toast.error("Enter required inputs");
+    });
     
   }
 
@@ -264,7 +276,7 @@ export const Addpatient = () => {
           <div className='addpatient'>
           <h1 className='heading'>Enter Personal Details</h1>
           <form className='addform'>
-            <div className='form-left' style={{paddingLeft: '100px'}}>
+            <div className='form-left'>
               <label style={{display: 'inline-block'}}><b>First Name:</b></label><b className="required">*<span id="fname" className="formerror"></span></b><br/>
               <input type="text" value={firstname} className="addhotelinp" onChange={(e)=>setFirstname(e.target.value)} required />
               
@@ -280,11 +292,11 @@ export const Addpatient = () => {
 
             <div className='form-right'>
               <label style={{display: 'inline-block'}}><b>Gender:</b></label><b className="required">*<span id="fgender" className="formerror"></span></b><br/>  
-              <label style={{display: 'inline-block'}}><input type="radio"  value="M" checked={selectedOption === 'M'} onChange={handleOptionChange} required></input>Male</label>
-              <label style={{display: 'inline-block'}}><input type="radio"  value="F" checked={selectedOption === 'F'} onChange={handleOptionChange}></input>Female</label>
-              <label style={{display: 'inline-block'}}><input type="radio"  value="N"  checked={selectedOption === 'N'} onChange={handleOptionChange}></input>Prefer Not to Say</label><br/>  
+              <label style={{display: 'inline-block', paddingRight:"10px"}}><RadioButton  value="M" style={{marginBottom:"3px"}} checked={selectedOption === 'M'} onChange={handleOptionChange} required></RadioButton>  Male</label>
+              <label style={{display: 'inline-block',  paddingRight:"10px"}}><RadioButton value="F" style={{marginBottom:"3px"}}  checked={selectedOption === 'F'} onChange={handleOptionChange}></RadioButton>  Female</label>
+              <label style={{display: 'inline-block', paddingBottom:"30px"}}><RadioButton value="N" style={{marginBottom:"3px"}}   checked={selectedOption === 'N'} onChange={handleOptionChange}></RadioButton>  Prefer Not to Say</label><br/>  
             
-              <label style={{display: 'inline-block'}}><b>Contact:</b></label><b className="required">*<span id="fph" className="formerror"></span></b><br/>  
+              <label style={{display: 'inline-block',}}><b>Contact:</b></label><b className="required">*<span id="fph" className="formerror"></span></b><br/>  
               <input type="tel" value={contact} className="addhotelinp" onChange={(e)=>setContact(e.target.value)} required/><br/>
               
               <label style={{display: 'inline-block'}}><b>Email:</b></label><b className="required">*<span id="femail" className="formerror"></span></b><br/>  
@@ -311,7 +323,7 @@ export const Addpatient = () => {
                 <input type="text" className="addhotelinp" value={weight} onChange={(e)=>setWeight(e.target.value)} />
                 
                 <label for="job">Blood Group<span className="required">*</span>:</label>
-                <Dropdown value={bloodgroup} onChange={handleBloodgroup} options={bloodgroups} optionLabel="" 
+                <Dropdown value={bloodgroup} onChange={handleBloodgroup} style={{marginBottom:"30px"}} options={bloodgroups} optionLabel="" 
                     placeholder="Select the Blood Group" className="w-full md:w-14rem" /> 
                 
                 <label >Diseases Description<span className="required">*</span>:</label>
@@ -323,7 +335,7 @@ export const Addpatient = () => {
               <div className='form-right'>
               <label>Department<span className="required">*</span>:</label>
                 <div className="flex justify-content-center">
-                <Dropdown value={selectedDepartment} onChange={handleDepartmentChange} options={departments} optionLabel="" 
+                <Dropdown  value={selectedDepartment} onChange={handleDepartmentChange} style={{marginBottom:"30px"}} options={departments} optionLabel="" 
                     placeholder="Select the Department" className="w-full md:w-14rem" />    
                 </div>  
                 <label>Doctor<span className="required">*</span>:</label>
@@ -337,13 +349,13 @@ export const Addpatient = () => {
                     )}
                 </select>   */}
                 <div className="flex justify-content-center">
-                <Dropdown value={doctor} onChange={handleDoctorChange} options={doctorList} optionLabel="first_name" 
-                    placeholder="Select the Doctor" className="w-full md:w-14rem" />    
+                <Dropdown value={doctor} style={{marginBottom:"30px"}} onChange={handleDoctorChange} options={doctorList} optionLabel="first_name" 
+                    placeholder="Select the Doctor" className="w-full md:w-14rem" required/>    
                 </div> 
 
                 <label>Patient Risk<span className="required">*</span>:</label>
                 <div className="flex justify-content-center">
-                <Dropdown value={selectedRisk} onChange={handleRiskChange} options={risk} optionLabel="name" 
+                <Dropdown value={selectedRisk} style={{marginBottom:"30px"}} onChange={handleRiskChange} options={risk} optionLabel="name" 
                     placeholder="Patient Risk" className="w-full md:w-14rem" />    
                 </div>
 
