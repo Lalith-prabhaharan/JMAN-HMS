@@ -125,7 +125,7 @@ h2 {
 }
 
 /* Media queries for responsiveness */
-@media (max-width: 768px) {
+@media (max-width: 805px) {
   .login-bg {
       flex-direction: column;
   }

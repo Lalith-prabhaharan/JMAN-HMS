@@ -39,20 +39,11 @@
   }
 
 
-   /* .addpatient{
-    background-color: darkseagreen;
-    height: 100%;
-    width: 100%;
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-   } */
 
    .addform{
     /* background-color: antiquewhite; */
     width:80%;
-    height: 80%;
+    height: 500px;
     margin:10px auto;
     border-radius: 15px;
     display: flex;
@@ -60,9 +51,12 @@
 
    .heading {
     text-align: center;
-    color:#00866E
+    color:#00866E;
   }
 
+  .form-left {
+    padding-left: 100px;
+  }
   
 .form-left,
 .form-right {
@@ -162,7 +156,7 @@
   }
 
 
-@media (max-width: 768px) {
+@media (max-width: 805px) {
   .addform {
     flex-direction: column; /* Change to column layout for mobile view */
   }

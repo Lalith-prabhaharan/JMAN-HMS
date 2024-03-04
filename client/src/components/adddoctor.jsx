@@ -69,7 +69,7 @@ export const Adddoctor = () => {
 
   return (
     <Navbar>
-        <h2 style={{marginTop:"20px",textAlign:"center"}}>Add Doctor</h2>
+        <h2 className='heading'>Add Doctor</h2>
         <div className="add-doctor">
             <div className='left-det'>
             <span className="p-float-label" >
@@ -97,7 +97,7 @@ export const Adddoctor = () => {
             <div  className="card flex justify-content-center" >
                 <Calendar value={docdetails.docdob} onChange={handleChange} name='docdob' placeholder='select DOB' />
             </div>
-            <div style={{marginLeft:"3%"}} className="card flex justify-content-center">
+            <div className="card flex justify-content-center">
             <Password value={docdetails.docpass} onChange={handleChange} header={header} footer={footer} placeholder='Enter Password'  name='docpass' toggleMask/>    
             </div>
             <div  className="card flex justify-content-center">

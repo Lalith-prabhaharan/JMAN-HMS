@@ -264,7 +264,7 @@ export const Addpatient = () => {
           <div className='addpatient'>
           <h1 className='heading'>Enter Personal Details</h1>
           <form className='addform'>
-            <div className='form-left' style={{paddingLeft: '100px'}}>
+            <div className='form-left'>
               <label style={{display: 'inline-block'}}><b>First Name:</b></label><b className="required">*<span id="fname" className="formerror"></span></b><br/>
               <input type="text" value={firstname} className="addhotelinp" onChange={(e)=>setFirstname(e.target.value)} required />
               
