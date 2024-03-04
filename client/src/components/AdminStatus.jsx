@@ -66,7 +66,7 @@ export default function AdminStatus() {
   return (
         <Navbar>
           <div className='status'>
-            <div style={{marginTop:"50px"}}>
+            <div style={{marginTop:"30px"}}>
                 <select value = {status} onChange={handleStatus} style={{margin: "0"}} className='dropdown'>
                 <option value="" className='dropdown-content'>All</option>
                 {
@@ -75,7 +75,7 @@ export default function AdminStatus() {
                     ))
                     }
                 </select>
-                <h2 className='page-heading'>Application Status</h2>
+                <h2 className='page-heading'>Applications</h2>
             </div>
                 <DataTable removableSort paginator rows={10} value={statusList} onRowClick={handleRowClick}>
                     <Column field="application_id" alignHeader={'center'} sortable header="Application ID" hidden></Column>

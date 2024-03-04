@@ -40,7 +40,7 @@ export const Doctordetails = () => {
   return (
       <Navbar>
         <div className="status">
-          <div style={{paddingTop:"50px"}}>
+          <div style={{paddingTop:"30px"}}>
             <select value = {dept} onChange={handleDepratment} style={{margin: "0"}} className='dropdown'>
               <option value="" className='dropdown-content'>All</option>
               {
