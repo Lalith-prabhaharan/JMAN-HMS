@@ -123,6 +123,11 @@ body {
     }
 }
 
+@media (max-width : 768px){
+    .docviewpatient fieldset{
+        flex-direction: column;
+    }
+}
 .docviewpatient .card{
     flex: 1.3;
     background-color: #bfc5bf;

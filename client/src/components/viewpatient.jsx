@@ -14,13 +14,18 @@ export const Viewpatient = () => {
   };
 
   useEffect(()=>{
-    doctorhandling().then((response)=>{
-        setPatientList(response.data)
-    })
-    .catch(error=>{
-      console.error("error in fetching data",error)
-    })
-  })
+    const fetch=async()=>{
+      try{
+          const res=await doctorhandling()
+          setPatientList(res.data)
+      }
+      catch(error){
+        console.error("error in fetching data",error)
+      }
+    }
+    fetch();
+  },[])
+
   const getRiskLabel = (risk) => {
     switch (risk) {
       case "0":
@@ -44,13 +49,15 @@ export const Viewpatient = () => {
       <div className="status">
           <h1 className='heading'>Handling Patients</h1>
           {
-          patientList.length > 0 &&
+          patientList.length > 0 ?
           <DataTable removableSort paginator rows={10} stripedRows  value={patientList} onRowClick={handleRowClick}>
               <Column field="patient_id" alignHeader={'center'} sortable header="id" ></Column>
               <Column field="first_name" alignHeader={'center'} sortable header="FirstName"></Column>
               <Column field="age" alignHeader={'center'} sortable header="Age"></Column>
               <Column field="risk" alignHeader={'center'} sortable header="Risk" body={riskBodyTemplate}></Column>
-          </DataTable>}
+          </DataTable>
+          :<p style={{textAlign:"center"}}>No patients are handled by doctor !!</p>
+          }
       </div>
     </DoctorNav>
   )

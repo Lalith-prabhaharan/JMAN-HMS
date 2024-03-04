@@ -23,6 +23,7 @@ export default function Doctorviewpatient() {
     const [risk,setRisk]=useState("")
     const [changedRisk,setChangedRisk]=useState("")
     const [changeRiskFactor,setRiskFactor]=useState(false);
+    const[reports,setReports]=useState([]);
     const risks=[{label:"Low",value:"0"},
                    {label:"Moderate",value:"1"},
                    {label:"High", value:"2"}]
@@ -57,6 +58,13 @@ export default function Doctorviewpatient() {
           };
           if(handlingDetails)
           getRiskLabel();
+          
+        const res=axiosInstance.get(`http://localhost:5000/api/v1/prescription/patient/report/${data}`)
+        .then((res)=>{
+            setReports(res.data)
+        })
+        .catch(err=>console.log(err))
+
     },[handlingDetails])
 
     const [activeTab, setActiveTab] = useState('personalInfo');
@@ -118,6 +126,18 @@ export default function Doctorviewpatient() {
         setRiskFactor(false);
     }
 
+    const download=(report_id)=>{
+        console.log(report_id)
+        const fetch=()=>{
+            const res=axiosInstance.get(`http://localhost:5000/api/v1/prescription/report/download/${report_id}`)
+            .then((res)=>{
+                toast.success("Report Downloaded")
+            })
+            .catch(err=>console.log(err))
+        }
+        fetch();
+    }
+
     return (
         <DoctorNav>
         <div className='docviewpatient'>
@@ -175,7 +195,7 @@ export default function Doctorviewpatient() {
                             </div>
                             <div className='right-view'>
                             <div className="form-row">
-                                <label for="description" className="form-label">Description:</label>
+                                <label for="description" className="form-label">Desc:</label>
                                 <textarea id="description" name="description" className="form-input" rows="4"  value={handlingDetails.diseases_description}></textarea>
                             </div>
                             <div className="form-row">
@@ -210,9 +230,9 @@ export default function Doctorviewpatient() {
             <div className="card">
                 <h2>Report Details</h2>
                 <div className="card-body">
-                    <a href="report1.pdf" className="report-link" download>Download Report 1</a>
-                    <a href="report2.pdf" className="report-link" download>Download Report 2</a>
-                    <a href="report3.pdf" className="report-link" download>Download Report 3</a>
+                    {reports.length>0? reports.map((report)=>(
+                        <div className="report-link" style={{cursor:"pointer"}} key={report.report_id} onClick={() => download(report.report_id)} >{report.file_name}</div> 
+                    )):<p>No reports are uploaded</p>}
                 </div>
             </div>
         </div>

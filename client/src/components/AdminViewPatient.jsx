@@ -174,7 +174,7 @@ export default function AdminViewPatient() {
                                             <input id="risk" name="risk" className="form-input" readOnly={true} value={risk}  ></input>
                                         </div>
                                         <div className="form-row">
-                                            <label for="description" className="form-label">Description</label>
+                                            <label for="description" className="form-label">Desc</label>
                                             <textarea id="description" name="description" className="form-input" readOnly={true} rows="3" value={handlingDetails.diseases_description}></textarea>
                                         </div>
                                         <div className="form-row">
@@ -192,9 +192,9 @@ export default function AdminViewPatient() {
                             <div className="card">
                                 <h2>Report Details</h2>
                                 <div className="card-body">
-                                    {reports.map((report)=>(
+                                    {reports.length>0? reports.map((report)=>(
                                     <div className="report-link" style={{cursor:"pointer"}} key={report.report_id} onClick={() => download(report.report_id)} >{report.file_name}</div> 
-                                    ))}
+                                    )):<p>No reports are uploaded</p>}
                                 </div>
                                 <div className="upload-section">
                                     <label htmlFor="file-upload" className="custom-file-upload">
