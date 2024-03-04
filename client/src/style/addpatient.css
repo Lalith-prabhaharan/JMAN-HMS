@@ -43,7 +43,7 @@
    .addform{
     /* background-color: antiquewhite; */
     width:80%;
-    height: 500px;
+    height: 520px;
     margin:10px auto;
     border-radius: 15px;
     display: flex;
@@ -118,7 +118,11 @@
     background-color: #eff3ef;
     color: #151616;
     box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
-    margin-bottom: 30px;
+  }
+
+  .p-calendar {
+    padding: 0%;
+    background-color: #eff3ef;
   }
 
   .p-dropdown-items-wrapper{
@@ -130,17 +134,6 @@
     padding: 6px;
   }
 
-  .p-calendar{
-    border: none;
-    font-size: 16px;
-    height: auto;
-    padding: 10px;
-    width: 84%;
-    background-color: #eff3ef;
-    color: #151616;
-    box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
-    margin-bottom: 30px;
-  }
 
   .p-datepicker{
     background-color: #eef1f0;
@@ -165,5 +158,10 @@
     height: 100%;
   } */
 }
-  
+
+.formerror {
+  color: rgb(255, 78, 78);
+  font-size: small;
+  padding-left: 10px;
+}  
   
