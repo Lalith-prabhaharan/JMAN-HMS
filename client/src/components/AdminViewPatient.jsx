@@ -174,7 +174,7 @@ export default function AdminViewPatient() {
                                             <input id="risk" name="risk" className="form-input" readOnly={true} value={risk}  ></input>
                                         </div>
                                         <div className="form-row">
-                                            <label for="description" className="form-label">Description</label>
+                                            <label for="description" className="form-label">Desc</label>
                                             <textarea id="description" name="description" className="form-input" readOnly={true} rows="3" value={handlingDetails.diseases_description}></textarea>
                                         </div>
                                         <div className="form-row">
@@ -192,9 +192,22 @@ export default function AdminViewPatient() {
                             <div className="card">
                                 <h2>Report Details</h2>
                                 <div className="card-body">
-                                    {reports.map((report)=>(
-                                    <div className="report-link" style={{cursor:"pointer"}} key={report.report_id} onClick={() => download(report.report_id)} >{report.file_name}</div> 
-                                    ))}
+                                    {reports.length>0? 
+                                    // reports.map((report)=>(
+                                    // <div>
+                                    //     <p>{report.time_stamp}</p>
+                                    //     <div className="report-link"  key={report.report_id}  >{report.file_name}<i className="pi pi-download"style={{cursor:"pointer", fontSize: '1rem',marginLeft:'5%' }} onClick={() => download(report.report_id)} ></i></div> 
+                                    // </div>
+                                    // ))
+                                    <ScrollPanel style={{ width: '100%', height: '400px' }}>
+                                        {reports.map((report)=>(
+                                            <div key={report.report_id} className="suggestion-item">
+                                                <h5>{report.time_stamp}</h5>
+                                                {report.file_name}<i className="pi pi-download"style={{cursor:"pointer", fontSize: '1rem',marginLeft:'5%' }} onClick={() => download(report.report_id)} ></i>
+                                            </div>
+                                        ))}
+                                    </ScrollPanel>
+                                    :<p>No reports are uploaded !!</p>}
                                 </div>
                                 <div className="upload-section">
                                     <label htmlFor="file-upload" className="custom-file-upload">
@@ -206,6 +219,7 @@ export default function AdminViewPatient() {
                                         accept=".pdf"
                                         multiple
                                         onChange={handleFileUpload}
+                                        style={{marginBottom:"5%"}}
                                     />
                                     <button id="btn1doc" onClick={uploadfiles}>Upload</button>
                                     {/* <h1>Uploading The File Using Express</h1>

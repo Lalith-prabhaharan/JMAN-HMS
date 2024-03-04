@@ -47,12 +47,16 @@ export const Login = () => {
           localStorage.setItem("mail",email)
           localStorage.setItem("password",pass)
           localStorage.setItem("token",response.data.token)
-          localStorage.setItem('activetab','addpatient')
           toastSuccess()
           if(selectedOption=="admin")
-          navigate("/addpatient")
-          else
-          navigate("/mypatients")
+          {
+            localStorage.setItem('activetab','addpatient')
+            navigate("/addpatient")
+          }
+          else{
+            localStorage.setItem('activetab','mypatients')
+            navigate("/mypatients")
+          }
         }
         else if(response.data.msg=="select"){
           const toastWarning=()=>{
