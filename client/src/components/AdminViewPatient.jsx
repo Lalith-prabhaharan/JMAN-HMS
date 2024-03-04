@@ -52,11 +52,10 @@ export default function AdminViewPatient() {
         const res=axiosInstance.get(`http://localhost:5000/api/v1/prescription/patient/report/${handlingDetails.patient_id}`)
         .then((res)=>{
             setReports(res.data)
-            console.log(reports)
         })
         .catch(err=>console.log(err))
-        
-    }, [handlingDetails])
+
+        }, [handlingDetails])
 
     const [activeTab, setActiveTab] = useState('personalInfo');
 
@@ -88,7 +87,6 @@ export default function AdminViewPatient() {
         formData.append("patient_id",handlingDetails.patient_id)
         formData.append("doc_id",handlingDetails.doc_id)
         formData.append("file",uploadedFiles[0])
-        console.log(formData)
         axios.post("http://localhost:5000/api/v1/prescription/report/upload",
             formData
         ,{headers: {
@@ -99,19 +97,18 @@ export default function AdminViewPatient() {
         .catch(err=>console.log(err));
     }
 
-    const [flag,setFlag]=useState(true);
-    // const download=(report_id)=>{
-    //     const fetch=()=>{
-    //         const res=axiosInstance.get(`http://localhost:5000/api/v1/prescription/report/download/${report_id}`)
-    //         .then((res)=>{
-    //             toast.success("Report Downloaded")
-    //             setFlag(false)
-    //         })
-    //         .catch(err=>console.log(err))
-    //     }
-    //     if(flag===true)
-    //     fetch();
-    // }
+    const download=(report_id)=>{
+        console.log(report_id)
+        const fetch=()=>{
+            const res=axiosInstance.get(`http://localhost:5000/api/v1/prescription/report/download/${report_id}`)
+            .then((res)=>{
+                toast.success("Report Downloaded")
+            })
+            .catch(err=>console.log(err))
+        }
+        fetch();
+    }
+
 
     return (
         <Navbar>
@@ -195,12 +192,9 @@ export default function AdminViewPatient() {
                             <div className="card">
                                 <h2>Report Details</h2>
                                 <div className="card-body">
-                                    {/* <a href="report1.pdf" className="report-link" download>Download Report 1</a>
-                                    <a href="report2.pdf" className="report-link" download>Download Report 2</a>
-                                    <a href="report3.pdf" className="report-link" download>Download Report 3</a> */}
-                                    {/* {reports.map((report)=>(
-                                    <a className="report-link" key={report.report_id} onClick={download(report.report_id)}>{report.file_name}</a> 
-                                    ))} */}
+                                    {reports.map((report)=>(
+                                    <div className="report-link" style={{cursor:"pointer"}} key={report.report_id} onClick={() => download(report.report_id)} >{report.file_name}</div> 
+                                    ))}
                                 </div>
                                 <div className="upload-section">
                                     <label htmlFor="file-upload" className="custom-file-upload">
