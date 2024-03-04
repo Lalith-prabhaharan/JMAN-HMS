@@ -162,7 +162,7 @@ export default function Doctorpendinglist() {
                                 rows={8} 
                                 cols={20} 
                                 onChange={(e) => {setRejectError(false); setRejectReason(e.target.value)}}
-                                style={{width: "353px", height: "188px"}}/>
+                                style={{width: "353px", height: "188px", backgroundColor: "#eff3ef"}}/>
                             {rejectError && (<small className="p-error" style={{display: "block", marginLeft: "3px", fontWeight: "500"}}>Reason is required.</small>)}
                             <Button className='reject' style={{marginLeft: "130px", marginTop: "30px"}} onClick= {(e) => handleReject(e, appId)}>Reject</Button>
                         </Card>

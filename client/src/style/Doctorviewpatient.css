@@ -90,21 +90,6 @@ body {
         flex: 1;
         width: 100%;
     }
-@media (max-width: 300px) {
-
-    .docviewpatient .left-view,
-    .docviewpatient .right-view {
-        display: grid;
-        flex: none;
-        width: auto;
-    }
-
-    .docviewpatient .form-containerdocview,
-    .docviewpatient .right-col {
-        width: auto;
-    }
-}
-
 @media (max-width:500px) {
 
     .docviewpatient .form-containerdocview,
@@ -119,6 +104,21 @@ body {
 
 @media (max-width:400px) {
     .docviewpatient .card {
+        width: auto;
+    }
+}
+
+@media (max-width: 300px) {
+
+    .docviewpatient .left-view,
+    .docviewpatient .right-view {
+        display: grid;
+        flex: none;
+        width: auto;
+    }
+
+    .docviewpatient .form-containerdocview,
+    .docviewpatient .right-col {
         width: auto;
     }
 }
@@ -190,6 +190,11 @@ fieldset {
     border-radius: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     display:flex;
+}
+@media (max-width : 768px){
+    .docviewpatient fieldset{
+        flex-direction: column;
+    }
 }
 
 #btn1doc {
