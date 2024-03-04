@@ -230,9 +230,19 @@ export default function Doctorviewpatient() {
             <div className="card">
                 <h2>Report Details</h2>
                 <div className="card-body">
-                    {reports.length>0? reports.map((report)=>(
-                        <div className="report-link" style={{cursor:"pointer"}} key={report.report_id} onClick={() => download(report.report_id)} >{report.file_name}</div> 
-                    )):<p>No reports are uploaded</p>}
+                    {reports.length>0?
+                    //  reports.map((report)=>(
+                    //     <div className="report-link"  key={report.report_id} >{report.file_name}<i className="pi pi-download"style={{cursor:"pointer", fontSize: '1rem',marginLeft:'5%' }} onClick={() => download(report.report_id)} ></i></div> 
+                    // ))
+                    <ScrollPanel style={{ width: '100%', height: '400px' }}>
+                        {reports.map((report)=>(
+                            <div key={report.report_id} className="suggestion-item">
+                                <h5>{report.time_stamp}</h5>
+                                {report.file_name}<i className="pi pi-download"style={{cursor:"pointer", fontSize: '1rem',marginLeft:'5%' }} onClick={() => download(report.report_id)} ></i>
+                            </div>
+                        ))}
+                    </ScrollPanel>
+                    :<p>No reports are uploaded !!</p>}
                 </div>
             </div>
         </div>
