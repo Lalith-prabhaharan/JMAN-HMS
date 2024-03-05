@@ -28,9 +28,18 @@ export const doctorhandling=()=>{
 export const approvedpatients=(status)=>{
     return axiosInstance.get(`${url}/admin/patientStatus/${status}`);
 }
-// export const approvedpatients=()=>{
-//     return axiosInstance.get(`${url}/admin/patient/statuss`);
-// }
+
+export const searchPatients = (status, search) => {
+    return axiosInstance.get(`${url}/admin/patient/${search}/${status}`);
+}
+
+export const searchApplications = (status, search) => {
+    return axiosInstance.get(`${url}/admin/application/${search}/${status}`);
+}
+
+export const searchDoctors = (dept, search) => {
+    return axiosInstance.get(`${url}/admin/doctor/${search}/${dept}`);
+}
 
 export const adddoctor=(doctordetails)=>{
     return axiosInstance.post(`${url}/admin/doctor/add`,doctordetails)

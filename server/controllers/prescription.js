@@ -86,10 +86,14 @@ const uploadreport = async (req, res) => {
     const timestamp = Date.now();
     const file_name = `${timestamp}-${req.files.file.name}`;
 
+    let date = new Date();
+    var currdatetime = date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate();
+    currdatetime += ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
+    
     const report = await Report.create({
         patient_id: Number(patient_id),
         doc_id: doc_id,
-        time_stamp: timestamp,
+        time_stamp: currdatetime,
         file_name: file_name
     });
 

@@ -11,7 +11,7 @@ const check = (req, res, next) => {
 
 const createValidator = [
     body('age', 'age must be a Number').isNumeric(),
-    body('phone', 'Invalid phone').isNumeric().isLength({min: 10, max: 10}), 
+    body('phone', 'Invalid phone').isLength({min: 10, max: 10}), 
     body('email', 'Invalid email').isEmail(),
     body('weight', 'Weight must be a Number').isNumeric(),
     check
