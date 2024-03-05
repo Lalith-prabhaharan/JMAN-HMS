@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../utils/authentication';
+import logo from "../images/logo1.png"
 import "../style/nav.css"
 
 export const Navbar = ({ children }) => {
@@ -31,7 +32,10 @@ export const Navbar = ({ children }) => {
   return (
     <div>
     <nav className="navbar">
-      <div className="logo">HEALTH CARE</div>
+      <div className="logo">
+        <img src={logo}></img>
+        {/* HEALTH CARE */}
+      </div>
       <div className={`nav-links ${showNav ? 'show' : ''}`} style={{paddingTop:"10px"}}>
         <a
           href="/allpatients"

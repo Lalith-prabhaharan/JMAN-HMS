@@ -51,7 +51,12 @@ export default function AdminViewPatient() {
 
         const res=axiosInstance.get(`http://localhost:5000/api/v1/prescription/patient/report/${handlingDetails.patient_id}`)
         .then((res)=>{
-            setReports(res.data)
+            // setReports(res.data)
+            const resdata=res.data
+            if (res.data.length > 0) {
+                const sortedData = resdata.sort((a, b) => new Date(b.time_stamp) - new Date(a.time_stamp));
+                setReports(sortedData)
+            }
         })
         .catch(err=>console.log(err))
 
@@ -86,14 +91,20 @@ export default function AdminViewPatient() {
         const formData=new FormData();
         formData.append("patient_id",handlingDetails.patient_id)
         formData.append("doc_id",handlingDetails.doc_id)
+        console.log(uploadedFiles[0])
         formData.append("file",uploadedFiles[0])
+        // setUploadedFiles([])
         axios.post("http://localhost:5000/api/v1/prescription/report/upload",
             formData
         ,{headers: {
             'Content-Type': 'multipart/form-data',
         }}
         )
-        .then(res=>console.log(res))
+        .then((res)=>
+            {
+                console.log(res)
+                setUploadedFiles([])
+            })
         .catch(err=>console.log(err));
     }
 
