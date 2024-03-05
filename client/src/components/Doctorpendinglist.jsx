@@ -12,8 +12,8 @@ import { Button } from 'primereact/button';
 import { InputTextarea } from 'primereact/inputtextarea';
 
 export default function Doctorpendinglist() {
-    const [pendingList, setPendingList] = useState([[]])
-    const [flag, setflag] = useState(true)
+    const [pendingList, setPendingList] = useState([[]]);
+    const [flag, setflag] = useState(true);
     const [selectedDetails, setSelectedDetails] = useState(null);
     const [rejectReason, setRejectReason] = useState("");
     const [reasonCard, setReasonCard] = useState(false);
@@ -21,52 +21,42 @@ export default function Doctorpendinglist() {
     const [rejectError, setRejectError] = useState(false);
 
     const handleApprove = (id)=> {
-        const toastSuccess = () => 
-        {
+        const toastSuccess = () => {
             toast.success('Approved Successfully');
-            console.log("Toast performed")
-        }
-        approvePatients(id)
-        .then(response => {
+        };
+        approvePatients(id).then(response => {
             if(response.data.msg === "Success")
                 toastSuccess();
-          }
-        )
-        .catch(err=>{
+        }).catch(err=>{
             console.log(err)
-        }) ;
-    }
+        });
+    };
 
     const handleReject = (e, id)=> {
         try {
             if(rejectReason === "") {
                 throw new Error("");
             }
-            const toastSuccess = () => 
-            {
+            const toastSuccess = () => {
                 toast.success('Rejected Successfully');
-                console.log("Toast performed")
-            }
-            rejectPatients(id, rejectReason)
-            .then(response => {
+            };
+            rejectPatients(id, rejectReason).then(response => {
                 if(response.data.msg === "Success")
                     toastSuccess();
                     setAppID("");
                     setRejectError(false);
                     setReasonCard(false);
                     setRejectReason("");
-              }
-            )
-            .catch(err=>{
+            }).catch(err=>{
                 setRejectError(true);
             }) ;            
         } catch (error) {
             setRejectError(true);
         }
-    }
+    };
 
     const handleView = (pending) => {
-        setSelectedDetails(pending)
+        setSelectedDetails(pending);
     };
 
     const handleCloseCard = () => {
@@ -74,8 +64,7 @@ export default function Doctorpendinglist() {
     };
 
     useEffect(() => {
-        doctorpending()
-        .then(response=>{
+        doctorpending().then(response=>{
             if(pendingList.length>0){
                 setPendingList(response.data)
                 console.log(pendingList)
@@ -83,14 +72,10 @@ export default function Doctorpendinglist() {
                     setflag(false)
                 }
             }
-            else{
-                toast.warn("No pending applicants")
-            }
-        })
-        .catch(err=>{
+        }).catch(err=>{
             console.log(err)
-        }) 
-    })
+        });
+    });
 
     const viewButton=(pending)=>{
         return(
@@ -99,8 +84,8 @@ export default function Doctorpendinglist() {
                 <i className='pi pi-check'  style={{  fontSize: '1rem', marginBottom:'2%' }}  onClick={() => {setAppID(pending.application_id); handleApprove(appId)}} /> <br></br>
                 <i className='pi pi-trash' style={{  fontSize: '1rem', marginBottom:'2%' }} onClick={() => {setAppID(pending.application_id); setReasonCard(true)}} />
             </div>
-        ) 
-    }
+        );
+    };
 
     const getRiskLabel = (risk) => {
         switch (risk) {
@@ -115,10 +100,11 @@ export default function Doctorpendinglist() {
         }
       };
     
-      const riskBodyTemplate = (rowData) => {
+    const riskBodyTemplate = (rowData) => {
         const riskLabel = getRiskLabel(rowData.risk);
         return <span>{riskLabel}</span>;
-      };
+    };
+
 
     return (
         <DoctorNav>
@@ -136,13 +122,14 @@ export default function Doctorpendinglist() {
 
                 {selectedDetails && (
                     <div className="custom-card-overlay">
-                        <Card className="custom-card" title={`Name: ${selectedDetails.name}`}>
-                            <p>Age: {selectedDetails.age}</p>
-                            <p>Phone: {selectedDetails.phone}</p>
-                            <p>Blood Group: {selectedDetails.blood_group}</p>
-                            <p>Description: {selectedDetails.diseases_description}</p>
-                            <p>History: {selectedDetails.history}</p>
-                            <p>Risk: {riskBodyTemplate(selectedDetails)}</p>
+                        <Card className="custom-card">
+                            <p style={{color: 'green', fontSize: "20px", fontWeight: "bold"}}>Name: {selectedDetails.name}</p>
+                            <p><b>Age:</b> <span style={{color: 'blue'}}>{selectedDetails.age}</span></p>
+                            <p><b>Phone:</b> <span style={{color: 'blue'}}>{selectedDetails.phone}</span></p>
+                            <p><b>Blood Group:</b> <span style={{color: 'blue'}}>{selectedDetails.blood_group}</span></p>
+                            <p><b>Description:</b> <span style={{color: 'blue'}}>{selectedDetails.diseases_description}</span></p>
+                            <p><b>History:</b> <span style={{color: 'blue'}}>{selectedDetails.history}</span></p>
+                            <p><b>Risk:</b> <span style={{color: 'blue'}}>{riskBodyTemplate(selectedDetails)}</span></p>
                             <Button label="Close" className='close' onClick={handleCloseCard} text
                             />
                         </Card>
@@ -151,7 +138,7 @@ export default function Doctorpendinglist() {
 
                 {reasonCard && (    
                     <div className="custom-card-overlay">
-                        <Card className="custom-card" style={{padding: "0px"}}>
+                        <Card className="custom-card" style={{padding: "0px", color: "red"}}>
                             <div style={{marginBottom: "30px"}}>
                                 <h3 style={{display: "inline", marginRight:"140px"}}>Reason for Rejection </h3>
                                 <i className="pi pi-times" onClick={() => setReasonCard(false)} style={{ fontSize: '1rem', cursor: "pointer"}}></i>
@@ -171,7 +158,5 @@ export default function Doctorpendinglist() {
             </div>
             
         </DoctorNav>
-    )
-
-    
+    );
 }

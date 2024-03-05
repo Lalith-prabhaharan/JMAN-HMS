@@ -61,4 +61,7 @@ router.route('/application/:search/:status').get(getSearchApplication);
 router.route('/doctor/:search/:dept').get(getSearchDoctor);
 
 
+
+
+
 module.exports = router;

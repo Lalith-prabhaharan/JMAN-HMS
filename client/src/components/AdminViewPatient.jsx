@@ -6,46 +6,46 @@ import axios from 'axios';
 import "primereact/resources/themes/lara-light-cyan/theme.css";
 import { ScrollPanel } from 'primereact/scrollpanel';
 import axiosInstance from '../interceptor/axios-config';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 
 export default function AdminViewPatient() {
-    const navigate = useNavigate()
     const loc = useLocation();
     const { data } = loc.state;
     const [handlingDetails, setHandlingDetails] = useState([]);
     const [prescriptionData, setPrescriptionData] = useState([]);
-    const [risk, setRisk] = useState("")
+    const [risk, setRisk] = useState("");
     const[reports,setReports]=useState([]);
+
     useEffect(() => {
         axiosInstance.get(`http://localhost:5000/api/v1/admin/patient/status/${data}`).then((res) => {
-            setHandlingDetails(res.data[0])
-        })
-            .catch((err) => console.log(err))
+            setHandlingDetails(res.data[0]);
+        }).catch((err) => console.log(err));
 
         axiosInstance.get(`http://localhost:5000/api/v1/prescription/getDetails/${data}`).then((res) => {
-            const resdata = res.data
+            const resdata = res.data;
             if (res.data.length > 0) {
                 const sortedData = resdata.sort((a, b) => new Date(b.time_stamp) - new Date(a.time_stamp));
-                setPrescriptionData(sortedData)
+                setPrescriptionData(sortedData);
             }
         }).catch((err) => console.log(err))
 
         const getRiskLabel = () => {
-            if (handlingDetails.risk == "0") {
+            if (handlingDetails.risk === "0") {
                 setRisk('Low');
             }
-            else if (handlingDetails.risk == "1") {
+            else if (handlingDetails.risk === "1") {
                 setRisk('Moderate');
             }
-            else if (handlingDetails.risk == "3") {
+            else if (handlingDetails.risk === "2") {
                 setRisk('High');
             }
             else {
                 setRisk('Unknown');
             }
         };
+
         if (handlingDetails)
             getRiskLabel();
 
@@ -60,7 +60,7 @@ export default function AdminViewPatient() {
         })
         .catch(err=>console.log(err))
 
-        }, [handlingDetails])
+    }, [handlingDetails]);
 
     const [activeTab, setActiveTab] = useState('personalInfo');
 
@@ -68,9 +68,7 @@ export default function AdminViewPatient() {
         setActiveTab(tab);
     };
 
-    const [medication, setMedication] = useState("")
 
-   
     // For add files
     const [uploadedFiles, setUploadedFiles] = useState([]);
 
@@ -89,23 +87,18 @@ export default function AdminViewPatient() {
     
     const uploadfiles=()=>{
         const formData=new FormData();
-        formData.append("patient_id",handlingDetails.patient_id)
-        formData.append("doc_id",handlingDetails.doc_id)
-        console.log(uploadedFiles[0])
-        formData.append("file",uploadedFiles[0])
-        // setUploadedFiles([])
+        formData.append("patient_id",handlingDetails.patient_id);
+        formData.append("doc_id",handlingDetails.doc_id);
+        formData.append("file",uploadedFiles[0]);
         axios.post("http://localhost:5000/api/v1/prescription/report/upload",
             formData
         ,{headers: {
             'Content-Type': 'multipart/form-data',
         }}
         )
-        .then((res)=>
-            {
-                console.log(res)
-                setUploadedFiles([])
-            })
-        .catch(err=>console.log(err));
+        .then((res)=>{
+            setUploadedFiles([]);
+        }).catch(err=>console.log(err));
     }
 
     const download=(report_id)=>{
@@ -113,9 +106,8 @@ export default function AdminViewPatient() {
         const fetch=()=>{
             const res=axiosInstance.get(`http://localhost:5000/api/v1/prescription/report/download/${report_id}`)
             .then((res)=>{
-                toast.success("Report Downloaded")
-            })
-            .catch(err=>console.log(err))
+                toast.success("Report Downloaded");
+            }).catch(err=>console.log(err));
         }
         fetch();
     }
@@ -163,8 +155,6 @@ export default function AdminViewPatient() {
                                             <label for="age" className="form-label">Age</label>
                                             <input type="number" id="age" name="age" className="form-input" readOnly={true} value={handlingDetails.age} />
                                         </div>
-
-
                                         <div className="form-row">
                                             <label for="gender" className="form-label">Gender</label>
                                             <input type="text" id="gender" name="gender" className="form-input" readOnly={true} value={handlingDetails.gender} required />
@@ -210,22 +200,22 @@ export default function AdminViewPatient() {
                                     //     <div className="report-link"  key={report.report_id}  >{report.file_name}<i className="pi pi-download"style={{cursor:"pointer", fontSize: '1rem',marginLeft:'5%' }} onClick={() => download(report.report_id)} ></i></div> 
                                     // </div>
                                     // ))
-                                    <ScrollPanel style={{ width: '100%', height: '400px' }}>
+                                    <ScrollPanel style={{ width: '100%', height: '350px' }}>
                                         {reports.map((report)=>(
                                             <div key={report.report_id} className="suggestion-item">
                                                 <h5>{report.time_stamp}</h5>
-                                                {report.file_name}<i className="pi pi-download"style={{cursor:"pointer", fontSize: '1rem',marginLeft:'5%' }} onClick={() => download(report.report_id)} ></i>
+                                                <p style={{fontSize: "13px"}}>
+                                                    {report.file_name}
+                                                    <i className="pi pi-download"style={{cursor:"pointer", fontSize: '1rem',marginLeft:'5%' }} onClick={() => download(report.report_id)} ></i>
+                                                </p>
                                             </div>
                                         ))}
                                     </ScrollPanel>
                                     :<p>No reports are uploaded !!</p>}
                                 </div>
                                 <div className="upload-section">
-                                    <label htmlFor="file-upload" className="custom-file-upload">
-                                        Upload Files
-                                    </label>
-                                    <input
-                                        type="file"
+                                    <label htmlFor="file-upload" className="custom-file-upload" style={{marginTop: "30px"}}>Upload Files</label>
+                                    <input type="file" 
                                         id="file-upload"
                                         accept=".pdf"
                                         multiple
@@ -250,20 +240,19 @@ export default function AdminViewPatient() {
                                 <h2>Previous Suggestions and Medications</h2>
                                 { prescriptionData.length>0 ?
                                     <ScrollPanel style={{ width: '100%', height: '383px' }}>
-                                    {prescriptionData.map((prescription) => (
-                                        <div key={prescription.p_id} className="suggestion-item">
-                                            <h5>{prescription.time_stamp}</h5>
-                                            {prescription.medication}
-                                        </div>
-                                    ))}
-                                </ScrollPanel>:<p>No prescription provided for the patient !!</p>
+                                        {prescriptionData.map((prescription) => (
+                                            <div key={prescription.p_id} className="suggestion-item">
+                                                <h5>{prescription.time_stamp}</h5>
+                                                {prescription.medication}
+                                            </div>
+                                        ))}
+                                    </ScrollPanel>:<p>No prescription provided for the patient !!</p>
                                 }
-                                
                             </div>
                         </div>
                     )}
                 </div>
             </div>
         </Navbar>
-    )
+    );
 }

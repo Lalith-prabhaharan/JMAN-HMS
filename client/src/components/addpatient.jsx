@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react'
+import React from 'react';
 import { useState } from 'react';
 import '../style/addpatient.css'
 import { Navbar } from './navbar';
 import { adminadd, getdeptdoctors, reapplyPatient } from '../services/services';
 import { Dropdown } from 'primereact/dropdown';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Calendar } from 'primereact/calendar';
 import { useLocation } from 'react-router-dom';
@@ -50,8 +50,8 @@ export const Addpatient = () => {
       data.department = dep; 
     }
     getdeptdoctors(dep).then((response)=>{
-      if(response.length===0){} // console.log("No data found")
-      else setDoctorList(response.data)
+      if(response.length===0){} // console.log("No data found");
+      else setDoctorList(response.data);
     }).catch(error => {
       console.error('Error fetching doctor data:', error);
     });
@@ -108,8 +108,8 @@ export const Addpatient = () => {
         doctor_name:doctor.first_name,
         doctor_id:doctor.doc_id,
         risk:riskCode
-      })
-    }
+      });
+    };
 
     await updatePatient().then((response) => {       
       if (response.msg === 'Success') {
@@ -142,8 +142,8 @@ export const Addpatient = () => {
           doctor_name:doctor.first_name,
           doctor_id:doctor.doc_id,
           risk:riskCode
-        })
-      }
+        });
+      };
       await addPatient().then((response) => {
         if (response.msg === 'success') {
           toastSuccess();
@@ -297,7 +297,7 @@ export const Addpatient = () => {
         }).catch(error => {
           console.error('Error fetching doctor data:', error);
         });
-      const selectedRiskObject = risk.find(item => item.code === data.risk);
+        const selectedRiskObject = risk.find(item => item.code === data.risk);
         if (selectedRiskObject) {
           setRisk(selectedRiskObject);
           setRiskCode(selectedRiskObject.code);
