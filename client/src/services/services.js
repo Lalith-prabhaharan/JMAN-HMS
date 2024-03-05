@@ -56,3 +56,15 @@ export const rejectPatients= (id, reason)=> {
 export const reapplyPatient = (patientDetails) => {
     return axiosInstance.patch(`${url}/admin/patient/application`,patientDetails);
 }
+
+export const sendMail = (email) => {
+    return axiosInstance.post(`${url}/auth/forget_password`, {email});
+}
+
+export const sendOtp = (email, otp) => {
+    return axiosInstance.post(`${url}/auth/otp_verify`, {email, otp});
+}
+
+export const resetPassword = (email, pass) => {
+    return axiosInstance.post(`${url}/auth/reset_pass`, {email, pass});
+}
