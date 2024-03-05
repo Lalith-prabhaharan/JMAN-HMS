@@ -1,11 +1,10 @@
-import React from 'react'
-import { useState } from 'react'
-import axios from 'axios'
-import "../style/login.css"
-import logindoc from "../images/login_doctor.jpg"
-import { useAuth } from '../utils/authentication'
-import { useNavigate } from 'react-router-dom'
-import {ToastContainer,toast} from 'react-toastify'
+import React from 'react';
+import { useState } from 'react';
+import axios from 'axios';
+import "../style/login.css";
+import logindoc from "../images/login_doctor.jpg";
+import { useNavigate } from 'react-router-dom';
+import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { RadioButton } from 'primereact/radiobutton';
 import { Button } from 'primereact/button';
@@ -13,7 +12,7 @@ import { InputText } from 'primereact/inputtext';
 import 'primereact/resources/themes/saga-blue/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
-import { resetPassword, sendMail, sendOtp } from '../services/services'
+import { resetPassword, sendMail, sendOtp } from '../services/services';
 
 
 export const Login = () => {
@@ -29,7 +28,7 @@ export const Login = () => {
   const [selectedOtp, setSelectedOtp] = useState(false);
   const [selectedReset, setSelectedReset] = useState(false);
 
-  const auth=useAuth();
+  // const auth=useAuth();
 
   const [loading, setLoading] = useState(false);
 
@@ -124,7 +123,7 @@ export const Login = () => {
           localStorage.setItem("password",pass)
           localStorage.setItem("token",response.data.token)
           toastSuccess()
-          if(selectedOption=="admin")
+          if(selectedOption==="admin")
           {
             localStorage.setItem('activetab','addpatient')
             navigate("/addpatient")
@@ -134,7 +133,7 @@ export const Login = () => {
             navigate("/mypatients")
           }
         }
-        else if(response.data.msg=="select"){
+        else if(response.data.msg==="select"){
           const toastWarning=()=>{
             toast.warn('Enter the type of user');
           }
@@ -255,7 +254,7 @@ export const Login = () => {
             )}
       </div>
       <div className="rightPanel">
-        <img src={logindoc} className='login-img'></img>
+        <img src={logindoc} className='login-img' alt='login-img'></img>
       </div>
     </div>
     </div>

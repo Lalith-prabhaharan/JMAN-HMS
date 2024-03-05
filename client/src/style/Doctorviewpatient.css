@@ -283,6 +283,8 @@ fieldset {
 }
 
 .form-label {
+    font-size: "17px";
+    font-weight: "bold";
     display: inline-block;
     width: 30%;
     text-align: left;

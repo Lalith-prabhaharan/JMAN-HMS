@@ -1,14 +1,13 @@
-import React, { useState } from 'react'
-import { Navbar } from './navbar'
-import { InputText } from 'primereact/inputtext'
-import "../style/addDoctor.css"
-import { adddoctor, doctordetails } from '../services/services'
-import { Dropdown } from 'primereact/dropdown'
-import { Calendar} from 'primereact/calendar'
-import { Password } from 'primereact/password'
-import { Divider } from 'primereact/divider'
-import { useEffect } from 'react'
-import axios from 'axios'
+import React, { useState } from 'react';
+import { Navbar } from './navbar';
+import { InputText } from 'primereact/inputtext';
+import "../style/addDoctor.css";
+import { adddoctor } from '../services/services';
+import { Dropdown } from 'primereact/dropdown';
+import { Calendar} from 'primereact/calendar';
+import { Password } from 'primereact/password';
+import { Divider } from 'primereact/divider';
+import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 
@@ -56,7 +55,7 @@ export const Adddoctor = () => {
                     phone:docdetails.doccontact,
                     department:docdetails.docdept,
                     year_of_exp:docdetails.docexp,
-                })
+                });
             };
             addDoctor();
             const sendMail=async()=>{
@@ -65,7 +64,7 @@ export const Adddoctor = () => {
                     email:docdetails.docemail,
                     department:docdetails.docdept
                 });
-            }
+            };
             sendMail();
             toast.success('Doctor Added');
             navigate('/doctordetails', {state : null});

@@ -8,7 +8,8 @@ const {
     getPendingPatient,
     approvePatient,
     rejectPatient,
-    dischargePatient
+    dischargePatient,
+    getSearchHandlePatient
 } = require('../controllers/doctor');
 
 
@@ -37,7 +38,8 @@ router.route('/reject/:id').patch(rejectPatient);
 // Discharge Patient
 router.route('/discharge/:id').patch(dischargePatient);
 
-
+// search handle patient 
+router.route('/handlePatient/:search').get(getSearchHandlePatient)
 
 
 

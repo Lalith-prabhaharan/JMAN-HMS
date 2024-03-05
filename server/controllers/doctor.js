@@ -5,6 +5,7 @@ const Patient = require('../models/Patient');
 const { Sequelize } = require('sequelize');
 
 
+
 // Get all Handling Patients
 const getAllPatients = async(req, res) => {
     const {userId} = req.user;
@@ -65,7 +66,7 @@ const approvePatient = async(req, res) => {
     await Patient.create(newPatient);
     return res.status(200).json({ msg: "Success" });
 }
-
+ 
 
 // Reject Patient
 const rejectPatient = async(req, res) => {
@@ -195,6 +196,34 @@ const dischargePatient = async (req, res) => {
 }
 
 
+// get doctors based on search
+const getSearchHandlePatient = async (req, res) => {
+    const {userId} = req.user;
+    const {search} = req.params;
+    var patients;
+    if(!isNaN(search)){
+        patients = await Patient.findAll({
+            where: { doc_id: userId, patient_id: Number(search), status: "active" }
+        });
+    }
+    else{
+        patients = await Patient.findAll({
+            where: { doc_id: userId, status: "active" }
+        });
+        
+        let x = new Array();
+        for(let i=0; i<patients.length; i++){
+            let str = patients[i].dataValues.first_name;
+            if(str.toLowerCase().includes(search.toLowerCase())){
+                x.push(patients[i]);
+            }
+        }
+        patients = x;
+    }
+    res.status(200).json(patients);
+};
+
+
 
 
 
@@ -206,5 +235,6 @@ module.exports = {
     approvePatient,
     rejectPatient,
     updateRisk,
-    dischargePatient
+    dischargePatient,
+    getSearchHandlePatient
 }

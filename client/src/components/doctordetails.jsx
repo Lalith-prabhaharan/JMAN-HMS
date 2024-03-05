@@ -1,20 +1,16 @@
-import React, { useEffect, useState } from 'react'
-import "../style/viewpatient.css"
-import { Navbar } from './navbar'
+import React, { useEffect, useState } from 'react';
+import "../style/viewpatient.css";
+import { Navbar } from './navbar';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Card } from 'primereact/card';
 import { Button } from 'primereact/button';
-import { Paginator } from 'primereact/paginator';
-import { searchDoctors, getdeptdoctors } from '../services/services'
-import { Dropdown } from 'primereact/dropdown';
+import { searchDoctors, getdeptdoctors } from '../services/services';
 import { InputText } from 'primereact/inputtext';
 
 
 
 export const Doctordetails = () => {
-  const [first, setFirst] = useState(0);
-  const [rows, setRows] = useState(10);
   const [doctorList,setDoctorList]=useState([])
   const [dept, setDept] = useState("all");
   const departments = ['cardiology','dermatology','pediatrics','gynecology','neurology','urology','orthopedics','radiology','oncology','general'];
@@ -44,14 +40,14 @@ export const Doctordetails = () => {
         setDoctorList(response.data)
       }).catch(error=>{
         console.error("error in fetching data",error)
-      })
+      });
     }
     else{
       searchDoctors(dept, searchText).then((response2) => {
         setDoctorList(response2.data);
       }).catch(error=>{
         console.error("error in fetching data",error);
-      })
+      });
     }
 });
 
@@ -89,15 +85,17 @@ export const Doctordetails = () => {
       
           {selectedDetails && (
             <div className="custom-card-overlay">
-              <Card className="custom-card" title={`Name: ${selectedDetails.first_name} ${selectedDetails.last_name}`}>
-                <p>Age: {selectedDetails.age}</p>
-                <p>Year of Experience: {selectedDetails.year_of_exp}</p>
-                <p>Department: {selectedDetails.department}</p><br />
+              <Card className="custom-card">
+                <h2 style={{color: 'green'}}>Dr. {selectedDetails.first_name} {selectedDetails.last_name}</h2>
+                <p><b>Age:</b> <span style={{color: "blue"}}>{selectedDetails.age}</span></p>
+                <p><b>Year of Experience:</b> <span style={{color: "blue"}}>{selectedDetails.year_of_exp}</span></p>
+                <p><b>Department:</b> <span style={{color: "blue"}}>{selectedDetails.department}</span></p>
+                <br />
                 <Button label="Close" className='close' onClick={handleCloseCard} />
               </Card>
             </div>  
           )} 
         </div>
       </Navbar>
-  )
+  );
 }
