@@ -82,6 +82,11 @@ const Application = sequelize.define('Application', {
         type: DataTypes.STRING(30),
         allowNull: true,
         defaultValue: 'pending'
+    },
+    
+    reason: {
+        type: DataTypes.STRING,
+        defaultValue:null
     }
 }, {
     timestamps: false

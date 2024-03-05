@@ -21,7 +21,7 @@ const Doctor = sequelize.define('Doctor', {
         unique: true
     },
     password: {
-        type: DataTypes.STRING(50),
+        type: DataTypes.STRING(520),
         allowNull: false
     },
     age: {
