@@ -9,7 +9,10 @@ const {
     postPatientForm,
     getSpecificStatus,
     postDoctorForm,
-    updatePatientForm
+    updatePatientForm,
+    getSearchPatient,
+    getSearchApplication,
+    getSearchDoctor
 } = require('../controllers/admin');
 
 
@@ -24,11 +27,10 @@ router.route('/doctor').get(getAllDeptDoctors);
 // get all doctors in a particular department
 router.route('/doctor/:dept').get(getDeptDoctors);
 
-// get the application status
+// get all applications status
 router.route('/patient/application/status').get(getPatients);
 
 // get the status of all patient
-// router.route('/patient/statuss').get(getAllPatientStatus);
 router.route('/patientStatus/:status').get(getAllPatientStatus);
 
 // get the details of a patient
@@ -49,9 +51,14 @@ router.route('/add/doctor').post(email_post);
 // put application form for resubmit
 router.patch('/patient/application', createValidator, updatePatientForm);
 
+// get patients based on search
+router.route('/patient/:search/:status').get(getSearchPatient);
 
+// get applications based on search
+router.route('/application/:search/:status').get(getSearchApplication);
 
-
+// get doctors based on search
+router.route('/doctor/:search/:dept').get(getSearchDoctor);
 
 
 module.exports = router;

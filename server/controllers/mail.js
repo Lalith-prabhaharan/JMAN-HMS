@@ -23,12 +23,12 @@ const email_post = async (req, res) => {
     };
 
     transporter.sendMail(info, (err, res) => {
-      console.log("Email sent successfully");
+      // console.log("Email sent successfully");
       res.json({ message: "Email sent successfully", info });
     })
     // Send a response to the client
   } catch (err) {
-    console.error(err);
+    // console.error(err);
     res.status(500).json({ message: "Server error", error: err });
   }
 };

@@ -73,7 +73,7 @@ const rejectPatient = async(req, res) => {
     const {reason} = req.body;
     const patient_id = Number(req.params.id);
     const patient = await Application.update({
-        status: 'Rejected',
+        status: 'rejected',
         reason: reason
     },
     {
@@ -151,6 +151,7 @@ const getPendingPatient = async(req, res) => {
 }
 
 
+// update risk status
 const updateRisk = async(req, res) => {
     const {id} = req.params;
     const {risk} = req.body;
