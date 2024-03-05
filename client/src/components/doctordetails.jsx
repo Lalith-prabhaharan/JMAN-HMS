@@ -56,7 +56,7 @@ export const Doctordetails = () => {
         <div className="status">
 
           <div style={{display: 'flex', justifyContent: 'center'}}>
-            <InputText type="text" style={{width: '50%', padding: '15px 50px', borderRadius: '30px', margin: "15px"}} value={searchText} onChange={handleInputChange} placeholder="Search by Name or ID..." />
+            <InputText type="text" style={{width: '70%', padding: '15px 50px', borderRadius: '15px', margin: "15px", backgroundColor:"#bae8ca",marginBottom:"30px"}} value={searchText} onChange={handleInputChange} placeholder="Search by Name or ID..." />
           </div>
 
           <div style={{ display: "flex", alignItems: "center"}}>

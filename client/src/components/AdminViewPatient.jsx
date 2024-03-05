@@ -49,9 +49,16 @@ export default function AdminViewPatient() {
         if (handlingDetails)
             getRiskLabel();
 
-        const res=axiosInstance.get(`http://localhost:5000/api/v1/prescription/patient/report/${handlingDetails.patient_id}`).then((res)=>{
-            setReports(res.data)
-        }).catch(err=>console.log(err));
+        const res=axiosInstance.get(`http://localhost:5000/api/v1/prescription/patient/report/${handlingDetails.patient_id}`)
+        .then((res)=>{
+            // setReports(res.data)
+            const resdata=res.data
+            if (res.data.length > 0) {
+                const sortedData = resdata.sort((a, b) => new Date(b.time_stamp) - new Date(a.time_stamp));
+                setReports(sortedData)
+            }
+        })
+        .catch(err=>console.log(err))
 
     }, [handlingDetails]);
 
@@ -85,11 +92,13 @@ export default function AdminViewPatient() {
         formData.append("file",uploadedFiles[0]);
         axios.post("http://localhost:5000/api/v1/prescription/report/upload",
             formData
-            ,{headers: {
-                'Content-Type': 'multipart/form-data',
-            }}
-        ).then(res=>console.log(res))
-        .catch(err=>console.log(err));
+        ,{headers: {
+            'Content-Type': 'multipart/form-data',
+        }}
+        )
+        .then((res)=>{
+            setUploadedFiles([]);
+        }).catch(err=>console.log(err));
     }
 
     const download=(report_id)=>{
@@ -97,9 +106,8 @@ export default function AdminViewPatient() {
         const fetch=()=>{
             const res=axiosInstance.get(`http://localhost:5000/api/v1/prescription/report/download/${report_id}`)
             .then((res)=>{
-                toast.success("Report Downloaded")
-            })
-            .catch(err=>console.log(err))
+                toast.success("Report Downloaded");
+            }).catch(err=>console.log(err));
         }
         fetch();
     }
