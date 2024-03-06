@@ -123,13 +123,13 @@ export default function Doctorpendinglist() {
 
                 {selectedDetails && (
                     <div className="custom-card-overlay">
-                        <Card className="custom-card">
+                        <Card className="custom-card" title="Overview Details">
                             <p style={{color: 'green', fontSize: "20px", fontWeight: "bold"}}>Name: {selectedDetails.name}</p>
                             <p><b>Age:</b> <span style={{color: 'blue'}}>{selectedDetails.age}</span></p>
                             <p><b>Phone:</b> <span style={{color: 'blue'}}>{selectedDetails.phone}</span></p>
                             <p><b>Blood Group:</b> <span style={{color: 'blue'}}>{selectedDetails.blood_group}</span></p>
                             <p><b>Description:</b> <span style={{color: 'blue'}}>{selectedDetails.diseases_description}</span></p>
-                            <p><b>History:</b> <span style={{color: 'blue'}}>{selectedDetails.history}</span></p>
+                            <p style={{display: "flex"}}><div><b>History:&nbsp;</b></div> <div style={{color: "blue"}}> {selectedDetails.history}</div></p>
                             <p><b>Risk:</b> <span style={{color: 'blue'}}>{riskBodyTemplate(selectedDetails)}</span></p>
                             <Button label="Close" className='close' onClick={handleCloseCard} text
                             />
