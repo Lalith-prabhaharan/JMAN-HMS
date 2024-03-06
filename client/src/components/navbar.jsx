@@ -5,7 +5,7 @@ import "../style/nav.css";
 
 export const Navbar = ({ children }) => {
   const [showNav, setShowNav] = useState(false);
-  const [ setActiveTab] = useState('addpatient');
+  const [activeTab, setActiveTab] = useState('addpatient');
   const [showDropdown,setShowDropdown]=useState(false);
 
   const activeColor = '#0e0e0e'; 
