@@ -111,13 +111,14 @@ export default function Doctorpendinglist() {
             <div className='status'>
                 <h1 className='heading'>Pending Patients List</h1>
                     {
-                        pendingList.length > 0 &&
+                        pendingList.length > 0 ?
                         <DataTable removableSort paginator rows={10} value={pendingList} className='pending'>
                         <Column  field="application_id" alignHeader={'center'} sortable header="Application ID" hidden></Column>
                         <Column  field="name" alignHeader={'center'} style={{width: "20%"}} sortable header="Name"></Column>
                         <Column  field="risk" alignHeader={'center'} style={{width: "20%"}}body={riskBodyTemplate} sortable header="Risk"></Column>
                         <Column  alignHeader={'center'} body={viewButton} headerStyle={{color: "white"}} style={{width: "20%"}}  header="Actions"></Column>
                     </DataTable>
+                    :<p style={{textAlign:"center"}}>No Pending Patients !!</p>
                     }
 
                 {selectedDetails && (

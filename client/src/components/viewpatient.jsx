@@ -62,9 +62,10 @@ export const Viewpatient = () => {
 
   return (
     <DoctorNav>
+      <h1 style={{fontFamily:"sans-serif",marginLeft:"2%",marginBottom:"-2%"}}>Hi {localStorage.getItem('name')},</h1>
       <div className="status">
         <div style={{display: 'flex', justifyContent: 'center'}}>
-          <InputText type="text" style={{width: '50%', padding: '15px 50px', borderRadius: '30px', margin: "15px"}} value={searchText} onChange={handleInputChange} placeholder="Search by Name or ID..." />
+          <InputText type="text" style={{width: '70%', padding: '15px 50px', borderRadius: '15px', margin: "15px", backgroundColor:"#bae8ca",marginBottom:"30px"}}  value={searchText} onChange={handleInputChange} placeholder="Search by Name or ID..." />
         </div>
 
         <h2 style={{ margin: "0px" }} className='heading'>Handling Patients</h2>

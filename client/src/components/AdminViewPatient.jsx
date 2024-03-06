@@ -143,7 +143,7 @@ export default function AdminViewPatient() {
                 <div className='fullbody'>
                     {activeTab === 'personalInfo' && (
                         <div className='form-containerdocview' id='left-col'>
-                            <form>
+                            <form style={{marginTop:"-2%"}}>
                                 <h2>Patient Info</h2>
                                 <fieldset>
                                     <div className='left-view'>
@@ -167,6 +167,10 @@ export default function AdminViewPatient() {
                                             <label for="bloodGroup" className="form-label">Blood Group</label>
                                             <input type="text" id="bloodGroup" name="bloodGroup" className="form-input" readOnly={true} value={handlingDetails.blood_group} required />
                                         </div>
+                                        <div className="form-row">
+                                            <label style={{fontSize: "15px", fontWeight: "bold"}} for="weight" className="form-label">Weight:</label>
+                                            <input type="text" id="weight" name="weight" className="form-input"  value={handlingDetails.weight}  />
+                                        </div>
                                     </div>
 
                                     <div className='right-view'>
@@ -186,11 +190,15 @@ export default function AdminViewPatient() {
                                             <label for="patientaddress" className="form-label">Address</label>
                                             <textarea id="patientaddress" name="patientaddress" className="form-input" rows="3" readOnly={true} value={handlingDetails.address}  ></textarea>
                                         </div>
+                                        <div className="form-row">
+                                            <label style={{fontSize: "15px", fontWeight: "bold"}} for="entry" className="form-label">Entry Date:</label>
+                                            <input id="entry" name="entry" className="form-input"  value={handlingDetails.entry_date}  ></input>
+                                        </div>
                                     </div>
                                 </fieldset>
                                 <button id='btn1doc' style={{ marginTop: "2%" }} >Release</button>
                             </form>
-                            <div className="card">
+                            <div className="card" style={{marginTop:"-3%"}}>
                                 <h2>Report Details</h2>
                                 <div className="card-body">
                                     {reports.length>0? 

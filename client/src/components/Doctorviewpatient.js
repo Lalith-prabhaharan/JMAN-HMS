@@ -29,6 +29,7 @@ export default function Doctorviewpatient() {
     useEffect(() => {
         axiosInstance.get(`http://localhost:5000/api/v1/doctor/handling/${data}`).then((res)=>{
             setHandlingDetails(res.data);
+            console.log(handlingDetails)
         }).catch((err)=>console.log(err));
 
         axiosInstance.get(`http://localhost:5000/api/v1/prescription/getDetails/${data}`).then((res)=>{
@@ -181,6 +182,10 @@ export default function Doctorviewpatient() {
                                             <label style={{fontSize: "15px", fontWeight: "bold"}} for="bloodGroup" className="form-label">Blood Group:</label>
                                             <input type="text" id="bloodGroup" name="bloodGroup" className="form-input"  value={handlingDetails.blood_group}  />
                                         </div>
+                                        <div className="form-row">
+                                            <label style={{fontSize: "15px", fontWeight: "bold"}} for="weight" className="form-label">Weight:</label>
+                                            <input type="text" id="weight" name="weight" className="form-input"  value={handlingDetails.weight}  />
+                                        </div>
                                     </div>
                                     <div className='right-view'>
                                         <div className="form-row">
@@ -194,6 +199,10 @@ export default function Doctorviewpatient() {
                                         <div className="form-row">
                                             <label style={{fontSize: "15px", fontWeight: "bold"}} for="risk" className="form-label">Risk:</label>
                                             <input id="risk" name="risk" className="form-input"  value={risk}  ></input>
+                                        </div>
+                                        <div className="form-row">
+                                            <label style={{fontSize: "15px", fontWeight: "bold"}} for="entry" className="form-label">Entry Date:</label>
+                                            <input id="entry" name="entry" className="form-input"  value={handlingDetails.entry_date}  ></input>
                                         </div>
                                     </div>
                                 </fieldset>
