@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import "../style/nav.css";
-import logo from "../images/logo1.png";
+import logo from "../images/logo2 - Copy.png";
 import { useAuth } from "../utils/authentication";
 
 

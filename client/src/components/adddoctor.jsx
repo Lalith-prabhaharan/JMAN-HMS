@@ -159,7 +159,7 @@ export const Adddoctor = () => {
                         <div id="fname"  className="required formerror"></div>
                         <span style={{width:"100%"}} className="p-float-label" >
                             <InputText id="username" value={docdetails.docfirstname} onChange={handleChange} name='docfirstname' required/>
-                            <label htmlFor="username">First name</label>
+                            <label htmlFor="username">First name<b className="required"> *</b></label>
                         </span>
                     </div>
                     <div style={{display:"inline"}}>
@@ -173,48 +173,48 @@ export const Adddoctor = () => {
                         <div id="fage" style={{marginLeft: "30%"}} className="required formerror"></div>
                         <span className="p-float-label">
                             <InputText id="username" value={docdetails.docage} onChange={handleChange} name='docage' required/>
-                            <label htmlFor="username">Age</label>
+                            <label htmlFor="username">Age<b className="required">*</b></label>
                         </span>
                     </div>
                     <div style={{display:"inline"}}>
                         <div id="femail" style={{marginLeft: "30%"}} className="required formerror"></div>
                         <span className="p-float-label">
                             <InputText id="username" value={docdetails.docemail} onChange={handleChange} name='docemail' required/>
-                            <label htmlFor="username">Email</label>
+                            <label htmlFor="username">Email<b className="required"> *</b></label>
                         </span>
                     </div>
                     <div style={{display:"inline"}}>
                         <div id="fcontact" style={{marginLeft: "30%"}} className="required formerror"></div>
                         <span className="p-float-label" >
                             <InputText id="username" value={docdetails.doccontact} onChange={handleChange} name='doccontact' required/>
-                            <label htmlFor="username">Contact</label>
+                            <label htmlFor="username">Contact<b className="required"> *</b></label>
                         </span>
                     </div>
                 </div>
                 <div className='right-det'>
                     <div style={{display:"inline"}}>
                         <div id="fdob" className="required formerror"></div>
-                        <Calendar style={{marginTop:"0%"}} value={docdetails.docdob} onChange={handleChange} name='docdob' placeholder='select DOB' required/>
+                        <Calendar style={{marginTop:"0%"}} value={docdetails.docdob} onChange={handleChange} name='docdob' placeholder='select DOB *' required/>
                     </div>
                     <div style={{display:"inline"}}>
                         <div id="fpass" className="required formerror"></div>
-                        <Password value={docdetails.docpass} onChange={handleChange} header={header} footer={footer} placeholder='Enter Password'  name='docpass' toggleMask required/>    
+                        <Password value={docdetails.docpass} onChange={handleChange} header={header} footer={footer} placeholder='Enter Password *'  name='docpass' toggleMask required/>    
                     </div>
                     <div style={{display:"inline"}}>
                         <div id="fgender" className="required formerror"></div>
                         <Dropdown value={docdetails.docgender} onChange={handleChange} options={gender} optionLabel="label"  name='docgender'
-                            placeholder="Select Gender" className="w-full md:w-14rem" required/>    
+                            placeholder="Select Gender *" className="w-full md:w-14rem" required/>    
                     </div>
                     <div style={{display:"inline"}}>
                         <div id="fdept" className="required formerror"></div>
                         <Dropdown value={docdetails.docdept} onChange={handleChange} options={departments} optionLabel=""  name='docdept'
-                            placeholder="Select the Department" className="w-full md:w-14rem" required/>    
+                            placeholder="Select the Department *" className="w-full md:w-14rem" required/>    
                     </div>
                     <div style={{display:"inline"}}>
                         <div id="fexp" className="required formerror"></div>
                         <span className="p-float-label">
                             <InputText id="username" value={docdetails.docexp} onChange={handleChange} name='docexp' required/>
-                            <label htmlFor="username">Year of Experience</label>
+                            <label htmlFor="username">Year of Experience<b className="required"> *</b></label>
                         </span>
                     </div>
                 </div>
