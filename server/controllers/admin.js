@@ -232,12 +232,10 @@ const updatePatientForm = async(req,res) => {
         doctor_id,
         risk
     } = req.body;
-
     const avail = await Application.findAll({
         where: { application_id: application_id }
     });
-    
-    if (avail[0].dataValues.status != "Rejected") {
+    if (avail[0].dataValues.status != "rejected") {
         return res.status(404).json({ msg: "Invalid Application_id" });
     }
 

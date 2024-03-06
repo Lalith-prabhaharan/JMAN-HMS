@@ -111,7 +111,8 @@ export const Addpatient = () => {
       });
     };
 
-    await updatePatient().then((response) => {       
+    await updatePatient().then((response) => {  
+      console.log(response)     
       if (response.msg === 'Success') {
         toastSuccess();
         navigate('/viewstatus');
