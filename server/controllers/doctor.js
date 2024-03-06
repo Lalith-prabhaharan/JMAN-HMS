@@ -3,7 +3,8 @@ const Doctor = require('../models/Doctor');
 const Application = require('../models/Application');
 const Patient = require('../models/Patient');
 const { Sequelize } = require('sequelize');
-
+const Prescription = require('../models/Prescription');
+const Report = require('../models/Report');
 
 
 // Get all Handling Patients
@@ -184,36 +185,42 @@ const dischargePatient = async (req, res) => {
         }
     });
 
-    const patient = await Patient.update({
-        status: 'discharge'
-    },
-    {
+    const prescription = await Prescription.destroy({
+        where: {
+            patient_id: patient_id,
+            doc_id: userId,
+        },
+        returning: true,
+    });
+
+    if(prescription === 0) {
+        console.log("No prescripiton Available");;
+    }
+
+    const report = await Report.destroy({
+        where: {
+            patient_id: patient_id,
+            doc_id: userId,
+        },
+        returning: true,
+    });
+
+    if(report === 0) {
+        console.log("No report Available");;
+    }
+
+    const patient = await Patient.destroy({
         where: {
             patient_id: patient_id,
             doc_id: userId,
             status: 'active'
         },
-
         returning: true,
     });
-    
-    if(patient.length === 0) {
+
+    if(patient === 0) {
         return res.status(404).json({msg: 'No such patient availabe'});
     }
-
-    //Need to add ondelete cascade
-    // const patient = await Patient.destroy({
-    //     where: {
-    //         patient_id: patient_id,
-    //         doc_id: userId,
-    //         status: 'active'
-    //     },
-    //     returning: true,
-    // });
-
-    // if(patient === 0) {
-    //     return res.status(404).json({msg: 'No such patient availabe'});
-    // }
 
     const mail =  email[0].dataValues.email;
 
