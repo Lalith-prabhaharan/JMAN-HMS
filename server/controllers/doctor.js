@@ -176,68 +176,23 @@ const updateRisk = async(req, res) => {
 const dischargePatient = async (req, res) => {
     const {userId} = req.user;
     const patient_id = Number(req.params.id);
-    const email = await Patient.findAll({
-        attributes: ['email'],
+    const patient = await Patient.update({
+        status: 'discharge'
+    },
+    {
         where: {
             patient_id: patient_id,
             doc_id: userId,
             status: 'active'
-        }
-    });
-
-    const prescription = await Prescription.destroy({
-        where: {
-            patient_id: patient_id,
-            doc_id: userId,
-        },
-        returning: true,
-    });
-
-    if(prescription === 0) {
-        console.log("No prescripiton Available");;
-    }
-
-    const report = await Report.destroy({
-        where: {
-            patient_id: patient_id,
-            doc_id: userId,
-        },
-        returning: true,
-    });
-
-    if(report === 0) {
-        console.log("No report Available");;
-    }
-
-    const patient = await Patient.destroy({
-        where: {
-            patient_id: patient_id,
-            doc_id: userId,
-            status: 'active'
-        },
-        returning: true,
-    });
-
-    if(patient === 0) {
-        return res.status(404).json({msg: 'No such patient availabe'});
-    }
-
-    const mail =  email[0].dataValues.email;
-
-    const applicant = await Application.destroy({
-        where: {
-            email: mail,
-            doc_id: userId,
-            status: 'approved'
         },
         returning: true,
     });
     
-    if(applicant === 0) {
-        return res.status(404).json({msg: 'No such applicant availabe'});
+    if(patient.length === 0) {
+        return res.status(404).json({msg: 'No such patient availabe'});
     }
 
-    return res.status(200).json({msg: 'success'});
+    return res.status(200).json(patient[0]);
 }
 
 

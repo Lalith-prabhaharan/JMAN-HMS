@@ -9,6 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { RadioButton } from 'primereact/radiobutton';
 import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
+import { Password } from 'primereact/password';
 import 'primereact/resources/themes/saga-blue/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
@@ -113,7 +114,7 @@ export const Login = () => {
           type:selectedOption
         })
         if(response.data.msg==="success"){
-          console.log(response.data.token)
+          console.log(response.data)
           const toastSuccess = () => 
           {
             toast.success('Logged in Successfully');
@@ -122,6 +123,7 @@ export const Login = () => {
           localStorage.setItem("mail",email)
           localStorage.setItem("password",pass)
           localStorage.setItem("token",response.data.token)
+          localStorage.setItem("name",response.data.name)
           toastSuccess()
           if(selectedOption==="admin")
           {
@@ -162,9 +164,10 @@ export const Login = () => {
                   </div>
                   <div className='login-input-row'>
                     <label><span>Password:</span></label>
-                    <InputText type='password' onChange={(e) => setPass(e.target.value)} placeholder='Enter your Password'/>
+                    {/* <InputText type='password' onChange={(e) => setPass(e.target.value)} placeholder='Enter your Password' toggleMask/> */}
+                    <Password style={{width:"100%"}}  feedback={false} onChange={(e) => setPass(e.target.value)} value={pass} placeholder='Enter your Password' toggleMask></Password>
                   </div>
-                    <span onClick={() => handleForgetPassword()} className='forget-pass'>Forget Password</span>
+                    <span onClick={() => handleForgetPassword()} className='forget-pass'>Forgot Password</span>
                       <label className='radio'>
                             <RadioButton
                               inputId="ingredient1" 

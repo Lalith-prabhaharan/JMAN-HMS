@@ -8,9 +8,12 @@ import { ScrollPanel } from 'primereact/scrollpanel';
 import axiosInstance from '../interceptor/axios-config';
 import { useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { ConfirmPopup, confirmPopup } from 'primereact/confirmpopup';
+import { useNavigate } from 'react-router-dom';
 
 
 export default function AdminViewPatient() {
+    const navigate=useNavigate();
     const loc = useLocation();
     const { data } = loc.state;
     const [handlingDetails, setHandlingDetails] = useState([]);
@@ -112,6 +115,13 @@ export default function AdminViewPatient() {
         fetch();
     }
 
+    const release=()=>{
+        axiosInstance.delete(`http://localhost:5000/api/v1/admin/release/${handlingDetails.patient_id}`).then(res=>{
+            toast.success('Patient Released');
+            navigate('/allpatients');
+        }).catch(err=>console.log(err));
+    };
+
 
     return (
         <Navbar>
@@ -167,6 +177,10 @@ export default function AdminViewPatient() {
                                             <label for="bloodGroup" className="form-label">Blood Group</label>
                                             <input type="text" id="bloodGroup" name="bloodGroup" className="form-input" readOnly={true} value={handlingDetails.blood_group} required />
                                         </div>
+                                        <div className="form-row">
+                                            <label style={{fontSize: "15px", fontWeight: "bold"}} for="weight" className="form-label">Weight:</label>
+                                            <input type="text" id="weight" name="weight" className="form-input"  value={handlingDetails.weight}  />
+                                        </div>
                                     </div>
 
                                     <div className='right-view'>
@@ -186,11 +200,15 @@ export default function AdminViewPatient() {
                                             <label for="patientaddress" className="form-label">Address</label>
                                             <textarea id="patientaddress" name="patientaddress" className="form-input" rows="3" readOnly={true} value={handlingDetails.address}  ></textarea>
                                         </div>
+                                        <div className="form-row">
+                                            <label style={{fontSize: "15px", fontWeight: "bold"}} for="entry" className="form-label">Entry Date:</label>
+                                            <input id="entry" name="entry" className="form-input"  value={handlingDetails.entry_date}  ></input>
+                                        </div>
                                     </div>
                                 </fieldset>
-                                <button id='btn1doc' style={{ marginTop: "2%" }} >Release</button>
+                                {/* <button id='btn1doc' style={{ marginTop: "2%" }} onClick={release} >Release</button> */}
                             </form>
-                            <div className="card">
+                            <div className="card" style={{marginTop:"-3%"}}>
                                 <h2>Report Details</h2>
                                 <div className="card-body">
                                     {reports.length>0? 
