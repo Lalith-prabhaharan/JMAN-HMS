@@ -175,6 +175,15 @@ const updateRisk = async(req, res) => {
 const dischargePatient = async (req, res) => {
     const {userId} = req.user;
     const patient_id = Number(req.params.id);
+    const email = await Patient.findAll({
+        attributes: ['email'],
+        where: {
+            patient_id: patient_id,
+            doc_id: userId,
+            status: 'active'
+        }
+    });
+
     const patient = await Patient.update({
         status: 'discharge'
     },
@@ -192,7 +201,36 @@ const dischargePatient = async (req, res) => {
         return res.status(404).json({msg: 'No such patient availabe'});
     }
 
-    return res.status(200).json(patient[0]);
+    //Need to add ondelete cascade
+    // const patient = await Patient.destroy({
+    //     where: {
+    //         patient_id: patient_id,
+    //         doc_id: userId,
+    //         status: 'active'
+    //     },
+    //     returning: true,
+    // });
+
+    // if(patient === 0) {
+    //     return res.status(404).json({msg: 'No such patient availabe'});
+    // }
+
+    const mail =  email[0].dataValues.email;
+
+    const applicant = await Application.destroy({
+        where: {
+            email: mail,
+            doc_id: userId,
+            status: 'approved'
+        },
+        returning: true,
+    });
+    
+    if(applicant === 0) {
+        return res.status(404).json({msg: 'No such applicant availabe'});
+    }
+
+    return res.status(200).json({msg: 'success'});
 }
 
 
