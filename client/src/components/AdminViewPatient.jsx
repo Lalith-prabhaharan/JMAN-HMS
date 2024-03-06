@@ -8,9 +8,12 @@ import { ScrollPanel } from 'primereact/scrollpanel';
 import axiosInstance from '../interceptor/axios-config';
 import { useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { ConfirmPopup, confirmPopup } from 'primereact/confirmpopup';
+import { useNavigate } from 'react-router-dom';
 
 
 export default function AdminViewPatient() {
+    const navigate=useNavigate();
     const loc = useLocation();
     const { data } = loc.state;
     const [handlingDetails, setHandlingDetails] = useState([]);
@@ -112,6 +115,13 @@ export default function AdminViewPatient() {
         fetch();
     }
 
+    const release=()=>{
+        axiosInstance.delete(`http://localhost:5000/api/v1/admin/release/${handlingDetails.patient_id}`).then(res=>{
+            toast.success('Patient Released');
+            navigate('/allpatients');
+        }).catch(err=>console.log(err));
+    };
+
 
     return (
         <Navbar>
@@ -143,7 +153,7 @@ export default function AdminViewPatient() {
                 <div className='fullbody'>
                     {activeTab === 'personalInfo' && (
                         <div className='form-containerdocview' id='left-col'>
-                            <form style={{marginTop:"-2%"}}>
+                            <form>
                                 <h2>Patient Info</h2>
                                 <fieldset>
                                     <div className='left-view'>
@@ -196,7 +206,7 @@ export default function AdminViewPatient() {
                                         </div>
                                     </div>
                                 </fieldset>
-                                <button id='btn1doc' style={{ marginTop: "2%" }} >Release</button>
+                                {/* <button id='btn1doc' style={{ marginTop: "2%" }} onClick={release} >Release</button> */}
                             </form>
                             <div className="card" style={{marginTop:"-3%"}}>
                                 <h2>Report Details</h2>

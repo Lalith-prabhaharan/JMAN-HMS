@@ -29,7 +29,6 @@ export default function Doctorviewpatient() {
     useEffect(() => {
         axiosInstance.get(`http://localhost:5000/api/v1/doctor/handling/${data}`).then((res)=>{
             setHandlingDetails(res.data);
-            console.log(handlingDetails)
         }).catch((err)=>console.log(err));
 
         axiosInstance.get(`http://localhost:5000/api/v1/prescription/getDetails/${data}`).then((res)=>{

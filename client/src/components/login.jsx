@@ -167,7 +167,7 @@ export const Login = () => {
                     {/* <InputText type='password' onChange={(e) => setPass(e.target.value)} placeholder='Enter your Password' toggleMask/> */}
                     <Password style={{width:"100%"}}  feedback={false} onChange={(e) => setPass(e.target.value)} value={pass} placeholder='Enter your Password' toggleMask></Password>
                   </div>
-                    <span onClick={() => handleForgetPassword()} className='forget-pass'>Forget Password</span>
+                    <span onClick={() => handleForgetPassword()} className='forget-pass'>Forgot Password</span>
                       <label className='radio'>
                             <RadioButton
                               inputId="ingredient1" 

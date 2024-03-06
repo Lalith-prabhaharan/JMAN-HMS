@@ -36,7 +36,7 @@ router.route('/approve/:id').put(approvePatient);
 router.route('/reject/:id').patch(rejectPatient);
 
 // Discharge Patient
-router.route('/discharge/:id').delete(dischargePatient);
+router.route('/discharge/:id').patch(dischargePatient);
 
 // search handle patient 
 router.route('/handlePatient/:search').get(getSearchHandlePatient)
