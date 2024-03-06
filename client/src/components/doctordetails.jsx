@@ -55,11 +55,7 @@ export const Doctordetails = () => {
       <Navbar>
         <div className="status">
 
-          <div style={{display: 'flex', justifyContent: 'center'}}>
-            <InputText type="text" style={{width: '70%', padding: '15px 50px', borderRadius: '15px', margin: "15px", backgroundColor:"#bae8ca",marginBottom:"30px"}} value={searchText} onChange={handleInputChange} placeholder="Search by Name or ID..." />
-          </div>
-
-          <div style={{ display: "flex", alignItems: "center"}}>
+          <div style={{ display: "flex", alignItems: "center", margin: "15px 0px"}}>
             <div>
               <select value = {dept} onChange={handleDepratment} style={{margin: "0"}} className='dropdown'>
                 <option value="all" className='dropdown-content'>All</option>
@@ -75,6 +71,10 @@ export const Doctordetails = () => {
             </div> 
           </div>
           
+          <div style={{display: 'flex', justifyContent: 'center'}}>
+            <InputText type="text" style={{width: '50%', padding: '15px 50px', borderRadius: '15px', backgroundColor:"#bae8ca"}} value={searchText} onChange={handleInputChange} placeholder="Search by Name or ID..." />
+          </div>
+
           <DataTable removableSort paginator rows={10} stripedRows  value={doctorList} onRowClick={handleRowClick}>
             <Column field="doc_id" alignHeader={'center'} sortable header="ID"></Column>
             <Column field="first_name" alignHeader={'center'} sortable header="Name"></Column>
@@ -85,11 +85,13 @@ export const Doctordetails = () => {
       
           {selectedDetails && (
             <div className="custom-card-overlay">
-              <Card className="custom-card">
+              <Card className="custom-card" title="Doctor Information" style={{color: "blue"}}>
                 <h2 style={{color: 'green'}}>Dr. {selectedDetails.first_name} {selectedDetails.last_name}</h2>
-                <p><b>Age:</b> <span style={{color: "blue"}}>{selectedDetails.age}</span></p>
-                <p><b>Year of Experience:</b> <span style={{color: "blue"}}>{selectedDetails.year_of_exp}</span></p>
-                <p><b>Department:</b> <span style={{color: "blue"}}>{selectedDetails.department}</span></p>
+                <div style={{color: "black"}}>
+                  <p><b>Age:</b> <span style={{color: "blue"}}>{selectedDetails.age}</span></p>
+                  <p><b>Year of Experience:</b> <span style={{color: "blue"}}>{selectedDetails.year_of_exp}</span></p>
+                  <p><b>Department:</b> <span style={{color: "blue"}}>{selectedDetails.department}</span></p>
+                </div>
                 <br />
                 <Button label="Close" className='close' onClick={handleCloseCard} />
               </Card>

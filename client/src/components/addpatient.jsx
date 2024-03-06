@@ -147,7 +147,7 @@ export const Addpatient = () => {
       await addPatient().then((response) => {
         if (response.msg === 'success') {
           toastSuccess();
-          navigate('/viewstatus', {state : null});
+          navigate('/viewstatus', {state : "pending"});
         }
       }).catch(() => {
         toast.error("Enter required inputs");
@@ -211,6 +211,7 @@ export const Addpatient = () => {
     let x = firstname.trim();
     if (x.length === 0) {
       seterror("fname", "Provide a valid name!");
+      setFirstname("");
       returnval = false;
     }
 
@@ -275,7 +276,7 @@ export const Addpatient = () => {
     let x = disease.trim();
     if (x.length === 0) {
       seterror("fdisease", "Enter Disease Description!");
-      setFirstname("");
+      setDisease("");
       returnval = false;
     }
     x = history.trim();
