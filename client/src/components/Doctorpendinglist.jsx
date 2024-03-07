@@ -17,7 +17,7 @@ export default function Doctorpendinglist() {
     const [selectedDetails, setSelectedDetails] = useState(null);
     const [rejectReason, setRejectReason] = useState("");
     const [reasonCard, setReasonCard] = useState(false);
-    const [appId, setAppID] = useState("");
+    const [appId, setAppID] = useState('');
     const [rejectError, setRejectError] = useState(false);
 
     const handleApprove = (id)=> {
@@ -67,7 +67,6 @@ export default function Doctorpendinglist() {
         doctorpending().then(response=>{
             if(pendingList.length>0){
                 setPendingList(response.data)
-                console.log(pendingList)
                 if(pendingList.msg === "No applicants Available" && flag === true){
                     setflag(false)
                 }
@@ -81,8 +80,14 @@ export default function Doctorpendinglist() {
         return(
             <div className='action'> 
                 <i className="pi pi-eye" style={{ fontSize: '1rem',marginBottom:'2%' }} onClick={() => handleView(pending)}></i><br></br>
-                <i className='pi pi-check'  style={{  fontSize: '1rem', marginBottom:'2%' }}  onClick={() => {setAppID(pending.application_id); handleApprove(appId)}} /> <br></br>
-                <i className='pi pi-trash' style={{  fontSize: '1rem', marginBottom:'2%' }} onClick={() => {setAppID(pending.application_id); setReasonCard(true)}} />
+                <i className='pi pi-check'  style={{  fontSize: '1rem', marginBottom:'2%' }}  onClick={
+                    (e) => {
+                        const id = pending.application_id;
+                        setAppID(id); 
+                        handleApprove(id)
+                    }
+                } /> <br></br>
+                <i className='pi pi-trash' style={{  fontSize: '1rem', marginBottom:'2%' }} onClick={(e) => {setAppID(pending.application_id); setReasonCard(true)}} />
             </div>
         );
     };
@@ -115,7 +120,7 @@ export default function Doctorpendinglist() {
                         <DataTable removableSort paginator rows={10} value={pendingList} className='pending'>
                         <Column  field="application_id" alignHeader={'center'} sortable header="Application ID" hidden></Column>
                         <Column  field="name" alignHeader={'center'} style={{width: "20%"}} sortable header="Name"></Column>
-                        <Column  field="risk" alignHeader={'center'} style={{width: "20%"}}body={riskBodyTemplate} sortable header="Risk"></Column>
+                        <Column  field="risk" alignHeader={'center'} style={{width: "20%"}} body={riskBodyTemplate} sortable header="Risk"></Column>
                         <Column  alignHeader={'center'} body={viewButton} headerStyle={{color: "white"}} style={{width: "20%"}}  header="Actions"></Column>
                     </DataTable>
                     :<p style={{textAlign:"center"}}>No Pending Patients !!</p>
@@ -123,16 +128,39 @@ export default function Doctorpendinglist() {
 
                 {selectedDetails && (
                     <div className="custom-card-overlay">
-                        <Card className="custom-card" title="Overview Details">
-                            <p style={{color: 'green', fontSize: "20px", fontWeight: "bold"}}>Name: {selectedDetails.name}</p>
-                            <p><b>Age:</b> <span style={{color: 'blue'}}>{selectedDetails.age}</span></p>
-                            <p><b>Phone:</b> <span style={{color: 'blue'}}>{selectedDetails.phone}</span></p>
-                            <p><b>Blood Group:</b> <span style={{color: 'blue'}}>{selectedDetails.blood_group}</span></p>
-                            <p><b>Description:</b> <span style={{color: 'blue'}}>{selectedDetails.diseases_description}</span></p>
-                            <p style={{display: "flex"}}><div><b>History:&nbsp;</b></div> <div style={{color: "blue"}}> {selectedDetails.history}</div></p>
-                            <p><b>Risk:</b> <span style={{color: 'blue'}}>{riskBodyTemplate(selectedDetails)}</span></p>
-                            <Button label="Close" className='close' onClick={handleCloseCard} text
-                            />
+                        <Card className="custom-card"  title={
+                            <div className="card-title" style={{display: "flex", alignItems:"center"}}>
+                                <span style={{flex: "1"}}>OVERVIEW DETAILS</span>
+                                <i style={{flex: "0"}} className="pi pi-times" onClick={handleCloseCard}></i>
+                            </div>}>
+                            <div>
+                            <div style={{display: "flex", flexDirection:"column", justifyContent:"space-evenly"}}>
+                                <div style={{fontSize:"1.5rem" ,color: "#00856c"}}>
+                                <span>{`${selectedDetails.name}`}</span>
+                                </div>
+                                <div  style={{display: "flex"}}>
+                                <p style={{flex: "1"}}><b>Age :</b><br></br><span style={{color: "#00856c"}}> {selectedDetails.age}</span></p>
+                                <p style={{flex: "1"}}><b>Description :</b><br></br><span style={{color: "#00856c"}}> {selectedDetails.diseases_description}</span></p>
+                                </div>
+                                <div  style={{display: "flex"}}>
+                                <p style={{flex: "1"}}><b>Phone :</b><br></br><span style={{color: "#00856c"}}> {selectedDetails.phone}</span></p>
+                                <p style={{flex: "1"}}><b>History :</b><br></br><span style={{color: "#00856c"}}> {selectedDetails.history}</span></p>
+                                </div>
+                                <div  style={{display: "flex"}}>
+                                <p style={{flex: "1"}}><b>Blood Group :</b><br></br><span style={{color: "#00856c"}}> {selectedDetails.blood_group}</span></p>
+                                
+                                {(selectedDetails.risk === '0') &&
+                                    <p style={{flex: "1"}}><b>Risk :</b><br></br><span style={{color: "#00856c"}}> {riskBodyTemplate(selectedDetails)}</span></p>
+                                }
+                                {(selectedDetails.risk === '1') &&
+                                    <p style={{flex: "1"}}><b>Risk :</b><br></br><span style={{color: "#e5ac02"}}> {riskBodyTemplate(selectedDetails)}</span></p>
+                                }
+                                {(selectedDetails.risk === '2') &&
+                                    <p style={{flex: "1"}}><b>Risk :</b><br></br><span style={{color: "red"}}> {riskBodyTemplate(selectedDetails)}</span></p>
+                                }
+                                </div>
+                            </div>
+                            </div>
                         </Card>
                     </div>
                 )}
