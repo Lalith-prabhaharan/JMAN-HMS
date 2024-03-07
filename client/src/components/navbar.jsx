@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../utils/authentication';
-import logo from "../images/logo1.png";
+import logo from "../images/logo2 - Copy.png";
 import "../style/nav.css";
 
 export const Navbar = ({ children }) => {
