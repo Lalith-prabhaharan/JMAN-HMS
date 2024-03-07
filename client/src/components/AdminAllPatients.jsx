@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import '../style/AdminAllPatientStatus.css';
 import { Navbar } from './navbar';
-import axios from 'axios';
 import { useEffect } from 'react';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
@@ -32,14 +31,14 @@ export default function AdminAllPatient() {
           setApprovedList(response.data);
         }).catch(error=>{
           console.error("error in fetching data",error);
-        })
+        });
       }
       else{
         searchPatients(status, searchText).then((response2) => {
           setApprovedList(response2.data);
         }).catch(error=>{
           console.error("error in fetching data",error);
-        })
+        });
       }
   });
 
@@ -60,15 +59,15 @@ export default function AdminAllPatient() {
   };
 
   const handleRowClick=(e)=>{
-    navigate("/adminviewpatient",{state:{data:e.data.patient_id}})
+    navigate("/adminviewpatient",{state:{data:e.data.patient_id}});
   };
 
   return (
       <Navbar>
         <div className='status'>
 
-          <div style={{display: 'flex', justifyContent: 'center'}}>
-            <InputText type="text" style={{width: '50%', padding: '15px 50px', borderRadius: '30px', margin: "15px"}} value={searchText} onChange={handleInputChange} placeholder="Search by Name or ID..." />
+          <div style={{display: 'flex', justifyContent:'space-evenly'}}>
+          <InputText type="text" style={{width: '70%', padding: '15px 50px', borderRadius: '15px', margin: "15px", backgroundColor:"#bae8ca",marginBottom:"30px"}} value={searchText} onChange={handleInputChange} placeholder="Search by Name or ID..." />
           </div>
 
           <div style={{ display: "flex", alignItems: "center"}}>

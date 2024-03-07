@@ -320,9 +320,6 @@ const getSearchPatient = async (req, res) => {
         }
         patients = x;
     }
-    if (patients.length === 0) {
-        return res.status(200).json(patients);
-    }
     res.status(200).json(patients);
 };
 
@@ -362,9 +359,6 @@ const getSearchApplication = async (req, res) => {
         }
         applications = x;
     }
-    if (applications.length === 0) {
-        return res.status(200).json(applications);
-    }
     res.status(200).json(applications);
 };
 
@@ -402,9 +396,6 @@ const getSearchDoctor = async (req, res) => {
             }
         }
         doctors = x;
-    }
-    if (doctors.length === 0) {
-        return res.status(200).json(doctors);
     }
     res.status(200).json(doctors);
 };

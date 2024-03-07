@@ -1,3 +1,4 @@
+
 body {
     margin: 0;
     padding: 0;
@@ -11,12 +12,6 @@ body {
 @media screen and (max-width: 600px) {
     body {
         font-size: 14px;
-    }
-}
-
-@media (max-width : 768px){
-    .adminviewpatient fieldset{
-        flex-direction: column;
     }
 }
 
@@ -147,7 +142,6 @@ body {
     overflow: hidden;
     max-width: 1000px;
     padding: 20px;
-    margin-top:-4%;
 }
 
 .card-header {
@@ -159,6 +153,7 @@ body {
 
 .adminviewpatient .card-body {
     text-align: left;
+
 }
 
 .report-link {

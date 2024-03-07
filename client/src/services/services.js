@@ -29,6 +29,10 @@ export const approvedpatients=(status)=>{
     return axiosInstance.get(`${url}/admin/patientStatus/${status}`);
 }
 
+export const adddoctor=(doctordetails)=>{
+    return axiosInstance.post(`${url}/admin/doctor/add`,doctordetails)
+}
+
 export const searchPatients = (status, search) => {
     return axiosInstance.get(`${url}/admin/patient/${search}/${status}`);
 }
@@ -41,8 +45,8 @@ export const searchDoctors = (dept, search) => {
     return axiosInstance.get(`${url}/admin/doctor/${search}/${dept}`);
 }
 
-export const adddoctor=(doctordetails)=>{
-    return axiosInstance.post(`${url}/admin/doctor/add`,doctordetails)
+export const searchHandlePatients = (search) => {
+    return axiosInstance.get(`${url}/doctor/handlePatient/${search}`);
 }
 
 export const approvePatients= (id)=> {
@@ -55,4 +59,16 @@ export const rejectPatients= (id, reason)=> {
 
 export const reapplyPatient = (patientDetails) => {
     return axiosInstance.patch(`${url}/admin/patient/application`,patientDetails);
+}
+
+export const sendMail = (email) => {
+    return axiosInstance.post(`${url}/auth/forget_password`, {email});
+}
+
+export const sendOtp = (email, otp) => {
+    return axiosInstance.post(`${url}/auth/otp_verify`, {email, otp});
+}
+
+export const resetPassword = (email, pass) => {
+    return axiosInstance.post(`${url}/auth/reset_pass`, {email, pass});
 }

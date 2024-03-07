@@ -2,8 +2,6 @@ import React from "react";
 import { useState } from "react";
 import "../style/nav.css";
 import { useAuth } from "../utils/authentication";
-import { useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
 
 
 

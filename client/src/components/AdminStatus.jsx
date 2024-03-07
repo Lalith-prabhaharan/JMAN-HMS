@@ -69,14 +69,14 @@ export default function AdminStatus() {
         }
       }).catch(error=>{
         console.error("error in fetching data",error);
-      })
+      });
     }
     else{
       searchApplications(status, searchText).then((response2) => {
         setStatusList(response2.data);
       }).catch(error=>{
         console.error("error in fetching data",error);
-      })
+      });
     }
   });
 
@@ -84,7 +84,7 @@ export default function AdminStatus() {
       <Navbar>
         <div className='status'>
           <div style={{display: 'flex', justifyContent: 'center'}}>
-            <InputText type="text" style={{width: '50%', padding: '15px 50px', borderRadius: '30px', margin: "15px"}} value={searchText} onChange={handleInputChange} placeholder="Search by Name or ID..." />
+            <InputText type="text" style={{width: '70%', padding: '15px 50px', borderRadius: '15px', margin: "15px", backgroundColor:"#bae8ca",marginBottom:"30px"}} value={searchText} onChange={handleInputChange} placeholder="Search by Name or ID..." />
           </div>
 
           <div style={{ display: "flex", alignItems: "center"}}>
@@ -113,15 +113,15 @@ export default function AdminStatus() {
             <div className="custom-card-overlay">
               <Card className="custom-card">
                 <div className='patient-status'>
-                  <h3>{`${selectedDetails.first_name} ${selectedDetails.last_name}`} </h3>
+                  <h3 style={{color: "green"}}>{`${selectedDetails.first_name} ${selectedDetails.last_name}`} </h3>
                   <i className="pi pi-times" onClick={handleCloseCard}></i>
                 </div>
-                <p>Entry Date: {selectedDetails.entry_date}</p>
-                <p>Appointed Doctor: {selectedDetails.doctor_name}</p>
-                <p>Status: {selectedDetails.status}</p>
-                <p>Description: {selectedDetails.description}</p>
-                <p>History: {selectedDetails.history}</p>
-                <p>Risk: {riskBodyTemplate(selectedDetails)}</p>
+                <p><b>Entry Date:</b><span style={{color: "blue"}}> {selectedDetails.entry_date}</span></p>
+                <p><b>Appointed Doctor:</b><span style={{color: "blue"}}> {selectedDetails.doctor_name}</span></p>
+                <p><b>Status:</b><span style={{color: "blue"}}> {selectedDetails.status}</span></p>
+                <p><b>Description:</b><span style={{color: "blue"}}> {selectedDetails.diseases_description}</span></p>
+                <p><b>History:</b><span style={{color: "blue"}}> {selectedDetails.history}</span></p>
+                <p><b>Risk:</b><span style={{color: "blue"}}> {riskBodyTemplate(selectedDetails)}</span></p>
                 {selectedDetails.reason !== null && (<p>Reason: {selectedDetails.reason}</p>)}
                 {selectedDetails.status === 'Rejected' &&<Button label="Reapply" className='approve' onClick={(e) => {handleReapply(e, selectedDetails)}} style={{marginLeft: "35%"}} text/>}
               </Card>

@@ -1,5 +1,5 @@
-import React, { useEffect,useState } from 'react'
-import {DoctorNav }from "./DoctorNav";
+import React, { useEffect,useState } from 'react';
+import {DoctorNav } from "./DoctorNav";
 import "../style/Doctorviewpendingpatient.css";
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
@@ -7,25 +7,25 @@ import axios from 'axios';
 export default function Doctorviewpendingpatient() {
     const loc=useLocation();
     const {data}=loc.state;
-    const [detailsList, setDetailsList] = useState([" "])
+    const [detailsList, setDetailsList] = useState([" "]);
+
     useEffect(() => {
         axios.get(`http://localhost:5000/api/v1/doctor/pending/${data.application_id}`,{
             headers:{
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
             },
-        })
-        .then(response=>{
-            if(response.length==0)console.log("No data found")
+        }).then(response=>{
+            if(response.length===0){} //console.log("No data found");
             else{
-                setDetailsList(response.data)
+                setDetailsList(response.data);
             }
-        }).catch(err=>console.log(err))
-    })
+        }).catch(err=>console.log(err));
+    });
+
+
     return (
         <div>
-            <div>
-                <DoctorNav />
-            </div>
+            <div><DoctorNav /></div>
             <div className='form-container'>
                 <form >
                     <fieldset>
@@ -64,5 +64,5 @@ export default function Doctorviewpendingpatient() {
                 </form>
             </div>
         </div>
-    )
+    );
 }

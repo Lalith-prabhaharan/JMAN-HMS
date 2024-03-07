@@ -3,6 +3,8 @@ const Doctor = require('../models/Doctor');
 const Application = require('../models/Application');
 const Patient = require('../models/Patient');
 const { Sequelize } = require('sequelize');
+const Prescription = require('../models/Prescription');
+const Report = require('../models/Report');
 
 
 // Get all Handling Patients
@@ -65,7 +67,7 @@ const approvePatient = async(req, res) => {
     await Patient.create(newPatient);
     return res.status(200).json({ msg: "Success" });
 }
-
+ 
 
 // Reject Patient
 const rejectPatient = async(req, res) => {
@@ -174,25 +176,97 @@ const updateRisk = async(req, res) => {
 const dischargePatient = async (req, res) => {
     const {userId} = req.user;
     const patient_id = Number(req.params.id);
-    const patient = await Patient.update({
-        status: 'discharge'
-    },
-    {
+    const email = await Patient.findAll({
+        attributes: ['email'],
+        where: {
+            patient_id: patient_id,
+            doc_id: userId,
+            status: 'active'
+        }
+    });
+
+    const prescription = await Prescription.destroy({
+        where: {
+            patient_id: patient_id,
+            doc_id: userId,
+        },
+        returning: true,
+    });
+
+    if(prescription === 0) {
+        console.log("No prescripiton Available");;
+    }
+
+    const report = await Report.destroy({
+        where: {
+            patient_id: patient_id,
+            doc_id: userId,
+        },
+        returning: true,
+    });
+
+    if(report === 0) {
+        console.log("No report Available");;
+    }
+
+    const patient = await Patient.destroy({
         where: {
             patient_id: patient_id,
             doc_id: userId,
             status: 'active'
         },
-
         returning: true,
     });
-    
-    if(patient.length === 0) {
+
+    if(patient === 0) {
         return res.status(404).json({msg: 'No such patient availabe'});
     }
 
-    return res.status(200).json(patient[0]);
+    const mail =  email[0].dataValues.email;
+
+    const applicant = await Application.destroy({
+        where: {
+            email: mail,
+            doc_id: userId,
+            status: 'approved'
+        },
+        returning: true,
+    });
+    
+    if(applicant === 0) {
+        return res.status(404).json({msg: 'No such applicant availabe'});
+    }
+
+    return res.status(200).json({msg: 'success'});
 }
+
+
+// get doctors based on search
+const getSearchHandlePatient = async (req, res) => {
+    const {userId} = req.user;
+    const {search} = req.params;
+    var patients;
+    if(!isNaN(search)){
+        patients = await Patient.findAll({
+            where: { doc_id: userId, patient_id: Number(search), status: "active" }
+        });
+    }
+    else{
+        patients = await Patient.findAll({
+            where: { doc_id: userId, status: "active" }
+        });
+        
+        let x = new Array();
+        for(let i=0; i<patients.length; i++){
+            let str = patients[i].dataValues.first_name;
+            if(str.toLowerCase().includes(search.toLowerCase())){
+                x.push(patients[i]);
+            }
+        }
+        patients = x;
+    }
+    res.status(200).json(patients);
+};
 
 
 
@@ -206,5 +280,6 @@ module.exports = {
     approvePatient,
     rejectPatient,
     updateRisk,
-    dischargePatient
+    dischargePatient,
+    getSearchHandlePatient
 }
