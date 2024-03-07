@@ -111,24 +111,25 @@ export default function Doctorpendinglist() {
             <div className='status'>
                 <h1 className='heading'>Pending Patients List</h1>
                     {
-                        pendingList.length > 0 &&
+                        pendingList.length > 0 ?
                         <DataTable removableSort paginator rows={10} value={pendingList} className='pending'>
                         <Column  field="application_id" alignHeader={'center'} sortable header="Application ID" hidden></Column>
                         <Column  field="name" alignHeader={'center'} style={{width: "20%"}} sortable header="Name"></Column>
                         <Column  field="risk" alignHeader={'center'} style={{width: "20%"}}body={riskBodyTemplate} sortable header="Risk"></Column>
                         <Column  alignHeader={'center'} body={viewButton} headerStyle={{color: "white"}} style={{width: "20%"}}  header="Actions"></Column>
                     </DataTable>
+                    :<p style={{textAlign:"center"}}>No Pending Patients !!</p>
                     }
 
                 {selectedDetails && (
                     <div className="custom-card-overlay">
-                        <Card className="custom-card">
+                        <Card className="custom-card" title="Overview Details">
                             <p style={{color: 'green', fontSize: "20px", fontWeight: "bold"}}>Name: {selectedDetails.name}</p>
                             <p><b>Age:</b> <span style={{color: 'blue'}}>{selectedDetails.age}</span></p>
                             <p><b>Phone:</b> <span style={{color: 'blue'}}>{selectedDetails.phone}</span></p>
                             <p><b>Blood Group:</b> <span style={{color: 'blue'}}>{selectedDetails.blood_group}</span></p>
                             <p><b>Description:</b> <span style={{color: 'blue'}}>{selectedDetails.diseases_description}</span></p>
-                            <p><b>History:</b> <span style={{color: 'blue'}}>{selectedDetails.history}</span></p>
+                            <p style={{display: "flex"}}><div><b>History:&nbsp;</b></div> <div style={{color: "blue"}}> {selectedDetails.history}</div></p>
                             <p><b>Risk:</b> <span style={{color: 'blue'}}>{riskBodyTemplate(selectedDetails)}</span></p>
                             <Button label="Close" className='close' onClick={handleCloseCard} text
                             />

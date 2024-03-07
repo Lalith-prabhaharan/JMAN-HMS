@@ -12,7 +12,8 @@ const {
     updatePatientForm,
     getSearchPatient,
     getSearchApplication,
-    getSearchDoctor
+    getSearchDoctor,
+    releasePatient
 } = require('../controllers/admin');
 
 
@@ -59,6 +60,8 @@ router.route('/application/:search/:status').get(getSearchApplication);
 
 // get doctors based on search
 router.route('/doctor/:search/:dept').get(getSearchDoctor);
+
+router.route('/release/:id').delete(releasePatient);
 
 
 

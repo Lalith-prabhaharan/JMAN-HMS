@@ -2,6 +2,8 @@ require('dotenv').config();
 const Doctor = require('../models/Doctor');
 const Application = require('../models/Application');
 const Patient = require('../models/Patient');
+const Prescription=require('../models/Prescription')
+const Report=require('../models/Report')
 const {Op} = require('sequelize');
 const bcrypt = require('bcryptjs');
 
@@ -230,12 +232,10 @@ const updatePatientForm = async(req,res) => {
         doctor_id,
         risk
     } = req.body;
-
     const avail = await Application.findAll({
         where: { application_id: application_id }
     });
-    
-    if (avail[0].dataValues.status != "Rejected") {
+    if (avail[0].dataValues.status != "rejected") {
         return res.status(404).json({ msg: "Invalid Application_id" });
     }
 
@@ -401,7 +401,67 @@ const getSearchDoctor = async (req, res) => {
 };
 
 
+const releasePatient=async(req,res)=>{
+    const patient_id = Number(req.params.id);
+    const email = await Patient.findAll({
+        attributes: ['email'],
+        where: {
+            patient_id: patient_id,
+            status: 'discharge'
+        }
+    });
 
+    const prescription = await Prescription.destroy({
+        where: {
+            patient_id: patient_id,
+        },
+        returning: true,
+    });
+
+    if(prescription === 0) {
+        console.log("No prescripiton Available");;
+    }
+
+    const report = await Report.destroy({
+        where: {
+            patient_id: patient_id,
+        },
+        returning: true,
+    });
+
+    if(report === 0) {
+        console.log("No report Available");;
+    }
+
+    const patient = await Patient.destroy({
+        where: {
+            patient_id: patient_id,
+            status: 'discharge'
+        },
+        returning: true,
+    });
+
+    if(patient === 0) {
+        return res.status(404).json({msg: 'No such patient availabe'});
+    }
+
+    const mail =  email[0].dataValues.email;
+
+    const applicant = await Application.destroy({
+        where: {
+            email: mail,
+            doc_id: userId,
+            status: 'approved'
+        },
+        returning: true,
+    });
+    
+    if(applicant === 0) {
+        return res.status(404).json({msg: 'No such applicant availabe'});
+    }
+
+    return res.status(200).json({msg: 'success'});
+}
 
 
 
@@ -418,5 +478,6 @@ module.exports = {
     updatePatientForm,
     getSearchPatient,
     getSearchApplication,
-    getSearchDoctor
+    getSearchDoctor,
+    releasePatient
 }

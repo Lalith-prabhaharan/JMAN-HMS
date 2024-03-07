@@ -83,23 +83,21 @@ export default function AdminStatus() {
   return (
       <Navbar>
         <div className='status'>
-          <div style={{display: 'flex', justifyContent: 'center'}}>
-            <InputText type="text" style={{width: '70%', padding: '15px 50px', borderRadius: '15px', margin: "15px", backgroundColor:"#bae8ca",marginBottom:"30px"}} value={searchText} onChange={handleInputChange} placeholder="Search by Name or ID..." />
+          <div className="page-heading">
+            <h2>Applications</h2>
           </div>
-
-          <div style={{ display: "flex", alignItems: "center"}}>
-            <div>
-              <select value={status} onChange={handleStatus} style={{ margin: "10px 0px", height: "30px" }} className="dropdown" >
+          <div style={{ display: "flex", alignItems:"center", justifyContent:"space-evenly"}}>
+            <div style={{flex: "1"}}>
+              <select value={status} onChange={handleStatus} style={{flex :"1", margin: "10px 0px", height: "30px" }} className="dropdown" >
                 <option value="pending" className="dropdown-content"> Pending </option>
                 <option value="approved" className="dropdown-content"> Approved </option>
                 <option value="rejected" className="dropdown-content"> Rejected </option>
                 <option value="all" className="dropdown-content"> All </option>
               </select>
             </div>
-            <div style={{ textAlign: "center", width: "70%" }}>
-              <h2 style={{ margin: "0px" }} className="page-heading">Applications</h2>
-            </div>
+              <InputText type="text" style={{width: '50%', padding: '15px 50px', borderRadius: '15px', backgroundColor:"#bae8ca"}} value={searchText} onChange={handleInputChange} placeholder="Search Name or ID..." />
           </div>
+
 
           <DataTable removableSort paginator rows={10} value={statusList} onRowClick={handleRowClick}>
             <Column field="application_id" alignHeader={'center'} sortable header="ID"></Column>
@@ -111,19 +109,21 @@ export default function AdminStatus() {
 
           { selectedDetails && (
             <div className="custom-card-overlay">
-              <Card className="custom-card">
+              <Card className="custom-card" title="Patient Information" style={{color: "blue"}}>
                 <div className='patient-status'>
                   <h3 style={{color: "green"}}>{`${selectedDetails.first_name} ${selectedDetails.last_name}`} </h3>
                   <i className="pi pi-times" onClick={handleCloseCard}></i>
                 </div>
-                <p><b>Entry Date:</b><span style={{color: "blue"}}> {selectedDetails.entry_date}</span></p>
-                <p><b>Appointed Doctor:</b><span style={{color: "blue"}}> {selectedDetails.doctor_name}</span></p>
-                <p><b>Status:</b><span style={{color: "blue"}}> {selectedDetails.status}</span></p>
-                <p><b>Description:</b><span style={{color: "blue"}}> {selectedDetails.diseases_description}</span></p>
-                <p><b>History:</b><span style={{color: "blue"}}> {selectedDetails.history}</span></p>
-                <p><b>Risk:</b><span style={{color: "blue"}}> {riskBodyTemplate(selectedDetails)}</span></p>
-                {selectedDetails.reason !== null && (<p>Reason: {selectedDetails.reason}</p>)}
-                {selectedDetails.status === 'Rejected' &&<Button label="Reapply" className='approve' onClick={(e) => {handleReapply(e, selectedDetails)}} style={{marginLeft: "35%"}} text/>}
+                <div style={{color: "black"}}>
+                  <p><b>Entry Date:</b><span style={{color: "blue"}}> {selectedDetails.entry_date}</span></p>
+                  <p><b>Appointed Doctor:</b><span style={{color: "blue"}}> {selectedDetails.doctor_name}</span></p>
+                  <p><b>Status:</b><span style={{color: "blue"}}> {selectedDetails.status}</span></p>
+                  <p><b>Description:</b><span style={{color: "blue"}}> {selectedDetails.diseases_description}</span></p>
+                  <div style={{display: "flex"}}><div><b>History:&nbsp;</b></div> <div style={{color: "blue"}}> {selectedDetails.history}</div></div>
+                  <p><b>Risk:</b><span style={{color: "blue"}}> {riskBodyTemplate(selectedDetails)}</span></p>
+                </div>
+                {selectedDetails.reason !== null && (<div style={{display: "flex"}}><div style={{color:"red"}}><b>Reason:&nbsp;</b></div> <div style={{color: "blue"}}> {selectedDetails.reason}</div></div>)}
+                {selectedDetails.status === 'rejected' &&<Button label="reapply" className='approve' onClick={(e) => {handleReapply(e, selectedDetails)}} style={{marginLeft: "35%", marginTop: "15px"}} text/>}
               </Card>
             </div>  
           )} 
