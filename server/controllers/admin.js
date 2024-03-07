@@ -80,13 +80,6 @@ const getDeptDoctors = async (req, res) => {
         return res.status(200).json([]);
     }
 
-    
-
-      
-    // if(doctorsWithPatientCount.length !== 0){ 
-    // const vishal = doctorsWithPatientCount.map((doc) => {doc.dataValues})
-    // console.log(doctorsWithPatientCount);}
-    
     res.status(200).json(doctor);
 };
 
