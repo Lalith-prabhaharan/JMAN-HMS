@@ -161,13 +161,18 @@
     z-index: 2;
 }
 
+::placeholder {
+    font-size: 13px;
+  }
+
 .custom-card {
     z-index: 2; 
     width: 400px;
-    color: black;
+    color: #183b1b;
     background-color: #d3e2df;
     padding: 20px; 
     border-radius: 20px; 
+    font-weight: bold;
 }
 
 .action {
@@ -269,6 +274,7 @@ view:hover {
 .pi-times {
     font-size: 1rem;
     cursor: pointer;
+
 }
 
 .patient-status {

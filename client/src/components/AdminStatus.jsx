@@ -98,7 +98,6 @@ export default function AdminStatus() {
               <InputText type="text" style={{width: '50%', padding: '15px 50px', borderRadius: '15px', backgroundColor:"#bae8ca"}} value={searchText} onChange={handleInputChange} placeholder="Search Name or ID..." />
           </div>
 
-
           <DataTable removableSort paginator rows={10} value={statusList} onRowClick={handleRowClick}>
             <Column field="application_id" alignHeader={'center'} sortable header="ID"></Column>
             <Column field="first_name" alignHeader={'center'} sortable header="Name"></Column>
@@ -109,21 +108,41 @@ export default function AdminStatus() {
 
           { selectedDetails && (
             <div className="custom-card-overlay">
-              <Card className="custom-card" title="Patient Information" style={{color: "blue"}}>
-                <div className='patient-status'>
-                  <h3 style={{color: "green"}}>{`${selectedDetails.first_name} ${selectedDetails.last_name}`} </h3>
-                  <i className="pi pi-times" onClick={handleCloseCard}></i>
-                </div>
-                <div style={{color: "black"}}>
-                  <p><b>Entry Date:</b><span style={{color: "blue"}}> {selectedDetails.entry_date}</span></p>
-                  <p><b>Appointed Doctor:</b><span style={{color: "blue"}}> {selectedDetails.doctor_name}</span></p>
-                  <p><b>Status:</b><span style={{color: "blue"}}> {selectedDetails.status}</span></p>
-                  <p><b>Description:</b><span style={{color: "blue"}}> {selectedDetails.diseases_description}</span></p>
-                  <div style={{display: "flex"}}><div><b>History:&nbsp;</b></div> <div style={{color: "blue"}}> {selectedDetails.history}</div></div>
-                  <p><b>Risk:</b><span style={{color: "blue"}}> {riskBodyTemplate(selectedDetails)}</span></p>
+              <Card className="custom-card"  title={
+                      <div className="card-title" style={{display: "flex", alignItems:"center"}}>
+                          <span style={{flex: "1"}}>APPLICANT INFO</span>
+                          <i style={{flex: "0"}} className="pi pi-times" onClick={handleCloseCard}></i>
+                      </div>
+                } >
+                <div>
+                  <div style={{display: "flex", flexDirection:"column", justifyContent:"space-evenly"}}>
+                    <div style={{fontSize:"1.5rem" ,color: "#00856c"}}>
+                      <span>{`${selectedDetails.first_name} ${selectedDetails.last_name}`}</span>
+                    </div>
+                    <div  style={{display: "flex"}}>
+                      <p style={{flex: "1"}}><b>Entry Date :</b><br></br><span style={{color: "#00856c"}}> {selectedDetails.entry_date}</span></p>
+                      <p style={{flex: "1"}}><b>Description :</b><br></br><span style={{color: "#00856c"}}> {selectedDetails.diseases_description}</span></p>
+                    </div>
+                    <div  style={{display: "flex"}}>
+                      <p style={{flex: "1"}}><b>Doctor :</b><br></br><span style={{color: "#00856c"}}> {selectedDetails.doctor_name}</span></p>
+                      <p style={{flex: "1"}}><b>History :</b><br></br><span style={{color: "#00856c"}}> {selectedDetails.history}</span></p>
+                    </div>
+                    <div  style={{display: "flex"}}>
+                      <p style={{flex: "1"}}><b>Status :</b><br></br><span style={{color: "#00856c"}}> {selectedDetails.status}</span></p>
+                      {(selectedDetails.risk === '0') &&
+                        <p style={{flex: "1"}}><b>Risk :</b><br></br><span style={{color: "#00856c"}}> {riskBodyTemplate(selectedDetails)}</span></p>
+                      }
+                      {(selectedDetails.risk === '1') &&
+                        <p style={{flex: "1"}}><b>Risk :</b><br></br><span style={{color: "#e5ac02"}}> {riskBodyTemplate(selectedDetails)}</span></p>
+                      }
+                      {(selectedDetails.risk === '2') &&
+                        <p style={{flex: "1"}}><b>Risk :</b><br></br><span style={{color: "red"}}> {riskBodyTemplate(selectedDetails)}</span></p>
+                      }
+                    </div>
+                  </div>
                 </div>
                 {selectedDetails.reason !== null && (<div style={{display: "flex"}}><div style={{color:"red"}}><b>Reason:&nbsp;</b></div> <div style={{color: "blue"}}> {selectedDetails.reason}</div></div>)}
-                {selectedDetails.status === 'rejected' &&<Button label="reapply" className='approve' onClick={(e) => {handleReapply(e, selectedDetails)}} style={{marginLeft: "35%", marginTop: "15px"}} text/>}
+                {selectedDetails.status === 'rejected' &&<Button label="Reapply" className='approve' onClick={(e) => {handleReapply(e, selectedDetails)}} style={{marginLeft: "35%", marginTop: "15px"}} text/>}
               </Card>
             </div>  
           )} 
