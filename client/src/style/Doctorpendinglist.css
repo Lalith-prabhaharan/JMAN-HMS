@@ -245,11 +245,16 @@
 }
 
 .page-heading {
+    margin: 15px 0px;
+    padding: 0px 180px;
+}
+
+.page-heading h2 {
     color: #00866E;
     display: inline;
     text-align: center;
-      margin-left: 27%;
-      vertical-align: middle; 
+    margin-left: 27%;
+    vertical-align: middle; 
 }
 
 .view {
@@ -283,8 +288,13 @@ view:hover {
     .dropdown {
         width:fit-content;
     }
+
     .page-heading {
-        font-size: 30px;
+        padding: 0px 100px;
+    }
+
+    .page-heading h2 {
+        font-size: 25px;
         margin-left: 20%;
     }
 
