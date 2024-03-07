@@ -47,6 +47,10 @@ h2 {
   width: 80%;
 }
 
+.login-input-row .p-password-input{
+  width: 100%;
+}
+
 .radio {
   display: flex;
   /* flex-direction: row;  */
