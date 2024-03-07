@@ -82,16 +82,28 @@ export const Doctordetails = () => {
       
           {selectedDetails && (
             <div className="custom-card-overlay">
-              <Card className="custom-card" title="Doctor Information" style={{color: "blue"}}>
-                <h2 style={{color: 'green'}}>Dr. {selectedDetails.first_name} {selectedDetails.last_name}</h2>
-                <div style={{color: "black"}}>
-                  <p><b>Age:</b> <span style={{color: "blue"}}>{selectedDetails.age}</span></p>
-                  <p><b>Year of Experience:</b> <span style={{color: "blue"}}>{selectedDetails.year_of_exp}</span></p>
-                  <p><b>Department:</b> <span style={{color: "blue"}}>{selectedDetails.department}</span></p>
+              <Card className="custom-card"  title={
+                      <div className="card-title" style={{display: "flex", alignItems:"center"}}>
+                          <span style={{flex: "1"}}>DOCTOR INFO</span>
+                          <i style={{flex: "0"}} className="pi pi-times" onClick={handleCloseCard}></i>
+                      </div>
+                } >
+                  <div>
+                  <div style={{display: "flex", flexDirection:"column", justifyContent:"space-evenly"}}>
+                    <div style={{fontSize:"1.5rem" ,color: "#00856c"}}>
+                      <span>{`${selectedDetails.first_name} ${selectedDetails.last_name}`}</span>
+                    </div>
+                    <div  style={{display: "flex"}}>
+                      <p style={{flex: "1"}}><b>Age :</b><br></br><span style={{color: "#00856c"}}> {selectedDetails.age}</span></p>
+                      <p style={{flex: "1"}}><b>Department :</b><br></br><span style={{color: "#00856c"}}> {selectedDetails.department}</span></p>
+                    </div>
+                    <div  style={{display: "flex"}}>
+                      <p style={{flex: "1"}}><b>Experience :</b><br></br><span style={{color: "#00856c"}}> {selectedDetails.year_of_exp}</span></p>
+                      <p style={{flex: "1"}}><b>Gender :</b><br></br><span style={{color: "#00856c"}}> {(selectedDetails.gender == 'M') ? 'Male' : 'Female'}</span></p>
+                    </div>
+                  </div>
                 </div>
-                <br />
-                <Button label="Close" className='close' onClick={handleCloseCard} />
-              </Card>
+              </Card>  
             </div>  
           )} 
         </div>

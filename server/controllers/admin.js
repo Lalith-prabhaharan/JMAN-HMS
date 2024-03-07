@@ -28,7 +28,9 @@ const getDeptDoctors = async (req, res) => {
 
     var doctor;
     if(department === "all"){
-        doctor = await Doctor.findAll({});
+        doctor = await Doctor.findAll({
+            attributes: ['doc_id', 'first_name', 'last_name', 'age', 'department', 'year_of_exp', 'gender']
+        });
     }
     else {
         doctor = await Doctor.findAll({
