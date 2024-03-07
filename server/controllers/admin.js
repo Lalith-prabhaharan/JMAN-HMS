@@ -61,7 +61,6 @@ const getDeptDoctors = async (req, res) => {
               'age',
               'year_of_exp',
               'department',
-              [Sequelize.fn('COUNT', Sequelize.col('Applications.application_id')), 'pending'],
               [Sequelize.fn('COUNT', Sequelize.col('Patients.patient_id')), 'handling'],
             ],
             where: {department: department},
@@ -71,12 +70,6 @@ const getDeptDoctors = async (req, res) => {
                   attributes: [],
                   where: { status: 'active' },
                   required: false
-              },
-              {
-                model: Application,
-                attributes: [],
-                where: {status: 'pending'},
-                required: false
               },
             ],
             group: ['Doctor.doc_id']
