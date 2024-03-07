@@ -164,7 +164,6 @@ export const Login = () => {
                   </div>
                   <div className='login-input-row'>
                     <label><span>Password:</span></label>
-                    {/* <InputText type='password' onChange={(e) => setPass(e.target.value)} placeholder='Enter your Password' toggleMask/> */}
                     <Password style={{width:"100%"}}  feedback={false} onChange={(e) => setPass(e.target.value)} value={pass} placeholder='Enter your Password' toggleMask></Password>
                   </div>
                     <span onClick={() => handleForgetPassword()} className='forget-pass'>Forgot Password?</span>

@@ -77,7 +77,7 @@ export default function AdminAllPatient() {
                 <option value="discharge" className="dropdown-content"> Discharge </option>
               </select>
             </div> 
-            <InputText type="text" style={{width: '60%', padding: '15px 50px', borderRadius: '15px', backgroundColor:"white"}} value={searchText} onChange={handleInputChange} placeholder="Name or ID..." />
+            <InputText type="text" style={{width: '60%', padding: '15px 50px', borderRadius: '15px', backgroundColor:"#bae8ca"}} value={searchText} onChange={handleInputChange} placeholder="Search Name or ID..." />
           </div>
 
           <DataTable removableSort paginator rows={10} value={approvedList} onRowClick={handleRowClick}>

@@ -83,23 +83,21 @@ export default function AdminStatus() {
   return (
       <Navbar>
         <div className='status'>
-          <div style={{ display: "flex", alignItems: "center", margin: "15px 0px"}}>
-            <div>
-              <select value={status} onChange={handleStatus} style={{ margin: "10px 0px", height: "30px" }} className="dropdown" >
+          <div className="page-heading">
+            <h2>Applications</h2>
+          </div>
+          <div style={{ display: "flex", alignItems:"center", justifyContent:"space-evenly"}}>
+            <div style={{flex: "1"}}>
+              <select value={status} onChange={handleStatus} style={{flex :"1", margin: "10px 0px", height: "30px" }} className="dropdown" >
                 <option value="pending" className="dropdown-content"> Pending </option>
                 <option value="approved" className="dropdown-content"> Approved </option>
                 <option value="rejected" className="dropdown-content"> Rejected </option>
                 <option value="all" className="dropdown-content"> All </option>
               </select>
             </div>
-            <div style={{ textAlign: "center", width: "70%" }}>
-              <h2 style={{ margin: "0px" }} className="page-heading">Applications</h2>
-            </div>
+              <InputText type="text" style={{width: '50%', padding: '15px 50px', borderRadius: '15px', backgroundColor:"#bae8ca"}} value={searchText} onChange={handleInputChange} placeholder="Search Name or ID..." />
           </div>
 
-          <div style={{display: 'flex', justifyContent: 'center'}}>
-            <InputText type="text" style={{width: '50%', padding: '15px 50px', borderRadius: '15px', backgroundColor:"#bae8ca"}} value={searchText} onChange={handleInputChange} placeholder="Search by Name or ID..." />
-          </div>
 
           <DataTable removableSort paginator rows={10} value={statusList} onRowClick={handleRowClick}>
             <Column field="application_id" alignHeader={'center'} sortable header="ID"></Column>
