@@ -164,10 +164,9 @@ export const Login = () => {
                   </div>
                   <div className='login-input-row'>
                     <label><span>Password:</span></label>
-                    {/* <InputText type='password' onChange={(e) => setPass(e.target.value)} placeholder='Enter your Password' toggleMask/> */}
                     <Password style={{width:"100%"}}  feedback={false} onChange={(e) => setPass(e.target.value)} value={pass} placeholder='Enter your Password' toggleMask></Password>
                   </div>
-                    <span onClick={() => handleForgetPassword()} className='forget-pass'>Forgot Password</span>
+                    <span onClick={() => handleForgetPassword()} className='forget-pass'>Forgot Password?</span>
                       <label className='radio'>
                             <RadioButton
                               inputId="ingredient1" 
@@ -214,7 +213,7 @@ export const Login = () => {
                     />
                     <label>Doctor</label>
                   </label>
-                  <Button className="login-button" loading={loading}>Next</Button><br></br>
+                  <Button className="login-button" disabled = {(loading) ? true : false} icon = {(loading) ? "pi pi-spin pi-spinner" : ""}>Next</Button><br></br>
                   <Button className="cancel-button" onClick={() => handleCancel()}>Cancel</Button>
                 </form>
               </div>
