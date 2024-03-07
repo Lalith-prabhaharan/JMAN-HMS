@@ -121,7 +121,7 @@ export default function Doctorviewpatient() {
     const download=(report_id)=>{
         const fetch=()=>{
             const res=axiosInstance.get(`http://localhost:5000/api/v1/prescription/report/download/${report_id}`).then((res)=>{
-                toast.success("Report Downloaded");
+                toast.success("Report Downloaded Successfully!");
             }).catch(err=>console.log(err));
         }
         fetch();

@@ -52,9 +52,8 @@ export default function AdminViewPatient() {
         if (handlingDetails)
             getRiskLabel();
 
-        const res=axiosInstance.get(`http://localhost:5000/api/v1/prescription/patient/report/${handlingDetails.patient_id}`)
+        axiosInstance.get(`http://localhost:5000/api/v1/prescription/patient/report/${data}`)
         .then((res)=>{
-            // setReports(res.data)
             const resdata=res.data
             if (res.data.length > 0) {
                 const sortedData = resdata.sort((a, b) => new Date(b.time_stamp) - new Date(a.time_stamp));
@@ -89,19 +88,32 @@ export default function AdminViewPatient() {
     };
     
     const uploadfiles=()=>{
-        const formData=new FormData();
-        formData.append("patient_id",handlingDetails.patient_id);
-        formData.append("doc_id",handlingDetails.doc_id);
-        formData.append("file",uploadedFiles[0]);
-        axios.post("http://localhost:5000/api/v1/prescription/report/upload",
-            formData
-        ,{headers: {
-            'Content-Type': 'multipart/form-data',
-        }}
-        )
-        .then((res)=>{
-            setUploadedFiles([]);
-        }).catch(err=>console.log(err));
+        for(let i=0; i<uploadedFiles.length;i++){
+            const formData=new FormData();
+            formData.append("patient_id",handlingDetails.patient_id);
+            formData.append("doc_id",handlingDetails.doc_id);
+            formData.append("file",uploadedFiles[i]);
+            axios.post("http://localhost:5000/api/v1/prescription/report/upload",
+                formData
+            ,{headers: {
+                'Content-Type': 'multipart/form-data',
+            }}
+            )
+            .then((res)=>{
+                console.log(res.data.message);
+                if(res.data.message === 'Success'){
+                    toast.success("File Uploaded Successfully!");
+                }
+                setUploadedFiles([]);
+            }).catch((err)=>{
+                if(err.response.data.message === 'Only PDF, JPEG, JPG, and PNG files are allowed!'){
+                    toast.error(err.response.data.message);
+                }
+                else if(err.response.data.message === 'Max file size: 5MB'){
+                    toast.error(err.response.data.message);
+                }
+            });
+        }
     }
 
     const download=(report_id)=>{
@@ -109,7 +121,7 @@ export default function AdminViewPatient() {
         const fetch=()=>{
             const res=axiosInstance.get(`http://localhost:5000/api/v1/prescription/report/download/${report_id}`)
             .then((res)=>{
-                toast.success("Report Downloaded");
+                toast.success("Report Downloaded Successfully!");
             }).catch(err=>console.log(err));
         }
         fetch();
@@ -235,19 +247,12 @@ export default function AdminViewPatient() {
                                     <label htmlFor="file-upload" className="custom-file-upload" style={{marginTop: "30px"}}>Upload Files</label>
                                     <input type="file" 
                                         id="file-upload"
-                                        accept=".pdf"
+                                        accept=".pdf,.png,.jpeg,.jpg"
                                         multiple
                                         onChange={handleFileUpload}
                                         style={{marginBottom:"5%"}}
                                     />
                                     <button id="btn1doc" onClick={uploadfiles}>Upload</button>
-                                    {/* <h1>Uploading The File Using Express</h1>
-                                    <form method="POST" action="http://localhost:5000/api/v1/prescription/report/upload" enctype="multipart/form-data">
-                                    <input type="number" name="patient_id" placeholder="enter patient_id" value={handlingDetails.patient_id}/>
-                                    <input type="text" name="doc_id" placeholder="enter doc_id " value={handlingDetails.doc_id}/>
-                                    <input type="file" name="file" />
-                                    <input type="submit" />
-                                    </form> */}
                                 </div>
                             </div>
                         </div>

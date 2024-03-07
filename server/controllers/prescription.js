@@ -69,7 +69,17 @@ const uploadreport = async (req, res) => {
     } = req.body;
 
     if (!req.files) {
-        return res.status(404).send("No files are received.");
+        return res.status(404).send({message: "No files are received"});
+    }
+
+    const allowedFileTypes = ['application/pdf', 'image/jpeg', 'image/png'];
+    const uploadedFileType = req.files.file.mimetype;
+    if (!allowedFileTypes.includes(uploadedFileType)) {
+        return res.status(400).json({ message: "Only PDF, JPEG, JPG, and PNG files are allowed!" });
+    }
+    
+    if (req.files.file.size > 5*1024*1024){
+        return res.status(400).send({message: "Max file size: 5MB!"});
     }
 
     const patient = await Patient.findAll({
@@ -98,7 +108,7 @@ const uploadreport = async (req, res) => {
     });
 
     if (!report) {
-        return res.status(500).json({ msg: 'Failed To insert' });
+        return res.status(500).json({ message: 'Failed To insert' });
     }
 
     const containerName = process.env.AZURE_CONTAINER_NAME;
@@ -119,7 +129,6 @@ const uploadreport = async (req, res) => {
             }
         }
     );
-
 
     res.status(200).json({ message: 'Success' });
 }
