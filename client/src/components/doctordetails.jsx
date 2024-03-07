@@ -82,7 +82,7 @@ export const Doctordetails = () => {
       
           {selectedDetails && (
             <div className="custom-card-overlay">
-              <Card className="custom-card"  title={
+              <Card className="custom-card" style={{width: "450px"}}  title={
                       <div className="card-title" style={{display: "flex", alignItems:"center"}}>
                           <span style={{flex: "1"}}>DOCTOR INFO</span>
                           <i style={{flex: "0"}} className="pi pi-times" onClick={handleCloseCard}></i>
@@ -99,7 +99,7 @@ export const Doctordetails = () => {
                     </div>
                     <div  style={{display: "flex"}}>
                       <p style={{flex: "1"}}><b>Experience :</b><br></br><span style={{color: "#00856c"}}> {selectedDetails.year_of_exp}</span></p>
-                      <p style={{flex: "1"}}><b>Gender :</b><br></br><span style={{color: "#00856c"}}> {(selectedDetails.gender == 'M') ? 'Male' : 'Female'}</span></p>
+                      <p style={{flex: "1"}}><b>Patients Handling :</b><br></br><span style={{color: "#00856c"}}> {selectedDetails.handling}</span></p>
                     </div>
                   </div>
                 </div>

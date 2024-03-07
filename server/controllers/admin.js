@@ -4,7 +4,7 @@ const Application = require('../models/Application');
 const Patient = require('../models/Patient');
 const Prescription=require('../models/Prescription')
 const Report=require('../models/Report')
-const {Op} = require('sequelize');
+const {Op, Sequelize} = require('sequelize');
 const bcrypt = require('bcryptjs');
 
 
@@ -27,20 +27,73 @@ const getDeptDoctors = async (req, res) => {
     const department = req.params.dept;
 
     var doctor;
+
+    Doctor.hasMany(Patient, { foreignKey: 'doc_id' });
+    Doctor.hasMany(Application, { foreignKey: 'doc_id' });
     if(department === "all"){
         doctor = await Doctor.findAll({
-            attributes: ['doc_id', 'first_name', 'last_name', 'age', 'department', 'year_of_exp', 'gender']
-        });
+            attributes: [
+              'doc_id',
+              'first_name',
+              'last_name',
+              'age',
+              'year_of_exp',
+              'department',
+              [Sequelize.fn('COUNT', Sequelize.col('Patients.patient_id')), 'handling'],
+            ],
+            include: [
+                {
+                  model: Patient,
+                  attributes: [],
+                  where: { status: 'active'},
+                  required: false
+              }
+            ],
+            group: ['Doctor.doc_id']
+          })
     }
     else {
         doctor = await Doctor.findAll({
-            where: { department: department }
-        });
+            attributes: [
+              'doc_id',
+              'first_name',
+              'last_name',
+              'age',
+              'year_of_exp',
+              'department',
+              [Sequelize.fn('COUNT', Sequelize.col('Applications.application_id')), 'pending'],
+              [Sequelize.fn('COUNT', Sequelize.col('Patients.patient_id')), 'handling'],
+            ],
+            where: {department: department},
+            include: [
+                {
+                  model: Patient,
+                  attributes: [],
+                  where: { status: 'active' },
+                  required: false
+              },
+              {
+                model: Application,
+                attributes: [],
+                where: {status: 'pending'},
+                required: false
+              },
+            ],
+            group: ['Doctor.doc_id']
+          })
     }
 
     if (doctor.length === 0) {
         return res.status(200).json([]);
     }
+
+    
+
+      
+    // if(doctorsWithPatientCount.length !== 0){ 
+    // const vishal = doctorsWithPatientCount.map((doc) => {doc.dataValues})
+    // console.log(doctorsWithPatientCount);}
+    
     res.status(200).json(doctor);
 };
 
