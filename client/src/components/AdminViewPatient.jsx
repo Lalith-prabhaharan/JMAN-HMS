@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
-import { Navbar  } from './navbar';
+import { Navbar } from './navbar';
 import '../style/AdminViewPatient.css';
 import axios from 'axios';
 import "primereact/resources/themes/lara-light-cyan/theme.css";
@@ -13,13 +13,13 @@ import { useNavigate } from 'react-router-dom';
 
 
 export default function AdminViewPatient() {
-    const navigate=useNavigate();
+    const navigate = useNavigate();
     const loc = useLocation();
     const { data } = loc.state;
     const [handlingDetails, setHandlingDetails] = useState([]);
     const [prescriptionData, setPrescriptionData] = useState([]);
     const [risk, setRisk] = useState("");
-    const[reports,setReports]=useState([]);
+    const [reports, setReports] = useState([]);
 
     useEffect(() => {
         axiosInstance.get(`http://localhost:5000/api/v1/admin/patient/status/${data}`).then((res) => {
@@ -52,16 +52,16 @@ export default function AdminViewPatient() {
         if (handlingDetails)
             getRiskLabel();
 
-        const res=axiosInstance.get(`http://localhost:5000/api/v1/prescription/patient/report/${handlingDetails.patient_id}`)
-        .then((res)=>{
-            // setReports(res.data)
-            const resdata=res.data
-            if (res.data.length > 0) {
-                const sortedData = resdata.sort((a, b) => new Date(b.time_stamp) - new Date(a.time_stamp));
-                setReports(sortedData)
-            }
-        })
-        .catch(err=>console.log(err))
+        const res = axiosInstance.get(`http://localhost:5000/api/v1/prescription/patient/report/${handlingDetails.patient_id}`)
+            .then((res) => {
+                // setReports(res.data)
+                const resdata = res.data
+                if (res.data.length > 0) {
+                    const sortedData = resdata.sort((a, b) => new Date(b.time_stamp) - new Date(a.time_stamp));
+                    setReports(sortedData)
+                }
+            })
+            .catch(err => console.log(err))
 
     }, [handlingDetails]);
 
@@ -87,39 +87,41 @@ export default function AdminViewPatient() {
             </div>
         ));
     };
-    
-    const uploadfiles=()=>{
-        const formData=new FormData();
-        formData.append("patient_id",handlingDetails.patient_id);
-        formData.append("doc_id",handlingDetails.doc_id);
-        formData.append("file",uploadedFiles[0]);
+
+    const uploadfiles = () => {
+        const formData = new FormData();
+        formData.append("patient_id", handlingDetails.patient_id);
+        formData.append("doc_id", handlingDetails.doc_id);
+        formData.append("file", uploadedFiles[0]);
         axios.post("http://localhost:5000/api/v1/prescription/report/upload",
             formData
-        ,{headers: {
-            'Content-Type': 'multipart/form-data',
-        }}
+            , {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                }
+            }
         )
-        .then((res)=>{
-            setUploadedFiles([]);
-        }).catch(err=>console.log(err));
+            .then((res) => {
+                setUploadedFiles([]);
+            }).catch(err => console.log(err));
     }
 
-    const download=(report_id)=>{
+    const download = (report_id) => {
         console.log(report_id)
-        const fetch=()=>{
-            const res=axiosInstance.get(`http://localhost:5000/api/v1/prescription/report/download/${report_id}`)
-            .then((res)=>{
-                toast.success("Report Downloaded");
-            }).catch(err=>console.log(err));
+        const fetch = () => {
+            const res = axiosInstance.get(`http://localhost:5000/api/v1/prescription/report/download/${report_id}`)
+                .then((res) => {
+                    toast.success("Report Downloaded");
+                }).catch(err => console.log(err));
         }
         fetch();
     }
 
-    const release=()=>{
-        axiosInstance.delete(`http://localhost:5000/api/v1/admin/release/${handlingDetails.patient_id}`).then(res=>{
+    const release = () => {
+        axiosInstance.delete(`http://localhost:5000/api/v1/admin/release/${handlingDetails.patient_id}`).then(res => {
             toast.success('Patient Released');
             navigate('/allpatients');
-        }).catch(err=>console.log(err));
+        }).catch(err => console.log(err));
     };
 
 
@@ -153,9 +155,11 @@ export default function AdminViewPatient() {
                 <div className='fullbody'>
                     {activeTab === 'personalInfo' && (
                         <div className='form-containerdocview' id='left-col'>
-                            <form>
-                                <h2>Patient Info</h2>
-                                <fieldset>
+                            <form className='AdminViewH2'>
+                                <div className='h2Admin'>
+                                    <h2>Patient Info</h2>
+                                </div>
+                                <div className='fieldsetmain'>
                                     <div className='left-view'>
                                         <div className="form-row">
                                             <label for="name" className="form-label">Name</label>
@@ -167,22 +171,21 @@ export default function AdminViewPatient() {
                                         </div>
                                         <div className="form-row">
                                             <label for="gender" className="form-label">Gender</label>
-                                            <input type="text" id="gender" name="gender" className="form-input" readOnly={true} value={handlingDetails.gender} required />
+                                            <input type="text" id="gender" name="gender" className="form-input" readOnly={true} value={handlingDetails.gender} />
                                         </div>
                                         <div className="form-row">
                                             <label for="dob" className="form-label">Phone No</label>
-                                            <input type="text" id="phoneno" name="phoneno" className="form-input" readOnly={true} value={handlingDetails.phone} required />
+                                            <input type="text" id="phoneno" name="phoneno" className="form-input" readOnly={true} value={handlingDetails.phone} />
                                         </div>
                                         <div className="form-row">
                                             <label for="bloodGroup" className="form-label">Blood Group</label>
-                                            <input type="text" id="bloodGroup" name="bloodGroup" className="form-input" readOnly={true} value={handlingDetails.blood_group} required />
+                                            <input type="text" id="bloodGroup" name="bloodGroup" className="form-input" readOnly={true} value={handlingDetails.blood_group} />
                                         </div>
                                         <div className="form-row">
-                                            <label style={{fontSize: "15px", fontWeight: "bold"}} for="weight" className="form-label">Weight:</label>
-                                            <input type="text" id="weight" name="weight" className="form-input"  value={handlingDetails.weight}  />
+                                            <label for="weight" className="form-label">Weight:</label>
+                                            <input type="text" id="weight" name="weight" className="form-input" value={handlingDetails.weight} />
                                         </div>
                                     </div>
-
                                     <div className='right-view'>
                                         <div className="form-row">
                                             <label for="risk" className="form-label">Risk</label>
@@ -201,76 +204,78 @@ export default function AdminViewPatient() {
                                             <textarea id="patientaddress" name="patientaddress" className="form-input" rows="3" readOnly={true} value={handlingDetails.address}  ></textarea>
                                         </div>
                                         <div className="form-row">
-                                            <label style={{fontSize: "15px", fontWeight: "bold"}} for="entry" className="form-label">Entry Date:</label>
-                                            <input id="entry" name="entry" className="form-input"  value={handlingDetails.entry_date}  ></input>
+                                            <label for="entry" className="form-label">Entry Date</label>
+                                            <input id="entry" name="entry" className="form-input" value={handlingDetails.entry_date}  ></input>
                                         </div>
                                     </div>
-                                </fieldset>
+                                </div>
                                 {/* <button id='btn1doc' style={{ marginTop: "2%" }} onClick={release} >Release</button> */}
                             </form>
-                            <div className="card" style={{marginTop:"-3%"}}>
-                                <h2>Report Details</h2>
-                                <div className="card-body">
-                                    {reports.length>0? 
-                                    // reports.map((report)=>(
-                                    // <div>
-                                    //     <p>{report.time_stamp}</p>
-                                    //     <div className="report-link"  key={report.report_id}  >{report.file_name}<i className="pi pi-download"style={{cursor:"pointer", fontSize: '1rem',marginLeft:'5%' }} onClick={() => download(report.report_id)} ></i></div> 
-                                    // </div>
-                                    // ))
-                                    <ScrollPanel style={{ width: '100%', height: '350px' }}>
-                                        {reports.map((report)=>(
-                                            <div key={report.report_id} className="suggestion-item">
-                                                <h5>{report.time_stamp}</h5>
-                                                <p style={{fontSize: "13px"}}>
-                                                    {report.file_name}
-                                                    <i className="pi pi-download"style={{cursor:"pointer", fontSize: '1rem',marginLeft:'5%' }} onClick={() => download(report.report_id)} ></i>
-                                                </p>
-                                            </div>
-                                        ))}
-                                    </ScrollPanel>
-                                    :<p>No reports are uploaded !!</p>}
-                                </div>
-                                <div className="upload-section">
-                                    <label htmlFor="file-upload" className="custom-file-upload" style={{marginTop: "30px"}}>Upload Files</label>
-                                    <input type="file" 
-                                        id="file-upload"
-                                        accept=".pdf"
-                                        multiple
-                                        onChange={handleFileUpload}
-                                        style={{marginBottom:"5%"}}
-                                    />
-                                    <button id="btn1doc" onClick={uploadfiles}>Upload</button>
-                                    {/* <h1>Uploading The File Using Express</h1>
+                            <div className="card">
+                                <div className='h2Admin'>
+                                    <h2>Report Details</h2>
+                                    </div>
+                    <div className="card-body">
+                        {reports.length > 0 ?
+                            // reports.map((report)=>(
+                            // <div>
+                            //     <p>{report.time_stamp}</p>
+                            //     <div className="report-link"  key={report.report_id}  >{report.file_name}<i className="pi pi-download"style={{cursor:"pointer", fontSize: '1rem',marginLeft:'5%' }} onClick={() => download(report.report_id)} ></i></div> 
+                            // </div>
+                            // ))
+                            <ScrollPanel style={{ width: '100%', height: '259px' }}>
+                                {reports.map((report) => (
+                                    <div key={report.report_id} className="suggestion-item">
+                                        <h5>{report.time_stamp}</h5>
+                                        <p style={{ fontSize: "13px" }}>
+                                            {report.file_name}
+                                            <i className="pi pi-download" style={{ cursor: "pointer", fontSize: '1rem', marginLeft: '5%' }} onClick={() => download(report.report_id)} ></i>
+                                        </p>
+                                    </div>
+                                ))}
+                            </ScrollPanel>
+                            : <p>No reports are uploaded !!</p>}
+                    </div>
+                    <div className="upload-section">
+                        <label htmlFor="file-upload" className="custom-file-upload" style={{ marginTop: "15px" }}>Upload Files</label>
+                        <input type="file"
+                            id="file-upload"
+                            accept=".pdf"
+                            multiple
+                            onChange={handleFileUpload}
+                        
+                        />
+                        <button id="btn1doc" onClick={uploadfiles}>Upload</button>
+                        {/* <h1>Uploading The File Using Express</h1>
                                     <form method="POST" action="http://localhost:5000/api/v1/prescription/report/upload" enctype="multipart/form-data">
                                     <input type="number" name="patient_id" placeholder="enter patient_id" value={handlingDetails.patient_id}/>
                                     <input type="text" name="doc_id" placeholder="enter doc_id " value={handlingDetails.doc_id}/>
                                     <input type="file" name="file" />
                                     <input type="submit" />
                                     </form> */}
-                                </div>
-                            </div>
-                        </div>
-                    )}
-                    {activeTab === 'prescription' && (
-                        <div className='right-col'>
-                            <div id="suggestions-card">
-                                <h2>Previous Suggestions and Medications</h2>
-                                { prescriptionData.length>0 ?
-                                    <ScrollPanel style={{ width: '100%', height: '383px' }}>
-                                        {prescriptionData.map((prescription) => (
-                                            <div key={prescription.p_id} className="suggestion-item">
-                                                <h5>{prescription.time_stamp}</h5>
-                                                {prescription.medication}
-                                            </div>
-                                        ))}
-                                    </ScrollPanel>:<p>No prescription provided for the patient !!</p>
-                                }
-                            </div>
-                        </div>
-                    )}
+                    </div>
                 </div>
             </div>
-        </Navbar>
+                    )}
+            {activeTab === 'prescription' && (
+                <div className='right-col'>
+                    <div id="suggestions-card">
+                        <h2>Previous Suggestions and Medications</h2>
+                        {prescriptionData.length > 0 ?
+                            <ScrollPanel style={{ width: '100%', height: '383px' }}>
+                                {prescriptionData.map((prescription) => (
+                                    <div key={prescription.p_id} className="suggestion-item">
+                                        <h5>{prescription.time_stamp}</h5>
+                                        {prescription.medication}
+                                    </div>
+                                ))}
+                            </ScrollPanel> : <p>No prescription provided for the patient !!</p>
+                        }
+                    </div>
+                </div>
+            )}
+        </div>
+            </div >
+        </Navbar >
     );
 }
