@@ -109,9 +109,10 @@ export default function AdminViewPatient() {
                 if(err.response.data.message === 'Only PDF, JPEG, JPG, and PNG files are allowed!'){
                     toast.error(err.response.data.message);
                 }
-                else if(err.response.data.message === 'Max file size: 5MB'){
-                    toast.error(err.response.data.message);
+                else if(err.response.data.message === 'Max file size: 5MB!'){
+                    toast.warn(err.response.data.message);
                 }
+                setUploadedFiles([]);
             });
         }
     }
