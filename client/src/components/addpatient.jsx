@@ -88,7 +88,7 @@ export const Addpatient = () => {
     toast.success('Request Sent to Doctor');
   };
 
-  const reapply = async (e) => {
+  const reapply = (e) => {
     const updatePatient = async()=>{
       const response = await reapplyPatient({
         application_id: id,
@@ -108,23 +108,17 @@ export const Addpatient = () => {
         doctor_name:doctor.first_name,
         doctor_id:doctor.doc_id,
         risk:riskCode
+      }).catch((err) => {
+        toast.error(err);
       });
     };
-
-    await updatePatient().then((response) => {  
-      console.log(response)     
-      if (response.msg === 'Success') {
-        toastSuccess();
-        navigate('/viewstatus');
-      } 
-    }).catch(() => {
-      toast.error("Enter all required inputs");
-    }); 
-  };
+    updatePatient();
+    toastSuccess();
+    navigate('/viewstatus');
+  }
   
   const submit= async (e)=>{
     if(validateForm2()){
-      // console.log(firstname,lastname,dob,selectedDepartment,doctor.doc_id,bloodgroup,selectedOption,riskCode);
       const addPatient=async()=>{
         const response= await adminadd({
           firstname:firstname, 
@@ -143,16 +137,13 @@ export const Addpatient = () => {
           doctor_name:doctor.first_name,
           doctor_id:doctor.doc_id,
           risk:riskCode
-        });
+        }).catch((err) => {
+            console.log(err);
+        })
       };
-      await addPatient().then((response) => {
-        if (response.msg === 'success') {
-          toastSuccess();
-          navigate('/viewstatus', {state : "pending"});
-        }
-      }).catch(() => {
-        toast.error("Enter required inputs");
-      });
+      addPatient()
+      toastSuccess();
+      navigate('/viewstatus');
     }
   };
 
