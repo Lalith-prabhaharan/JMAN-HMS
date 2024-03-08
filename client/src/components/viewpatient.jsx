@@ -66,8 +66,8 @@ export const Viewpatient = () => {
       <div className="status">
         <h2 style={{ margin: "0px" }} className='heading'>Handling Patients</h2>
 
-        <div style={{display: 'flex', justifyContent: 'center'}}>
-          <InputText type="text" style={{width: '70%', padding: '15px 50px', borderRadius: '15px', backgroundColor:"#bae8ca", marginTop: "15px"}}  value={searchText} onChange={handleInputChange} placeholder="Search by Name or ID..." />
+        <div style={{display: 'flex', justifyContent: 'end'}}>
+          <InputText type="text" style={{width: '50%', padding: '15px 50px', borderRadius: '15px', backgroundColor:"#bae8ca", marginTop: "15px"}}  value={searchText} onChange={handleInputChange} placeholder="Search by Name or ID..." />
         </div>
 
         {

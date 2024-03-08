@@ -121,16 +121,72 @@ export default function Doctorviewpatient() {
     const download=(report_id)=>{
         const fetch=()=>{
             const res=axiosInstance.get(`http://localhost:5000/api/v1/prescription/report/download/${report_id}`).then((res)=>{
-                toast.success("Report Downloaded Successfully!");
+                toast.success("Report Downloaded");
             }).catch(err=>console.log(err));
         }
         fetch();
     }
 
+    const formatDateToWords = (inputDate) => {
+        console.log(inputDate)
+        const date = new Date(inputDate);
+        // Format day with ordinal suffix
+        const day = addOrdinalSuffix(date.getDate());
+      
+        // Get month name
+        const monthNames = [
+          'January', 'February', 'March', 'April', 'May', 'June',
+          'July', 'August', 'September', 'October', 'November', 'December'
+        ];
+        const month = monthNames[date.getMonth()];
+      
+        // Get year, hour, and minute
+        const year = date.getFullYear();
+        const hour = date.getHours();
+        const minute = date.getMinutes();
+      
+        // Convert hour to 12-hour format and get am/pm
+        const ampm = hour >= 12 ? 'pm' : 'am';
+        const formattedHour = hour % 12 || 12;
+      
+        // Create the final formatted string
+        const formattedDate = `${day} ${month} ${year} ${formattedHour}:${minute} ${ampm}`;
+      
+        return formattedDate;
+      };
+
+    const formatDate = (backendDate) => {
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        const date = new Date(backendDate);
+        const formattedDate = date.toLocaleDateString('en-US', options);
+        // Extract day, month, and year
+        const [month, day, year] = formattedDate.split(' ');
+        // Add ordinal suffix to the day
+        const ordinalDay = addOrdinalSuffix(parseInt(day, 10));
+      
+        // Format the result
+        return `${ordinalDay} ${month} ${year}`;
+      };
+      
+      const addOrdinalSuffix = (num) => {
+        const j = num % 10,
+          k = num % 100;
+        if (j === 1 && k !== 11) {
+          return num + 'st';
+        }
+        if (j === 2 && k !== 12) {
+          return num + 'nd';
+        }
+        if (j === 3 && k !== 13) {
+          return num + 'rd';
+        }
+        return num + 'th';
+      };
+
     return (
         <DoctorNav>
             <div className='docviewpatient'>
-                <div className='sidetabs'>
+            <div className='sidetabs'>
                     <div
                         onClick={() => handleTabChange('personalInfo')}
                         style={{
@@ -140,7 +196,7 @@ export default function Doctorviewpatient() {
                             color: activeTab === 'personalInfo' ? '#3498db' : '#333',
                         }}
                     >
-                        Personal Info
+                        Patient Info
                     </div>
                     <div
                         onClick={() => handleTabChange('prescription')}
@@ -150,65 +206,71 @@ export default function Doctorviewpatient() {
                             borderBottom: activeTab === 'prescription' ? '4px solid #3498db' : 'none',
                             color: activeTab === 'prescription' ? '#3498db' : '#333',
                         }}
-                        >
+                    >
                         Prescription
                     </div>
                 </div>
                 <div>
                     {activeTab === 'personalInfo' && (
                         <div className='form-containerdocview' id='left-col'>
-                            <form>
-                                <h2>Personal Info</h2>
-                                <fieldset>
+                            <form className='AdminViewH2'>
+                                <div className='h2Admin'>
+                                    <h2>Patient Info</h2>
+                                </div>
+                                <div className='fieldsetmain'>
                                     <div className='left-view'>
                                         <div className="form-row">
-                                            <label  style={{fontSize: "17px", fontWeight: "bold"}} for="name" className="form-label">Name:</label>
-                                            <input type="text" id="name" name="name" className="form-input" value={handlingDetails.first_name+" "+handlingDetails.last_name } />
+                                            <label for="name" className="form-label">Name</label>
+                                            <input type="text" id="name" name="name" style={{fontWeight:"bolder"}} className="form-input" readOnly={true} value={handlingDetails.first_name + " " + handlingDetails.last_name} />
                                         </div>
                                         <div className="form-row">
-                                            <label style={{fontSize: "17px", fontWeight: "bold"}} for="age" className="form-label">Age:</label>
-                                            <input type="number" id="age" name="age" className="form-input" value={handlingDetails.age} />
+                                            <label for="age" className="form-label">Age</label>
+                                            <input type="number" id="age" name="age" className="form-input" readOnly={true} value={handlingDetails.age} />
                                         </div>
                                         <div className="form-row">
-                                            <label style={{fontSize: "17px", fontWeight: "bold"}} for="gender" className="form-label">Gender:</label>
-                                            <input type="text" id="gender" name="gender" className="form-input" value={handlingDetails.gender} />
+                                            <label for="gender" className="form-label">Gender</label>
+                                            <input type="text" id="gender" name="gender" className="form-input" readOnly={true} value={handlingDetails.gender} />
                                         </div>
                                         <div className="form-row">
-                                            <label style={{fontSize: "17px", fontWeight: "bold"}} for="dob" className="form-label">Phone No:</label>
-                                            <input type="text" id="phoneno" name="phoneno" className="form-input" value={handlingDetails.phone} />
+                                            <label for="dob" className="form-label">Phone No</label>
+                                            <input type="text" id="phoneno" name="phoneno" className="form-input" readOnly={true} value={handlingDetails.phone} />
                                         </div>
                                         <div className="form-row">
-                                            <label style={{fontSize: "15px", fontWeight: "bold"}} for="bloodGroup" className="form-label">Blood Group:</label>
-                                            <input type="text" id="bloodGroup" name="bloodGroup" className="form-input"  value={handlingDetails.blood_group}  />
+                                            <label for="patientaddress" className="form-label">Address</label>
+                                            <textarea id="patientaddress" name="patientaddress" className="form-input" rows="3" readOnly={true} value={handlingDetails.address}  ></textarea>
                                         </div>
                                         <div className="form-row">
-                                            <label style={{fontSize: "15px", fontWeight: "bold"}} for="weight" className="form-label">Weight:</label>
-                                            <input type="text" id="weight" name="weight" className="form-input"  value={handlingDetails.weight}  />
+                                            <label for="weight" className="form-label">Weight:</label>
+                                            <input type="text" id="weight" name="weight" className="form-input" value={handlingDetails.weight+" kg"} />
                                         </div>
                                     </div>
                                     <div className='right-view'>
                                         <div className="form-row">
-                                            <label style={{fontSize: "15px", fontWeight: "bold"}} for="description" className="form-label">Desc:</label>
-                                            <textarea id="description" name="description" className="form-input" rows="4"  value={handlingDetails.diseases_description} ></textarea>
+                                            <label for="risk" className="form-label">Risk</label>
+                                            <input id="risk" name="risk" className="form-input" readOnly={true} value={risk}  ></input>
                                         </div>
                                         <div className="form-row">
-                                            <label style={{fontSize: "15px", fontWeight: "bold"}} for="medicalHistory" className="form-label">Medical History:</label>
-                                            <textarea id="medicalHistory" name="medicalHistory" className="form-input" rows="4"  value={handlingDetails.history}  ></textarea>
+                                            <label for="description" className="form-label">Desc</label>
+                                            <textarea id="description" name="description" className="form-input" readOnly={true} rows="3" value={handlingDetails.diseases_description}></textarea>
                                         </div>
                                         <div className="form-row">
-                                            <label style={{fontSize: "15px", fontWeight: "bold"}} for="risk" className="form-label">Risk:</label>
-                                            <input id="risk" name="risk" className="form-input"  value={risk}  ></input>
+                                            <label for="medicalHistory" className="form-label">Medical History</label>
+                                            <textarea id="medicalHistory" name="medicalHistory" className="form-input" readOnly={true} rows="3" value={handlingDetails.history}  ></textarea>
                                         </div>
                                         <div className="form-row">
-                                            <label style={{fontSize: "15px", fontWeight: "bold"}} for="entry" className="form-label">Entry Date:</label>
-                                            <input id="entry" name="entry" className="form-input"  value={handlingDetails.entry_date}  ></input>
+                                            <label for="bloodGroup" className="form-label">Blood Group</label>
+                                            <input type="text" id="bloodGroup" name="bloodGroup" className="form-input" readOnly={true} value={handlingDetails.blood_group} />
+                                        </div>  
+                                        <div className="form-row">
+                                            <label for="entry" className="form-label">Entry Date</label>
+                                            <input id="entry" name="entry" className="form-input" value={formatDate(handlingDetails.entry_date)}  ></input>
                                         </div>
                                     </div>
-                                </fieldset>
+                                </div>
                                 <ConfirmPopup />
                                 <div>
-                                    <Button id='btn1doc'  style={{marginTop:"2%",marginBottom:"2%"}} onClick={discharge} icon="pi pi-check">Discharge</Button>
-                                    <Button id='btn1doc'  style={{marginLeft:"2%",marginBottom:"2%"}} onClick={changeRisk} >Change Risk</Button>
+                                    <Button id='btn1doc'  onClick={discharge} icon="pi pi-check">Discharge</Button>
+                                    <Button id='btn1doc'  style={{marginLeft:"2%"}} onClick={changeRisk} >Change Risk</Button>
                                 </div>
                             </form>
                             {changeRiskFactor && (
@@ -230,10 +292,10 @@ export default function Doctorviewpatient() {
                                     //  reports.map((report)=>(
                                     //     <div className="report-link"  key={report.report_id} >{report.file_name}<i className="pi pi-download"style={{cursor:"pointer", fontSize: '1rem',marginLeft:'5%' }} onClick={() => download(report.report_id)} ></i></div> 
                                     // ))
-                                    <ScrollPanel style={{ width: '100%', height: '400px' }}>
+                                    <ScrollPanel style={{ width: '100%', height: '408px' }}>
                                         {reports.map((report)=>(
                                             <div key={report.report_id} className="suggestion-item">
-                                                <h5>{report.time_stamp}</h5>
+                                                <h5>{formatDateToWords(report.time_stamp)}</h5>
                                                 {report.file_name}<i className="pi pi-download"style={{cursor:"pointer", fontSize: '1rem',marginLeft:'5%' }} onClick={() => download(report.report_id)} ></i>
                                             </div>
                                         ))}
@@ -247,7 +309,7 @@ export default function Doctorviewpatient() {
                         <div className='right-col'>
                             <div className='btndoctor'>
                                 <textarea className="text-box" style={{ fontSize: "20px" }} placeholder="add new suggestion/medication" value={medication} onChange={(e)=>setMedication(e.target.value)}></textarea>
-                                <div className='btnViewdoc'>
+                                <div className='btnViewdoc1'>
                                     <button id='btn1doc' onClick={addSuggestion}>Add</button>
                                 </div>
                             </div>
@@ -255,10 +317,10 @@ export default function Doctorviewpatient() {
                             <div id="suggestions-card">
                                 <h2>Suggestions and Medications</h2>
                                 { prescriptionData.length>0 ?
-                                    <ScrollPanel style={{ width: '100%', height: '400px' }}>
+                                    <ScrollPanel style={{ width: '100%', height: '388px' }}>
                                         {prescriptionData.map((prescription)=>(
                                             <div key={prescription.p_id} className="suggestion-item">
-                                                <h5>{prescription.time_stamp}</h5>
+                                                <h5>{formatDateToWords(prescription.time_stamp)}</h5>
                                                 {prescription.medication}
                                             </div>
                                         ))}

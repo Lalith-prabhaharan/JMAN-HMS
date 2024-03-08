@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
-import { Navbar  } from './navbar';
+import { Navbar } from './navbar';
 import '../style/AdminViewPatient.css';
 import axios from 'axios';
 import "primereact/resources/themes/lara-light-cyan/theme.css";
@@ -107,7 +107,7 @@ export default function AdminViewPatient() {
                 setUploadedFiles([]);
             }).catch((err)=>{
                 if(err.response.data.message === 'Only PDF, JPEG, JPG, and PNG files are allowed!'){
-                    toast.error(err.response.data.message);
+                    toast.warn(err.response.data.message);
                 }
                 else if(err.response.data.message === 'Max file size: 5MB!'){
                     toast.warn(err.response.data.message);
@@ -135,6 +135,62 @@ export default function AdminViewPatient() {
         }).catch(err=>console.log(err));
     };
 
+    const formatDateToWords = (inputDate) => {
+        console.log(inputDate)
+        const date = new Date(inputDate);
+        // Format day with ordinal suffix
+        const day = addOrdinalSuffix(date.getDate());
+        
+        // Get month name
+        const monthNames = [
+            'January', 'February', 'March', 'April', 'May', 'June',
+            'July', 'August', 'September', 'October', 'November', 'December'
+        ];
+        const month = monthNames[date.getMonth()];
+        
+        // Get year, hour, and minute
+        const year = date.getFullYear();
+        const hour = date.getHours();
+        const minute = date.getMinutes();
+        
+        // Convert hour to 12-hour format and get am/pm
+        const ampm = hour >= 12 ? 'pm' : 'am';
+        const formattedHour = hour % 12 || 12;
+        
+        // Create the final formatted string
+        const formattedDate = `${day} ${month} ${year} ${formattedHour}:${minute} ${ampm}`;
+        
+        return formattedDate;
+        };
+
+    const formatDate = (backendDate) => {
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        const date = new Date(backendDate);
+        const formattedDate = date.toLocaleDateString('en-US', options);
+        // Extract day, month, and year
+        const [month, day, year] = formattedDate.split(' ');
+        // Add ordinal suffix to the day
+        const ordinalDay = addOrdinalSuffix(parseInt(day, 10));
+        
+        // Format the result
+        return `${ordinalDay} ${month} ${year}`;
+        };
+        
+        const addOrdinalSuffix = (num) => {
+        const j = num % 10,
+            k = num % 100;
+        if (j === 1 && k !== 11) {
+            return num + 'st';
+        }
+        if (j === 2 && k !== 12) {
+            return num + 'nd';
+        }
+        if (j === 3 && k !== 13) {
+            return num + 'rd';
+        }
+        return num + 'th';
+        };
+    
 
     return (
         <Navbar>
@@ -166,13 +222,15 @@ export default function AdminViewPatient() {
                 <div className='fullbody'>
                     {activeTab === 'personalInfo' && (
                         <div className='form-containerdocview' id='left-col'>
-                            <form>
-                                <h2>Patient Info</h2>
-                                <fieldset>
+                            <form className='AdminViewH2'>
+                                <div className='h2Admin'>
+                                    <h2>Patient Info</h2>
+                                </div>
+                                <div className='fieldsetmain'>
                                     <div className='left-view'>
                                         <div className="form-row">
                                             <label for="name" className="form-label">Name</label>
-                                            <input type="text" id="name" name="name" className="form-input" readOnly={true} value={handlingDetails.first_name + " " + handlingDetails.last_name} />
+                                            <input type="text" id="name" name="name" className="form-input" readOnly={true} style={{fontWeight:"bolder"}} value={handlingDetails.first_name + " " + handlingDetails.last_name} />
                                         </div>
                                         <div className="form-row">
                                             <label for="age" className="form-label">Age</label>
@@ -180,22 +238,21 @@ export default function AdminViewPatient() {
                                         </div>
                                         <div className="form-row">
                                             <label for="gender" className="form-label">Gender</label>
-                                            <input type="text" id="gender" name="gender" className="form-input" readOnly={true} value={handlingDetails.gender} required />
+                                            <input type="text" id="gender" name="gender" className="form-input" readOnly={true} value={handlingDetails.gender} />
                                         </div>
                                         <div className="form-row">
                                             <label for="dob" className="form-label">Phone No</label>
-                                            <input type="text" id="phoneno" name="phoneno" className="form-input" readOnly={true} value={handlingDetails.phone} required />
+                                            <input type="text" id="phoneno" name="phoneno" className="form-input" readOnly={true} value={handlingDetails.phone} />
                                         </div>
                                         <div className="form-row">
-                                            <label for="bloodGroup" className="form-label">Blood Group</label>
-                                            <input type="text" id="bloodGroup" name="bloodGroup" className="form-input" readOnly={true} value={handlingDetails.blood_group} required />
+                                            <label for="patientaddress" className="form-label">Address</label>
+                                            <textarea id="patientaddress" name="patientaddress" className="form-input" rows="3" readOnly={true} value={handlingDetails.address}  ></textarea>
                                         </div>
                                         <div className="form-row">
-                                            <label style={{fontSize: "15px", fontWeight: "bold"}} for="weight" className="form-label">Weight:</label>
-                                            <input type="text" id="weight" name="weight" className="form-input"  value={handlingDetails.weight}  />
+                                            <label for="weight" className="form-label">Weight:</label>
+                                            <input type="text" id="weight" name="weight" className="form-input" value={handlingDetails.weight} />
                                         </div>
                                     </div>
-
                                     <div className='right-view'>
                                         <div className="form-row">
                                             <label for="risk" className="form-label">Risk</label>
@@ -210,73 +267,75 @@ export default function AdminViewPatient() {
                                             <textarea id="medicalHistory" name="medicalHistory" className="form-input" readOnly={true} rows="3" value={handlingDetails.history}  ></textarea>
                                         </div>
                                         <div className="form-row">
-                                            <label for="patientaddress" className="form-label">Address</label>
-                                            <textarea id="patientaddress" name="patientaddress" className="form-input" rows="3" readOnly={true} value={handlingDetails.address}  ></textarea>
+                                            <label for="bloodGroup" className="form-label">Blood Group</label>
+                                            <input type="text" id="bloodGroup" name="bloodGroup" className="form-input" readOnly={true} value={handlingDetails.blood_group} />
                                         </div>
                                         <div className="form-row">
-                                            <label style={{fontSize: "15px", fontWeight: "bold"}} for="entry" className="form-label">Entry Date:</label>
-                                            <input id="entry" name="entry" className="form-input"  value={handlingDetails.entry_date}  ></input>
+                                            <label for="entry" className="form-label">Entry Date</label>
+                                            <input id="entry" name="entry" className="form-input" value={formatDate(handlingDetails.entry_date)}  ></input>
                                         </div>
                                     </div>
-                                </fieldset>
+                                </div>
                                 {/* <button id='btn1doc' style={{ marginTop: "2%" }} onClick={release} >Release</button> */}
                             </form>
-                            <div className="card" style={{marginTop:"-3%"}}>
-                                <h2>Report Details</h2>
-                                <div className="card-body">
-                                    {reports.length>0? 
-                                    // reports.map((report)=>(
-                                    // <div>
-                                    //     <p>{report.time_stamp}</p>
-                                    //     <div className="report-link"  key={report.report_id}  >{report.file_name}<i className="pi pi-download"style={{cursor:"pointer", fontSize: '1rem',marginLeft:'5%' }} onClick={() => download(report.report_id)} ></i></div> 
-                                    // </div>
-                                    // ))
-                                    <ScrollPanel style={{ width: '100%', height: '350px' }}>
-                                        {reports.map((report)=>(
-                                            <div key={report.report_id} className="suggestion-item">
-                                                <h5>{report.time_stamp}</h5>
-                                                <p style={{fontSize: "13px"}}>
-                                                    {report.file_name}
-                                                    <i className="pi pi-download"style={{cursor:"pointer", fontSize: '1rem',marginLeft:'5%' }} onClick={() => download(report.report_id)} ></i>
-                                                </p>
-                                            </div>
-                                        ))}
-                                    </ScrollPanel>
-                                    :<p>No reports are uploaded !!</p>}
-                                </div>
-                                <div className="upload-section">
-                                    <label htmlFor="file-upload" className="custom-file-upload" style={{marginTop: "30px"}}>Upload Files</label>
-                                    <input type="file" 
-                                        id="file-upload"
-                                        accept=".pdf,.png,.jpeg,.jpg"
-                                        multiple
-                                        onChange={handleFileUpload}
-                                        style={{marginBottom:"5%"}}
-                                    />
-                                    <button id="btn1doc" onClick={uploadfiles}>Upload</button>
-                                </div>
-                            </div>
-                        </div>
-                    )}
-                    {activeTab === 'prescription' && (
-                        <div className='right-col'>
-                            <div id="suggestions-card">
-                                <h2>Previous Suggestions and Medications</h2>
-                                { prescriptionData.length>0 ?
-                                    <ScrollPanel style={{ width: '100%', height: '383px' }}>
-                                        {prescriptionData.map((prescription) => (
-                                            <div key={prescription.p_id} className="suggestion-item">
-                                                <h5>{prescription.time_stamp}</h5>
-                                                {prescription.medication}
-                                            </div>
-                                        ))}
-                                    </ScrollPanel>:<p>No prescription provided for the patient !!</p>
-                                }
-                            </div>
-                        </div>
-                    )}
+                            <div className="card">
+                                <div className='h2Admin'>
+                                    <h2>Report Details</h2>
+                                    </div>
+                    <div className="card-body">
+                        {reports.length > 0 ?
+                            // reports.map((report)=>(
+                            // <div>
+                            //     <p>{report.time_stamp}</p>
+                            //     <div className="report-link"  key={report.report_id}  >{report.file_name}<i className="pi pi-download"style={{cursor:"pointer", fontSize: '1rem',marginLeft:'5%' }} onClick={() => download(report.report_id)} ></i></div> 
+                            // </div>
+                            // ))
+                            <ScrollPanel style={{ width: '100%', height: '259px' }}>
+                                {reports.map((report) => (
+                                    <div key={report.report_id} className="suggestion-item">
+                                        <h5>{formatDateToWords(report.time_stamp)}</h5>
+                                        <p style={{ fontSize: "13px" }}>
+                                            {report.file_name}
+                                            <i className="pi pi-download" style={{ cursor: "pointer", fontSize: '1rem', marginLeft: '5%' }} onClick={() => download(report.report_id)} ></i>
+                                        </p>
+                                    </div>
+                                ))}
+                            </ScrollPanel>
+                            : <p>No reports are uploaded !!</p>}
+                    </div>
+                    <div className="upload-section">
+                        <label htmlFor="file-upload" className="custom-file-upload" style={{ marginTop: "15px" }}>Upload Files</label>
+                        <input type="file"
+                            id="file-upload"
+                            accept=".pdf"
+                            multiple
+                            onChange={handleFileUpload}
+                        
+                        />
+                        <button id="btn1doc" onClick={uploadfiles}>Upload</button>
+                    </div>
                 </div>
             </div>
-        </Navbar>
+                    )}
+            {activeTab === 'prescription' && (
+                <div className='right-col'>
+                    <div id="suggestions-card">
+                        <h2>Previous Suggestions and Medications</h2>
+                        {prescriptionData.length > 0 ?
+                            <ScrollPanel style={{ width: '100%', height: '383px' }}>
+                                {prescriptionData.map((prescription) => (
+                                    <div key={prescription.p_id} className="suggestion-item">
+                                        <h5>{formatDateToWords(prescription.time_stamp)}</h5>
+                                        {prescription.medication}
+                                    </div>
+                                ))}
+                            </ScrollPanel> : <p>No prescription provided for the patient !!</p>
+                        }
+                    </div>
+                </div>
+            )}
+        </div>
+            </div >
+        </Navbar >
     );
 }
