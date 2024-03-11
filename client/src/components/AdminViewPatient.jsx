@@ -118,7 +118,6 @@ export default function AdminViewPatient() {
     }
 
     const download=(report_id)=>{
-        console.log(report_id)
         const fetch=()=>{
             const res=axiosInstance.get(`http://localhost:5000/api/v1/prescription/report/download/${report_id}`)
             .then((res)=>{
