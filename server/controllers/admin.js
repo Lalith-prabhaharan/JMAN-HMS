@@ -2,8 +2,12 @@ require('dotenv').config();
 const Doctor = require('../models/Doctor');
 const Application = require('../models/Application');
 const Patient = require('../models/Patient');
-const {Op} = require('sequelize');
+const Prescription=require('../models/Prescription')
+const Report=require('../models/Report')
+const {Op, Sequelize} = require('sequelize');
 const bcrypt = require('bcryptjs');
+
+
 
 // get all doctors
 const getAllDeptDoctors = async (req, res) => {
@@ -22,14 +26,60 @@ const getAllDeptDoctors = async (req, res) => {
 const getDeptDoctors = async (req, res) => {
     const department = req.params.dept;
 
-    const doctor = await Doctor.findAll({
-        attributes: ['doc_id', 'first_name', 'last_name', 'age', 'department', 'year_of_exp'],
-        where: { department: { [Op.regexp]: `^${department}` } }
-    });
+    var doctor;
+
+    Doctor.hasMany(Patient, { foreignKey: 'doc_id' });
+    Doctor.hasMany(Application, { foreignKey: 'doc_id' });
+    if(department === "all"){
+        doctor = await Doctor.findAll({
+            attributes: [
+              'doc_id',
+              'first_name',
+              'last_name',
+              'age',
+              'year_of_exp',
+              'department',
+              [Sequelize.fn('COUNT', Sequelize.col('Patients.patient_id')), 'handling'],
+            ],
+            include: [
+                {
+                  model: Patient,
+                  attributes: [],
+                  where: { status: 'active'},
+                  required: false
+              }
+            ],
+            group: ['Doctor.doc_id']
+          })
+    }
+    else {
+        doctor = await Doctor.findAll({
+            attributes: [
+              'doc_id',
+              'first_name',
+              'last_name',
+              'age',
+              'year_of_exp',
+              'department',
+              [Sequelize.fn('COUNT', Sequelize.col('Patients.patient_id')), 'handling'],
+            ],
+            where: {department: department},
+            include: [
+                {
+                  model: Patient,
+                  attributes: [],
+                  where: { status: 'active' },
+                  required: false
+              },
+            ],
+            group: ['Doctor.doc_id']
+          })
+    }
 
     if (doctor.length === 0) {
-        return res.status(200).json({ msg: 'No doctor in the specified department' })
+        return res.status(200).json([]);
     }
+
     res.status(200).json(doctor);
 };
 
@@ -53,20 +103,17 @@ const getAllPatientStatus = async (req, res) => {
     var allPatient;
     if (status === "all"){
         allPatient = await Patient.findAll({
-            attributes: ['patient_id', 'first_name', 'last_name', 'status', 'risk'],
             order: [ ['risk', 'DESC'] ]
         });
     }
     else{
         allPatient = await Patient.findAll({
-            attributes: ['patient_id', 'first_name', 'last_name', 'status', 'risk'],
-            where: { status: status },
+            where: {status: status},
             order: [ ['risk', 'DESC'] ]
         });
     }
-    
     if (allPatient.length === 0) {
-        return res.status(200).json({ msg: 'No Patients' });
+        return res.status(200).json([]);
     }
     res.status(200).json(allPatient);
 };
@@ -83,6 +130,7 @@ const getPatientDetails = async (req, res) => {
     }
     res.status(200).json(patient);
 };
+
 
 // post the application form for new patient
 const postPatientForm = async (req, res) => {
@@ -142,20 +190,26 @@ const postPatientForm = async (req, res) => {
 
 
 // get application based on specific value
-const getSpecificStatus = async(req,res)=>{
+const getSpecificStatus = async(req,res) => {
     const status=req.params.status;
-    const patient=await Application.findAll({
-        where: {status: { [Op.regexp]: `^${status}`}}
-    }) 
+    var patient;
+    if(status === "all"){
+        patient=await Application.findAll({});
+    }
+    else {
+        patient=await Application.findAll({
+            where: {status: status}
+        }) ;
+    }
     if(patient.length === 0){
-        return res.status(404).json({msg:'No Patient in the specified status'})
+        return res.status(200).json([]);
     }
     res.status(200).json(patient);
 }
 
 
 // add new doctor
-const postDoctorForm=async(req,res)=>{
+const postDoctorForm=async(req,res) => {
     const{
         first_name,
         last_name,
@@ -199,7 +253,7 @@ const postDoctorForm=async(req,res)=>{
 
 
 // get application based on specific value
-const updatePatientForm = async(req,res)=>{
+const updatePatientForm = async(req,res) => {
     const {
         application_id,
         firstname,
@@ -219,12 +273,10 @@ const updatePatientForm = async(req,res)=>{
         doctor_id,
         risk
     } = req.body;
-
     const avail = await Application.findAll({
         where: { application_id: application_id }
     });
-    
-    if (avail[0].dataValues.status != "Rejected") {
+    if (avail[0].dataValues.status != "rejected") {
         return res.status(404).json({ msg: "Invalid Application_id" });
     }
 
@@ -274,6 +326,185 @@ const updatePatientForm = async(req,res)=>{
 }
 
 
+// get patients based on search
+const getSearchPatient = async (req, res) => {
+    const {search, status} = req.params;
+
+    var patients;
+    if(!isNaN(search)){
+        if (status === "all"){
+            patients = await Patient.findAll({
+                where: { patient_id: Number(search) }
+            });
+        }
+        else{
+            patients = await Patient.findAll({
+                where: { status: status, patient_id: Number(search) }
+            });
+        }
+    }
+    else{
+        if (status === "all"){
+            patients = await Patient.findAll({});
+        }
+        else{
+            patients = await Patient.findAll({ 
+                where: { status: status }
+            });
+        }
+        let x = new Array();
+        for(let i=0; i<patients.length; i++){
+            let str = patients[i].dataValues.first_name;
+            if(str.toLowerCase().includes(search.toLowerCase())){
+                x.push(patients[i]);
+            }
+        }
+        patients = x;
+    }
+    res.status(200).json(patients);
+};
+
+
+// get applications based on search
+const getSearchApplication = async (req, res) => {
+    const {search, status} = req.params;
+    var applications;
+    if(!isNaN(search)){
+        if (status === "all"){
+            applications = await Application.findAll({
+                where: { application_id: Number(search) }
+            });
+        }
+        else{
+            applications = await Application.findAll({
+                where: { status: status, application_id: Number(search) }
+            });
+        }
+    }
+    else{
+        if (status === "all"){
+            applications = await Application.findAll({});
+        }
+        else{
+            applications = await Application.findAll({
+                where: { status: status }
+            });
+        }
+        
+        let x = new Array();
+        for(let i=0; i<applications.length; i++){
+            let str = applications[i].dataValues.first_name;
+            if(str.toLowerCase().includes(search.toLowerCase())){
+                x.push(applications[i]);
+            }
+        }
+        applications = x;
+    }
+    res.status(200).json(applications);
+};
+
+// get doctors based on search
+const getSearchDoctor = async (req, res) => {
+    const {search, dept} = req.params;
+    var doctors;
+    if(!isNaN(search.substring(1))){
+        if (dept === "all"){
+            doctors = await Doctor.findAll({
+                where: { doc_id: search }
+            });
+        }
+        else{
+            doctors = await Doctor.findAll({
+                where: { department: dept, doc_id: search }
+            });
+        }
+    }
+    else{
+        if (dept === "all"){
+            doctors = await Doctor.findAll({});
+        }
+        else{
+            doctors = await Doctor.findAll({
+                where: { department: dept }
+            });
+        }
+        
+        let x = new Array();
+        for(let i=0; i<doctors.length; i++){
+            let str = doctors[i].dataValues.first_name;
+            if(str.toLowerCase().includes(search.toLowerCase())){
+                x.push(doctors[i]);
+            }
+        }
+        doctors = x;
+    }
+    res.status(200).json(doctors);
+};
+
+
+const releasePatient=async(req,res)=>{
+    const patient_id = Number(req.params.id);
+    const email = await Patient.findAll({
+        attributes: ['email'],
+        where: {
+            patient_id: patient_id,
+            status: 'discharge'
+        }
+    });
+
+    const prescription = await Prescription.destroy({
+        where: {
+            patient_id: patient_id,
+        },
+        returning: true,
+    });
+
+    if(prescription === 0) {
+        console.log("No prescripiton Available");;
+    }
+
+    const report = await Report.destroy({
+        where: {
+            patient_id: patient_id,
+        },
+        returning: true,
+    });
+
+    if(report === 0) {
+        console.log("No report Available");;
+    }
+
+    const patient = await Patient.destroy({
+        where: {
+            patient_id: patient_id,
+            status: 'discharge'
+        },
+        returning: true,
+    });
+
+    if(patient === 0) {
+        return res.status(404).json({msg: 'No such patient availabe'});
+    }
+
+    const mail =  email[0].dataValues.email;
+
+    const applicant = await Application.destroy({
+        where: {
+            email: mail,
+            doc_id: userId,
+            status: 'approved'
+        },
+        returning: true,
+    });
+    
+    if(applicant === 0) {
+        return res.status(404).json({msg: 'No such applicant availabe'});
+    }
+
+    return res.status(200).json({msg: 'success'});
+}
+
+
 
 
 module.exports = {
@@ -285,5 +516,9 @@ module.exports = {
     postPatientForm,
     getSpecificStatus,
     postDoctorForm,
-    updatePatientForm
+    updatePatientForm,
+    getSearchPatient,
+    getSearchApplication,
+    getSearchDoctor,
+    releasePatient
 }

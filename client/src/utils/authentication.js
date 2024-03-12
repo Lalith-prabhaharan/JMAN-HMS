@@ -13,6 +13,7 @@ export const Authentication = (props) => {
         localStorage.removeItem("mail")
         localStorage.removeItem("password")
         localStorage.removeItem("activetab")
+        localStorage.removeItem("token")
 
         navigate("/")
     }

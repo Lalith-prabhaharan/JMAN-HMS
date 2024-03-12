@@ -3,6 +3,8 @@ const Doctor = require('../models/Doctor');
 const Application = require('../models/Application');
 const Patient = require('../models/Patient');
 const { Sequelize } = require('sequelize');
+const Prescription = require('../models/Prescription');
+const Report = require('../models/Report');
 
 
 // Get all Handling Patients
@@ -65,7 +67,7 @@ const approvePatient = async(req, res) => {
     await Patient.create(newPatient);
     return res.status(200).json({ msg: "Success" });
 }
-
+ 
 
 // Reject Patient
 const rejectPatient = async(req, res) => {
@@ -73,7 +75,7 @@ const rejectPatient = async(req, res) => {
     const {reason} = req.body;
     const patient_id = Number(req.params.id);
     const patient = await Application.update({
-        status: 'Rejected',
+        status: 'rejected',
         reason: reason
     },
     {
@@ -151,6 +153,7 @@ const getPendingPatient = async(req, res) => {
 }
 
 
+// update risk status
 const updateRisk = async(req, res) => {
     const {id} = req.params;
     const {risk} = req.body;
@@ -182,7 +185,6 @@ const dischargePatient = async (req, res) => {
             doc_id: userId,
             status: 'active'
         },
-
         returning: true,
     });
     
@@ -192,6 +194,34 @@ const dischargePatient = async (req, res) => {
 
     return res.status(200).json(patient[0]);
 }
+
+
+// get doctors based on search
+const getSearchHandlePatient = async (req, res) => {
+    const {userId} = req.user;
+    const {search} = req.params;
+    var patients;
+    if(!isNaN(search)){
+        patients = await Patient.findAll({
+            where: { doc_id: userId, patient_id: Number(search), status: "active" }
+        });
+    }
+    else{
+        patients = await Patient.findAll({
+            where: { doc_id: userId, status: "active" }
+        });
+        
+        let x = new Array();
+        for(let i=0; i<patients.length; i++){
+            let str = patients[i].dataValues.first_name;
+            if(str.toLowerCase().includes(search.toLowerCase())){
+                x.push(patients[i]);
+            }
+        }
+        patients = x;
+    }
+    res.status(200).json(patients);
+};
 
 
 
@@ -205,5 +235,6 @@ module.exports = {
     approvePatient,
     rejectPatient,
     updateRisk,
-    dischargePatient
+    dischargePatient,
+    getSearchHandlePatient
 }

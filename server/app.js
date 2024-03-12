@@ -12,6 +12,7 @@ const auth = require('./routes/auth');
 const admin = require('./routes/admin');
 const doctor = require('./routes/doctor');
 const prescription = require('./routes/prescription');
+
 const authDoc = require('./middleware/authDoctor');
 const authAdmin = require('./middleware/authAdmin');
 
@@ -36,7 +37,6 @@ app.use('/api/v1/auth', auth);
 app.use('/api/v1/admin', admin);
 app.use('/api/v1/doctor', authDoc, doctor);
 app.use('/api/v1/prescription', prescription);
-
 
 
 

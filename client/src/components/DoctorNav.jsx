@@ -1,20 +1,21 @@
 import React from "react";
 import { useState } from "react";
 import "../style/nav.css";
+import logo from "../images/logo2 - Copy.png";
 import { useAuth } from "../utils/authentication";
-import { useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
+
+
 
 export const DoctorNav=({children})=> {
   const activeColor='#000';
   const inactiveColor='#fff';
   const [showNav, setShowNav] = useState(false);
   const [activeTab, setActiveTab] = useState('');
-  const auth=useAuth()
+  const auth=useAuth();
 
   const logout=()=>{
     auth.logout();
-  }
+  };
 
   const toggleNav = () => {
     setShowNav(!showNav);
@@ -28,7 +29,10 @@ export const DoctorNav=({children})=> {
   return (
       <div>
         <nav className="navbar">
-          <div className="logo">HEALTH CARE</div>
+          <div className="logo">
+            <img src={logo}></img>
+            {/* HEALTH CARE */}
+          </div>
           <div className={`nav-links ${showNav ? 'show' : ''}`} style={{paddingTop: "10px"}}>
             <a  
               href="/mypatients"
@@ -52,7 +56,7 @@ export const DoctorNav=({children})=> {
             <span>&#9776;</span>
           </button>
         </nav>
-      {children}
+        {children}
       </div>
   );
 }
