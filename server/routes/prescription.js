@@ -4,7 +4,6 @@ const {
     uploadprescription,
     getprescription,
     uploadreport,
-    choosereport,
     downloadreport,
     getreports
 } = require('../controllers/prescription');
@@ -17,7 +16,7 @@ router.route('/getDetails/:id').get(getprescription);
 router.route('/uploadprescription').post(uploadprescription);
 
 // upload report
-router.route('/report/upload').get(choosereport).post(uploadreport);
+router.route('/report/upload').post(uploadreport);
 
 // Download patient report
 router.route('/report/download/:id').get(downloadreport);
