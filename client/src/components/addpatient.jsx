@@ -109,11 +109,12 @@ export const Addpatient = () => {
         doctor_id:doctor.doc_id,
         risk:riskCode
       }).catch((err) => {
-        toast.error(err);
+        console.log(err);
       });
     };
     updatePatient();
     toastSuccess();
+    localStorage.setItem('activetab','viewstatus');
     navigate('/viewstatus');
   }
   
@@ -143,6 +144,7 @@ export const Addpatient = () => {
       };
       addPatient()
       toastSuccess();
+      localStorage.setItem('activetab','viewstatus');
       navigate('/viewstatus');
     }
   };
