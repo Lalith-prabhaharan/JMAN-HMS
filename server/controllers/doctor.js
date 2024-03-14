@@ -1,10 +1,7 @@
 const statusCode = require('http-status-codes');
-const Doctor = require('../models/Doctor');
 const Application = require('../models/Application');
 const Patient = require('../models/Patient');
 const { Sequelize } = require('sequelize');
-const Prescription = require('../models/Prescription');
-const Report = require('../models/Report');
 
 
 // Get all Handling Patients

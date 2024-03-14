@@ -1,4 +1,3 @@
-const { UnauthenticatedError, BadRequestError } = require('../errors/index');
 const jwt = require('jsonwebtoken');
 const Doctor = require('../models/Doctor');
 const bcrypt = require('bcryptjs');
@@ -69,10 +68,8 @@ const forgetPass = async(req,res) =>{
     };
     transporter.sendMail(mailOptions, function(error, info){
         if (error) {
-            console.log(error);
             return res.status(500).json({msg: 'Error sending email'});
         } else {
-            console.log('Email sent: ' + info.response);
             otps[email]= String (randomCode);
             return res.status(200).json({msg: 'success'});
         }
