@@ -231,7 +231,6 @@ const postDoctorForm=async(req,res) => {
     //Password Hashing
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
-    // console.log(hashedPassword);
 
     const doctor=await Doctor.create({
         doc_id:newDocId,
@@ -459,20 +458,12 @@ const releasePatient=async(req,res)=>{
         returning: true,
     });
 
-    if(prescription === 0) {
-        console.log("No prescripiton Available");;
-    }
-
     const report = await Report.destroy({
         where: {
             patient_id: patient_id,
         },
         returning: true,
     });
-
-    if(report === 0) {
-        console.log("No report Available");;
-    }
 
     const patient = await Patient.destroy({
         where: {

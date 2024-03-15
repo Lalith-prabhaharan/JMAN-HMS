@@ -112,13 +112,12 @@ export default function AdminViewPatient() {
                 else if(err.response.data.message === 'Max file size: 5MB!'){
                     toast.warn(err.response.data.message);
                 }
-                setUploadedFiles([])
+                setUploadedFiles([]);
             });
         }
     }
 
     const download=(report_id)=>{
-        console.log(report_id)
         const fetch=()=>{
             const res=axiosInstance.get(`http://localhost:5000/api/v1/prescription/report/download/${report_id}`)
             .then((res)=>{

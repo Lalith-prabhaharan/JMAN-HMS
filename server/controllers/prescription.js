@@ -54,13 +54,6 @@ const getprescription = async (req, res) => {
 };
 
 
-// test interface to upload report
-const dirname = path.resolve("../server");
-const choosereport = (req, res) => {
-    res.sendFile(path.join(dirname, "index.html"));
-};
-
-
 // upload the patient report
 const uploadreport = async (req, res) => {
     const {
@@ -195,7 +188,6 @@ module.exports = {
     uploadprescription,
     getprescription,
     uploadreport,
-    choosereport,
     downloadreport,
     getreports
 }
